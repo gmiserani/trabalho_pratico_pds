@@ -11,6 +11,24 @@ Trabalho da disciplina Prática em Desenvolvimento de Software
 > Maria Luiza Leão Silva - 2020100953 -> fullstack
 
 ## Escopo
+Criar um ambiente para avaliar restaurantes e bares visitados por você e acompanhar as avaliações feitas pelos usuarios que você segue.
+
+## Principais features
+> Pagina de login
+
+> Sistema de avaliação para a avaliação de um novo restaurante ou bar pelo usuário
+
+> Pagina inicial, com os restaurantes e bares avaliados recentemente pelos usuarios seguidos
+
+## Escopo
+Criar um ambiente para avaliar as materias ofertadas e os professores do Departamento de Ciencia da Compautação(DCC).
+
+## Principais features
+> Pagina de login
+
+> Avaliar uma materia e o professor que a lecionou(dar uma nota para a materia em geral(1 a 5 estrelas), provas e trabalhos(facil, medio ou dificil), assim como outras observações como se a materia exige uma carga horaria altafora dos horarios de aula, se o professor exige presença, entre outros)
+
+> Filtrar as materias de acordo com horario/classifição/professor
 
 ## Tecnologias
 > JavaScript
