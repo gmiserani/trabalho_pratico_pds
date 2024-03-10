@@ -1,7 +1,7 @@
-# trabalho_pratico_pds
-Trabalho da disciplina de prática em desenvolvimento de software 
+# Trabalho pratico PDS
+Trabalho da disciplina Prática em Desenvolvimento de Software 
 
-# Membros:
+## Membros:
 > Gabriela Moraes Miserani de Freitas - 2020006566 -> fullstack
 
 > Isabella Vignoli Gonçalves - 2020006655 -> fullstack
