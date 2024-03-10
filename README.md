@@ -14,6 +14,9 @@ Maria Luiza Leão Silva - 2020 -> fullstack
 
 # Tecnologias
 JavaScript
+
 NodeJS
+
 React
+
 MySQL
