@@ -63,73 +63,73 @@ Criar um ambiente para avaliar as materias ofertadas e os professores do Departa
 ## Backlog da próxima sprint
 > História #1: Como usuário, eu gostaria de me cadastrar no sistema
 >>Tarefas e responsáveis:
->>>instalar banco de dados e criar primeiras tabelas [José]
+>>>Instalar banco de dados e criar primeiras tabelas [Gabriela]
 >>
->>>Instalar node.js [José]
+>>>Instalar node.js [Gabriela]
 >>
->>>Configurar o mySQL []
+>>>Configurar o mySQL [Gabriela]
 >>
->>>Criar e testar uma primeira rota usando o node.js [José]
+>>>Criar e testar uma primeira rota usando o node.js [Maria]
 >>
->>>Implementar versão inicial da tela de cadastro [Maria]
+>>>Implementar versão inicial da tela de cadastro [Isabella]
 >>
->>>Implementar no backend a lógica de criar uma nova conta [José]
+>>>Implementar no backend a lógica de criar uma nova conta [Maria]
 
 > História #2: Como usuário, eu gostaria de logar na minha conta
 >>Tarefas e responsáveis:
->>>Implementar versão inicial da tela de login [Maria]
+>>>Implementar versão inicial da tela de login [Raissa]
 >>
->>>Implementar no backend a lógica de realizar login [José]
+>>>Implementar no backend a lógica de realizar login [Maria]
 >>
->>>Integrar tela de login com a respectiva lógica no backend []
+>>>Integrar tela de login com a respectiva lógica no backend [Isabella]
 
 > História #3: Como usuário, eu gostaria de ver a lista das disciplinas disponíveis
 >>Tarefas e responsáveis:
->>>Implementar versão inicial da tela com as disciplinas disponíveis [Maria]
+>>>Implementar versão inicial da tela com as disciplinas disponíveis [Isabella]
 >>
->>>Implementar no backend a lógica listagem das matérias [José]
+>>>Implementar no backend a lógica listagem das matérias [Gabriela]
 >>
->>>Integrar tela com as disciplinas disponíveis com a respectiva lógica no backend []
+>>>Integrar tela com as disciplinas disponíveis com a respectiva lógica no backend [Raissa]
   
 > História #4: Como usuário, eu gostaria de visualizar uma página com a visão geral de cada disciplina
 >>Tarefas e responsáveis:
->>>Implementar versão inicial da tela geral da disciplina [Maria]
+>>>Implementar versão inicial da tela geral da disciplina [Isabella]
 >>
->>>Adicionar ementa, nome do professor, foto do professor, horário e link para página da máteria no DCC 
+>>>Adicionar ementa, nome do professor, foto do professor, horário e link para página da máteria no DCC [Raissa]
 >>
->>>Implementar no backend a lógica listagem das matérias [José]
+>>>Implementar no backend a lógica listagem das matérias [Maria]
 >>
->>>Integrar tela com a respectiva lógica no backend []
+>>>Integrar tela com a respectiva lógica no backend [Isabella]
 
 > História #5: Como usuário, eu gostaria de visualizar uma página para adicionar uma avaliação de uma disciplina 
 >>Tarefas e responsáveis:
->>>Implementar versão inicial da tela de adicionar uma nova avaliação [Maria]
+>>>Implementar versão inicial da tela de adicionar uma nova avaliação [Raissa]
 >>
->>>Implementar no backend uma rota para uma página de nova avaliação [José]
+>>>Implementar no backend uma rota para uma página de nova avaliação [Gabriela]
 >>
->>>Integrar tela de nova avaliação com a respectiva lógica no backend []
+>>>Integrar tela de nova avaliação com a respectiva lógica no backend [Isabella]
 
 > História #6: Como usuário, eu gostaria de avaliar a disciplina em relação à se cobra presença(sim ou não), didatica do professor(ruim, media, boa, otima), provas(fácil, médio, difícil), trabalhos(fácil, médio, difícil), tempo de dedicação extraclasse(pouco, medio, alto), nota geral da disciplina(1 a 5 estralas)
 >>Tarefas e responsáveis:
->>>Implementar versão inicial da tela com as disciplinas discponíveis [Maria]
+>>>Implementar formulário [Raissa]
 >>
->>>Implementar no backend a lógica listagem das matérias [José]
+>>>Implementar no backend a lógica de preecher o formulario com o backend/banco de dados [Maria]
 >>
->>>Integrar tela de login com a respectiva lógica no backend []
+>>>Implementar a associação do formulario com o backend[Isabella]
 
 > História #7: Como usuário, eu gostaria de visualizar a resposta mais frequente para cada categoria da avaliação de uma disciplina
 >>Tarefas e responsáveis:
->>>Implementar na tela da disciplina uma tabela onde as respostas mais frequntes serão mostrados [Maria]
+>>>Implementar na tela da disciplina uma tabela onde as respostas mais frequntes serão mostrados [Raissa]
 >>
->>>Implementar no backend a lógica do cálculo para computar a resposta mais frequente [José]
+>>>Implementar no backend a lógica do cálculo para computar a resposta mais frequente [Gabriela]
 >>
->>>Integrar a tabela com a respectiva lógica no backend []
+>>>Integrar a tabela com a respectiva lógica no backend [Isabella]
 
 > História #8: Como usuário, eu gostaria de ordenar as materias por avaliação
 >>Tarefas e responsáveis:
->>>Implementar na tela de listagem das disciplinas disponíveis um filtro para ordenação por nota de avaliação [Maria]
+>>>Implementar na tela de listagem das disciplinas disponíveis um filtro para ordenação por nota de avaliação [Isabella]
 >>
->>>Implementar no backend a lógica de ordenação por nota de avaliação [José]
+>>>Implementar no backend a lógica de ordenação por nota de avaliação [Maria]
 >>
->>>Integrar filtro de ordenação com a respectiva lógica no backend []
+>>>Integrar filtro de ordenação com a respectiva lógica no backend [Raissa]
 
