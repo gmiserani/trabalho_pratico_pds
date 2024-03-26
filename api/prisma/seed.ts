@@ -22,9 +22,30 @@ async function main() {
             username: "bob",
         },
     });
-    const users = await prisma.user.findMany();
+    await prisma.subject.deleteMany();
+    await prisma.subject.create({
+        data: {
+            name: "Projeto em Desenvolvimento de Software",
+            syllabus: "Ementa",
+            mode: "Presencial",
+            semester: 0,
+            workload: 60,
+            date: "Mon/Wend",
+            time: "17:00",
+            teacher: {
+                create: {
+                    name: "Marco Tulio",
+                },
+            },
+        },
+    });
+    const subjects = await prisma.subject.findMany();
 
-    console.log(users);
+    console.log(subjects);
+
+    console.log(prisma.user.findMany());
+
+    console.log(prisma.teacher.findMany());
 }
 
 main()

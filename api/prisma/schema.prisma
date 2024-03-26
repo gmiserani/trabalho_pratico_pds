@@ -16,18 +16,53 @@ datasource db {
 }
 
 model User {
-  id       String  @id @default(uuid())
-  email    String  @unique
+  id       String   @id @default(uuid())
+  email    String   @unique
   name     String?
-  username String  @unique
+  username String   @unique
   password String
+  Review   Review[]
 
   @@map("users")
 }
 
 model Subject {
-  id   String @id @default(uuid())
-  name String
+  id         String   @id @default(uuid())
+  teacher_id String
+  teacher    Teacher  @relation(fields: [teacher_id], references: [id], onDelete: Cascade)
+  name       String
+  syllabus   String
+  mode       String
+  date       String
+  time       String
+  semester   Int
+  workload   Int
+  reviews    Review[]
 
   @@map("subjects")
+}
+
+model Teacher {
+  id      String    @id @default(uuid())
+  subject Subject[]
+  name    String
+
+  @@map("teachers")
+}
+
+model Review {
+  id              String  @id @default(uuid())
+  subject         Subject @relation(fields: [subject_id], references: [id], onDelete: Cascade)
+  subject_id      String
+  user            User    @relation(fields: [user_id], references: [id], onDelete: Cascade)
+  user_id         String
+  test_rating     String
+  project_rating  String
+  teacher_rating  String
+  effort_rating   String
+  presence_rating String
+  overall_rating  Int
+  comment         String?
+
+  @@map("reviews")
 }

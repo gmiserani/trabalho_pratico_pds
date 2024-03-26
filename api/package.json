@@ -22,7 +22,8 @@
   },
   "dependencies": {
     "@prisma/client": "^5.11.0",
-    "express": "^4.19.1"
+    "express": "^4.19.1",
+    "jsonwebtoken": "^9.0.2"
   },
   "prisma": {
     "seed": "tsx prisma/seed.ts"
