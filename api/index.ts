@@ -20,7 +20,7 @@ import { router as reviewRouter } from "../api/controllers/ReviewController";
 app.use("/api/users", usersRouter);
 app.use("/api/subject", subjectRouter);
 app.use("/api/teachers", teacherRouter);
-app.use("api/reviews", reviewRouter);
+app.use("/api/reviews", reviewRouter);
 
 app.listen(port, () => {
     console.log(`Example app listening on http://localhost:${port}`);
