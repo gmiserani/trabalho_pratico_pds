@@ -11,7 +11,7 @@ Trabalho da disciplina Prática em Desenvolvimento de Software
 > Maria Luiza Leão Silva - 2020100953 -> fullstack
 
 ## Escopo
-Criar um ambiente para avaliar as materias ofertadas e os professores do Departamento de Ciencia da Computação(DCC).
+Criar um ambiente para avaliar as matérias ofertadas e os professores do Departamento de Ciencia da Computação(DCC) que as lecionaram em relação a vários atributos interessantes para os alunos no momento da escolha de disciplinas a se cursar no semestre. Este sistema evita a necessidade de procurar por outros estudantes que já cursaram a disciplina ao sumarizar as avaliações em uma só página.
 
 ## Principais features
 > Página de cadastro/login
@@ -23,7 +23,7 @@ Criar um ambiente para avaliar as materias ofertadas e os professores do Departa
 > * tipo de avaliação
 > * didática/coerência do professor
 
-> Filtrar as materias de acordo com horario/classifição/professor
+> Filtrar as materias de acordo com horario/classificação/professor
 
 > Ordenar matérias mais bem avaliadas 
 
