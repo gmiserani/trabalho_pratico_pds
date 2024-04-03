@@ -41,6 +41,10 @@ Criar um ambiente para avaliar as matérias ofertadas e os professores do Depart
 
 > Como usuário, eu gostaria de logar na minha conta
 
+> Como usuário, eu gostaria de visualizar uma página para adicionar uma avaliação de uma disciplina (formulário)
+
+> Como usuário, eu gostaria de avaliar a disciplina em relação à se cobra presença(sim ou não), didatica do professor(ruim, media, boa, otima), provas(fácil, médio, difícil), trabalhos(fácil, médio, difícil), tempo de dedicação extraclasse(pouco, medio, alto), nota geral da disciplina(1 a 5 estrelas)
+
 > Como usuário, eu gostaria de deletar minha avaliação
 
 > Como usuário, eu gostaria de ver a lista das disciplinas disponíveis
@@ -55,15 +59,13 @@ Criar um ambiente para avaliar as matérias ofertadas e os professores do Depart
 
 > Como usuário, eu gostaria de visualizar uma página com a visão geral de cada disciplina
 
-> Como usuário, eu gostaria de visualizar uma página para adicionar uma avaliação de uma disciplina 
-
-> Como usuário, eu gostaria de avaliar a disciplina em relação à se cobra presença(sim ou não), didatica do professor(ruim, media, boa, otima), provas(fácil, médio, difícil), trabalhos(fácil, médio, difícil), tempo de dedicação extraclasse(pouco, medio, alto), nota geral da disciplina(1 a 5 estralas)
-
 > Como usuário, eu gostaria de poder adicionar um comentário ao final da minha avaliação
 
 > Como usuário, eu gostaria de visualizar a resposta mais frequente para cada categoria da avaliação de uma disciplina
 
 > Como usuário, eu gostaria de visualizar uma página com as informações gerais do professor
+
+>  Como usuário, eu gostaria de ter um perfil
 
 > Como usuário, eu gostaria de atualizar meu perfil
 
