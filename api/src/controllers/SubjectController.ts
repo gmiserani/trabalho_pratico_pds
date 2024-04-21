@@ -22,13 +22,37 @@ router.post("/", async (req: Request, res: Response, next: NextFunction) => {
 // Fetch all subjects and returns its id, name and overall rating
 router.get("/", async (req: Request, res: Response, next: NextFunction) => {
     try {
-        const subjects = await SubjectService.getAllSummary();
+        const subjects = await SubjectService.getAllSummaryNormalOrder();
         res.status(statusCodes.SUCCESS).json(subjects).end();
     }
     catch (error) {
         next(error);
     }
 },
+);
+
+// Fetch all subjects and returns its id, name and overall rating but ordered by rating
+router.get("/descRating", async (req: Request, res: Response, next: NextFunction) => {
+    try {
+        const subjects = await SubjectService.getAllSummaryRatingOrderDesc();
+        res.status(statusCodes.SUCCESS).json(subjects).end();
+    }
+    catch (error) {
+        next(error);
+    }
+}
+);
+
+// Fetch all subjects and returns its id, name and overall rating but ordered by rating
+router.get("/ascRating", async (req: Request, res: Response, next: NextFunction) => {
+    try {
+        const subjects = await SubjectService.getAllSummaryRatingOrderAsc();
+        res.status(statusCodes.SUCCESS).json(subjects).end();
+    }
+    catch (error) {
+        next(error);
+    }
+}
 );
 
 // Fetch a subject by id and returns its basic content

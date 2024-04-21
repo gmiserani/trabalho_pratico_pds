@@ -96,12 +96,52 @@ class SubjectServiceClass {
     }
 
     // Get all subjects, but only the name and the 
-    async getAllSummary() {
+    async getAllSummaryNormalOrder() {
         const subjects = await prisma.subject.findMany({
             select: {
                 id: true,
                 name: true,
                 overall_rating: true,
+            },
+        });
+
+        if (!subjects) {
+            throw new QueryError("No subjects found");
+        }
+
+        return subjects;
+    }
+
+    // Get all subjects, but ordered by the overall rating
+    async getAllSummaryRatingOrderDesc() {
+        const subjects = await prisma.subject.findMany({
+            select: {
+                id: true,
+                name: true,
+                overall_rating: true,
+            },
+            orderBy: {
+                overall_rating: "desc",
+            },
+        });
+
+        if (!subjects) {
+            throw new QueryError("No subjects found");
+        }
+
+        return subjects;
+    }
+
+    // Get all subjects, but ordered by the overall rating
+    async getAllSummaryRatingOrderAsc() {
+        const subjects = await prisma.subject.findMany({
+            select: {
+                id: true,
+                name: true,
+                overall_rating: true,
+            },
+            orderBy: {
+                overall_rating: "asc",
             },
         });
 
