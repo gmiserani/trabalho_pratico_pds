@@ -346,10 +346,10 @@ class SubjectServiceClass {
     }
 
     // Add a review to a subject -> will receive the ID of the subject, the name of the user and the review data
-    async addReview(id: string, user_name: string, body: Prisma.ReviewCreateInput) {
+    async addReview(id: string, username: string, body: Prisma.ReviewCreateInput) {
         const user = await prisma.user.findFirst({
             where: {
-                username: user_name,
+                username: username,
             },
             select: {
                 id: true,

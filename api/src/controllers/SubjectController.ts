@@ -32,7 +32,7 @@ router.get("/", async (req: Request, res: Response, next: NextFunction) => {
 );
 
 // Fetch all subjects and returns its id, name and overall rating but ordered by rating
-router.get("/descRating", async (req: Request, res: Response, next: NextFunction) => {
+router.get("/?order=asc", async (req: Request, res: Response, next: NextFunction) => {
     try {
         const subjects = await SubjectService.getAllSummaryRatingOrderDesc();
         res.status(statusCodes.SUCCESS).json(subjects).end();
@@ -44,7 +44,7 @@ router.get("/descRating", async (req: Request, res: Response, next: NextFunction
 );
 
 // Fetch all subjects and returns its id, name and overall rating but ordered by rating
-router.get("/ascRating", async (req: Request, res: Response, next: NextFunction) => {
+router.get("/?order=desc", async (req: Request, res: Response, next: NextFunction) => {
     try {
         const subjects = await SubjectService.getAllSummaryRatingOrderAsc();
         res.status(statusCodes.SUCCESS).json(subjects).end();
@@ -68,7 +68,7 @@ router.get("/:id", async (req: Request, res: Response, next: NextFunction) => {
 );
 
 // Fetch a subject by id and returns its summary
-router.get("/:id/summary", async (req: Request, res: Response, next: NextFunction) => {
+router.get("/:id/most-common-answers", async (req: Request, res: Response, next: NextFunction) => {
     try {
         const ratings = await SubjectService.getRatings(req.params.id);
         res.status(statusCodes.SUCCESS).json(ratings).end();
@@ -92,7 +92,7 @@ router.get("/:id/reviews", async (req: Request, res: Response, next: NextFunctio
 );
 
 // Check if a user can add a review to a subject
-router.get("/:id/canAddReview/:username", async (req: Request, res: Response, next: NextFunction) => {
+router.get("/:id/check-review/:username", async (req: Request, res: Response, next: NextFunction) => {
     try {
         const canAddReview = await SubjectService.canUserReviewSubject(req.params.id, req.params.username);
         res.status(statusCodes.SUCCESS).json(canAddReview).end();
@@ -104,9 +104,9 @@ router.get("/:id/canAddReview/:username", async (req: Request, res: Response, ne
 );
 
 // Add a review to a subject
-router.post("/:id/reviews", async (req: Request, res: Response, next: NextFunction) => {
+router.post("/:id/add-review/:username", async (req: Request, res: Response, next: NextFunction) => {
     try {
-        await SubjectService.addReview(req.params.id, req.body.user_name, req.body);
+        await SubjectService.addReview(req.params.id, req.params.username, req.body);
         res.status(statusCodes.CREATED).end();
     }
     catch (error) {

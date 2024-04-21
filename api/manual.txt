@@ -1,0 +1,112 @@
+Querys:
+
+Create new user:
+                post->http://localhost:3000/api/users/
+                body->{
+                    name: Maria Luiza,
+                    email: marialuiza@maria.com,
+                    password: maria123,
+                    username: marialuiza,
+                    course: Ciencia da Computacao,
+                    semester: 6,
+                }
+
+Login:
+        post->http://localhost:3000/api/users/login
+        body->{
+            email: marialuiza@maria.com,
+            password: maria123
+        }
+
+Logout:
+        post->http://localhost:3000/api/users/logout
+
+-----------------------------------------Subjects page-----------------------------------------
+
+Get all subjects:
+                                    get: http://localhost:3000/api/subjects/
+                                    response: {
+                                        id: string;
+                                        name: string;
+                                        overall_rating: number;
+                                    }[]
+                
+Get all subject in crescent order:
+                                    get: http://localhost:3000/api/subjects/?order=asc
+                                    response: {
+                                        id: string;
+                                        name: string;
+                                        overall_rating: number;
+                                    }[]
+
+Subjects page with decrescent order:
+                                    get: http://localhost:3000/api/subjects/?order=desc
+                                    response: {
+                                        id: string;
+                                        name: string;
+                                        overall_rating: number;
+                                    }[]
+
+-----------------------------------------Subject page-----------------------------------------
+
+Basic info:
+                                    get: http://localhost:3000/api/subjects/:id
+                                    response: {
+                                        id: string;
+                                        name: string;
+                                        syllabus: string;
+                                        mode: string;
+                                        date: string;
+                                        time: string;
+                                        semester: number;
+                                        workload: number;
+                                        teacher: {
+                                            id: string;
+                                            name: string;
+                                        };
+                                    }
+
+Most common review answers:
+                                    get: http://localhost:3000/api/subjects/:id/most-common-answers
+                                    response: {
+                                        presence_rating: string;
+                                        teacher_rating: string;
+                                        project_rating: string;
+                                        test_rating: string;
+                                        effort_rating: string;
+                                        overall_rating: number;
+                                    }
+                                    
+Check with user can add a review:
+                                    get: http://localhost:3000/api/subjects/:id/check-review/:username
+                                    response: {
+                                        canAddReview: boolean
+                                    }
+Create new review:
+                                    post: http://localhost:3000/api/subjects/:id/add-review/:username
+                                    body: {
+                                        
+                                        presence_rating: ["SIM", "NAO"];
+                                        teacher_rating: ["RUIM", "MEDIA", "BOA", "OTIMA"];
+                                        project_rating: ["FACIL", "MEDIO", "DIFICIL"];
+                                        test_rating: ["FACIL", "MEDIO", "DIFICIL"];
+                                        effort_rating: ["POUCO", "MEDIO", "MUITO"];
+                                        overall_rating: [0-5];
+                                        comment: string | null;
+                                    }
+
+Get reviews:    
+                                    get: http://localhost:3000/api/subjects/1/reviews
+                                    response: { 
+                                        presence_rating: string;
+                                        teacher_rating: string;
+                                        project_rating: string;
+                                        test_rating: string;
+                                        effort_rating: string;
+                                        overall_rating: number;
+                                        comment: string | null;
+                                        user: {
+                                            username: string;
+                                        };
+                                    }[]
+
