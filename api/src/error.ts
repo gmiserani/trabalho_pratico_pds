@@ -1,3 +1,6 @@
+import { JsonWebTokenError } from "jsonwebtoken";
+import { Request, Response } from "express";
+
 export class QueryError extends Error {
     constructor(msg: string) {
         super(msg);
@@ -52,10 +55,7 @@ export const statusCodes = {
     INTERNAL_SERVER_ERROR: 500,
 };
 
-import { JsonWebTokenError } from "jsonwebtoken";
-import { Request, Response, NextFunction } from "express";
-
-export function errorHandler(error: Error, req: Request, res: Response, next: NextFunction) {
+export function errorHandler(error: Error, req: Request, res: Response) {
     const message = error.message;
     let status = statusCodes.INTERNAL_SERVER_ERROR;
 

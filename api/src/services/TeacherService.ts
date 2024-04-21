@@ -1,9 +1,13 @@
-import prisma from "../../api/prisma_main";
+// Service class for teacher related operations in the database. Here we define the methods that will be used in the TeacherController
+
+import prisma from "../prisma_main";
 import { Prisma } from "@prisma/client";
-import { QueryError } from "../../api/error";
+import { QueryError } from "../../src/error";
 
 
 class TeacherServiceClass {
+
+    // Define the fields that will be returned when a teacher is fetched
     selectOptions = {
         name: true,
         subjects: {
@@ -13,6 +17,7 @@ class TeacherServiceClass {
         },
     };
 
+    // Fetch a teacher by id
     async getById(id: string) {
         const teacher = await prisma.teacher.findFirst({
             where: {
@@ -28,6 +33,7 @@ class TeacherServiceClass {
         return teacher;
     }
 
+    // Fetch all teachers
     async getAll() {
         const teachers = await prisma.teacher.findMany({
             select: this.selectOptions,
@@ -38,6 +44,7 @@ class TeacherServiceClass {
         return teachers;
     }
 
+    // Create a new teacher
     async create(body: Prisma.TeacherCreateInput) {
         const newTeacher = await prisma.teacher.create({
             data: {
@@ -50,4 +57,5 @@ class TeacherServiceClass {
 
 }
 
+// Export the service
 export const TeacherService = new TeacherServiceClass();

@@ -13,6 +13,8 @@ async function main() {
             email: "alice@prisma.io",
             password: "123",
             username: "alice",
+            course: "Ciencia da Computacao",
+            semester: 1,
         },
     });
     await prisma.user.create({
@@ -21,6 +23,8 @@ async function main() {
             email: "bob@prisma.io",
             password: "123",
             username: "bob",
+            course: "Ciencia da Computacao",
+            semester: 1,
         },
     });
     await prisma.subject.deleteMany();

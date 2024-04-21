@@ -1,8 +1,12 @@
-import prisma from "../../api/prisma_main";
+// Service class for the Review entity. Here we define the methods that will be used in the ReviewController
+
+import prisma from "../prisma_main";
 import { Prisma } from "@prisma/client";
-import { QueryError } from "../../api/error";
+import { QueryError } from "../../src/error";
 
 class ReviewServiceClass {
+
+    // Define the fields that will be returned when a review is fetched
     selectOptions = {
         id: true,
         user: true,
@@ -15,6 +19,7 @@ class ReviewServiceClass {
         comment: true,
     };
 
+    // Create a new review
     async create(data: Prisma.ReviewCreateInput) {
         try {
             return await prisma.review.create({ data });
@@ -23,9 +28,9 @@ class ReviewServiceClass {
         }
     }
 
-    async getAll() {
+    // Get the count of reviews for a subject
 
-    }
 }
 
+// Export the service
 export const ReviewService = new ReviewServiceClass();

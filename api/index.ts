@@ -1,29 +1,29 @@
 import express, { Express } from "express";
-import { errorHandler } from "../api/error";
+import { errorHandler } from "./src/error";
 
-// Controller -> define which function of the will be called for each route -> depending on the request -> dependps on the path and the method
-
-// app.post("/:id", (req: Request, res: Response) => {
-//     res.json({ message: `Ola ${req.params.id}` }).end();
-// });
-
-const app: Express = express(); // Responsable for the routes -> listen to routes I defined, uses the port to receive requests and decide what to do with them
+// Express will be responsable for the routes -> listen to routes I define, uses the port to receive requests and decide what to do with them
+const app: Express = express();
 const port = 3000;
-app.use(express.json()); // Middleware to parse the body of the request -> JSON
-app.use(express.urlencoded({ extended: true })); // Middleware to parse the body of the request -> URL Encoded
+// Middleware to parse the body of the request 
+app.use(express.json()); // JSON
+app.use(express.urlencoded({ extended: true })); // URL Encoded
 
-import { router as usersRouter } from "../api/controllers/UserController";
-import { router as subjectRouter } from "../api/controllers/SubjectController";
-import { router as teacherRouter } from "../api/controllers/TeacherController";
-import { router as reviewRouter } from "../api/controllers/ReviewController";
+// Controllers -> define which method will be called for each route depending on the request -> dependps on the path and the method
+import { router as usersRouter } from "./src/controllers/UserController"; // Import the router from the UserController
+import { router as subjectRouter } from "./src/controllers/SubjectController"; // Import the router from the SubjectController
+import { router as teacherRouter } from "./src/controllers/TeacherController"; // Import the router from the TeacherController
+import { router as reviewRouter } from "./src/controllers/ReviewController"; // Import the router from the ReviewController
 
-app.use("/api/users", usersRouter);
-app.use("/api/subject", subjectRouter);
-app.use("/api/teachers", teacherRouter);
-app.use("/api/reviews", reviewRouter);
+// Defining the routes -> the path and the method
+app.use("/api/users", usersRouter); // When the path of the request is /api/users-> use the usersRouter
+app.use("/api/subject", subjectRouter); // When the path of the request is /api/subject-> use the subjectRouter
+app.use("/api/teachers", teacherRouter); // When the path of the request is /api/teachers-> use the teacherRouter
+app.use("/api/reviews", reviewRouter); // When the path of the request is /api/reviews-> use the reviewRouter
 
+// Start the server -> listen to the port
 app.listen(port, () => {
     console.log(`Example app listening on http://localhost:${port}`);
 });
 
+// Error handler -> if an error is thrown, it will be handled here
 app.use(errorHandler);
