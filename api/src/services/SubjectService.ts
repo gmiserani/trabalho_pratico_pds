@@ -153,10 +153,10 @@ class SubjectServiceClass {
     }
 
     // Check if a user can review a subject (if the user has already reviewed the subject, he can't review it again)
-    async canUserReviewSubject(subject_id: string, user_name: string) {
+    async canUserReviewSubject(subject_id: string, username: string) {
         const user = await prisma.user.findFirst({
             where: {
-                name: user_name,
+                name: username,
             },
             select: {
                 id: true,

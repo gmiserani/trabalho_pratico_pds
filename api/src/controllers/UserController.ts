@@ -17,6 +17,8 @@ export const router = Router();
 // },
 // );
 
+
+// Create a new user
 router.post("/", async (req: Request, res: Response, next: NextFunction) => {
     try {
         await UserService.create(req.body);
@@ -28,11 +30,12 @@ router.post("/", async (req: Request, res: Response, next: NextFunction) => {
 },
 );
 
+// Fetch all users
 router.get("/", async (req: Request, res: Response, next: NextFunction) => {
     console.log(req);
     try {
         const users = await UserService.getAll();
-        res.status(200).json(users).end();
+        res.status(statusCodes.SUCCESS).json(users).end();
     }
     catch (error) {
         next(error);

@@ -11,7 +11,7 @@ export const router = Router();
 router.post("/", async (req: Request, res: Response, next: NextFunction) => {
     try {
         const subject = await SubjectService.create(req.body.teacher_name, req.body);
-        res.status(statusCodes.SUCCESS).json(subject).end();
+        res.status(statusCodes.CREATED).json(subject).end();
     }
     catch (error) {
         next(error);
@@ -91,10 +91,23 @@ router.get("/:id/reviews", async (req: Request, res: Response, next: NextFunctio
 },
 );
 
+// Check if a user can add a review to a subject
+router.get("/:id/canAddReview/:username", async (req: Request, res: Response, next: NextFunction) => {
+    try {
+        const canAddReview = await SubjectService.canUserReviewSubject(req.params.id, req.params.username);
+        res.status(statusCodes.SUCCESS).json(canAddReview).end();
+    }
+    catch (error) {
+        next(error);
+    }
+}
+);
+
+// Add a review to a subject
 router.post("/:id/reviews", async (req: Request, res: Response, next: NextFunction) => {
     try {
         await SubjectService.addReview(req.params.id, req.body.user_name, req.body);
-        res.status(statusCodes.SUCCESS).end();
+        res.status(statusCodes.CREATED).end();
     }
     catch (error) {
         next(error);

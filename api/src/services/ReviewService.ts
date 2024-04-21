@@ -28,8 +28,6 @@ class ReviewServiceClass {
         }
     }
 
-    // Get the count of reviews for a subject
-
 }
 
 // Export the service
