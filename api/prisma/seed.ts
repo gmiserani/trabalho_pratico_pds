@@ -7,27 +7,30 @@ const prisma = new PrismaClient();
 async function main() {
     await prisma.user.deleteMany();
     await prisma.teacher.deleteMany();
+    await prisma.teacher.deleteMany();
+    await prisma.review.deleteMany();
+
     await prisma.user.create({
         data: {
-            name: "Alice",
-            email: "alice@prisma.io",
+            name: "Raissa Miranda",
+            email: "raissa@prisma.io",
             password: "123",
-            username: "alice",
+            username: "raissa",
             course: "Ciencia da Computacao",
             semester: 1,
         },
     });
     await prisma.user.create({
         data: {
-            name: "Bob",
-            email: "bob@prisma.io",
+            name: "Isabella Vignoli",
+            email: "bella@prisma.io",
             password: "123",
-            username: "bob",
+            username: "bella",
             course: "Ciencia da Computacao",
             semester: 1,
         },
     });
-    await prisma.subject.deleteMany();
+
     await prisma.subject.create({
         data: {
             name: "Projeto em Desenvolvimento de Software",
@@ -44,9 +47,9 @@ async function main() {
             },
         },
     });
-    const subjects = await prisma.subject.findMany();
 
-    console.log(subjects);
+
+    console.log(prisma.subject.findMany());
 
     console.log(prisma.user.findMany());
 

@@ -115,14 +115,15 @@ class SubjectServiceClass {
     // Get all subjects, but ordered by the overall rating
     async getAllSummaryRatingOrderDesc() {
         const subjects = await prisma.subject.findMany({
+            orderBy: {
+                overall_rating: "desc",
+            },
             select: {
                 id: true,
                 name: true,
                 overall_rating: true,
             },
-            orderBy: {
-                overall_rating: "desc",
-            },
+
         });
 
         if (!subjects) {
@@ -135,14 +136,15 @@ class SubjectServiceClass {
     // Get all subjects, but ordered by the overall rating
     async getAllSummaryRatingOrderAsc() {
         const subjects = await prisma.subject.findMany({
+            orderBy: {
+                overall_rating: "asc",
+            },
             select: {
                 id: true,
                 name: true,
                 overall_rating: true,
             },
-            orderBy: {
-                overall_rating: "asc",
-            },
+
         });
 
         if (!subjects) {
@@ -156,7 +158,7 @@ class SubjectServiceClass {
     async canUserReviewSubject(subject_id: string, username: string) {
         const user = await prisma.user.findFirst({
             where: {
-                name: username,
+                username: username,
             },
             select: {
                 id: true,

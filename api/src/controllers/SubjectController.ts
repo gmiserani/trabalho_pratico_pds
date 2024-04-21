@@ -19,7 +19,7 @@ router.post("/", async (req: Request, res: Response, next: NextFunction) => {
 },
 );
 
-// Fetch all subjects and returns its id, name and overall rating
+/* // Fetch all subjects and returns its id, name and overall rating
 router.get("/", async (req: Request, res: Response, next: NextFunction) => {
     try {
         const subjects = await SubjectService.getAllSummaryNormalOrder();
@@ -29,12 +29,21 @@ router.get("/", async (req: Request, res: Response, next: NextFunction) => {
         next(error);
     }
 },
-);
+); */
 
 // Fetch all subjects and returns its id, name and overall rating but ordered by rating
-router.get("/?order=asc", async (req: Request, res: Response, next: NextFunction) => {
+router.get("/", async (req: Request, res: Response, next: NextFunction) => {
     try {
-        const subjects = await SubjectService.getAllSummaryRatingOrderDesc();
+        let subjects;
+        const order = req.query.order;
+        if (order === "asc") {
+            subjects = await SubjectService.getAllSummaryRatingOrderAsc();
+        } else if (order === "desc") {
+            subjects = await SubjectService.getAllSummaryRatingOrderDesc();
+        }
+        else {
+            subjects = await SubjectService.getAllSummaryNormalOrder();
+        }
         res.status(statusCodes.SUCCESS).json(subjects).end();
     }
     catch (error) {
@@ -43,17 +52,17 @@ router.get("/?order=asc", async (req: Request, res: Response, next: NextFunction
 }
 );
 
-// Fetch all subjects and returns its id, name and overall rating but ordered by rating
-router.get("/?order=desc", async (req: Request, res: Response, next: NextFunction) => {
-    try {
-        const subjects = await SubjectService.getAllSummaryRatingOrderAsc();
-        res.status(statusCodes.SUCCESS).json(subjects).end();
-    }
-    catch (error) {
-        next(error);
-    }
-}
-);
+// // Fetch all subjects and returns its id, name and overall rating but ordered by rating
+// router.get("/?order=asc", async (req: Request, res: Response, next: NextFunction) => {
+//     try {
+//         const subjects = await SubjectService.getAllSummaryRatingOrderAsc();
+//         res.status(statusCodes.SUCCESS).json(subjects).end();
+//     }
+//     catch (error) {
+//         next(error);
+//     }
+// }
+// );
 
 // Fetch a subject by id and returns its basic content
 router.get("/:id", async (req: Request, res: Response, next: NextFunction) => {
