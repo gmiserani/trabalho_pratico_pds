@@ -63,7 +63,7 @@ async function main() {
                             teacher: {
                                 create: {
                                     name: subject.teacherName,
-                                    picture: subject.teacherPicture,
+                                    picture: subject.pictureUrl,
                                 },
                             },
                         }
