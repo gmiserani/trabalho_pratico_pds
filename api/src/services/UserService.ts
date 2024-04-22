@@ -12,6 +12,8 @@ class UserServiceClass {
         name: true,
         email: true,
         username: true,
+        course: true,
+        semester: true,
     };
 
     private async encryptPassword(password: string) {

@@ -1,5 +1,6 @@
 import express, { Express } from "express";
 import { errorHandler } from "./src/error";
+import cookieParser from "cookie-parser";
 
 // Express will be responsable for the routes -> listen to routes I define, uses the port to receive requests and decide what to do with them
 const app: Express = express();
@@ -7,6 +8,8 @@ const port = 3000;
 // Middleware to parse the body of the request 
 app.use(express.json()); // JSON
 app.use(express.urlencoded({ extended: true })); // URL Encoded
+
+app.use(cookieParser());
 
 // Controllers -> define which method will be called for each route depending on the request -> dependps on the path and the method
 import { router as usersRouter } from "./src/controllers/UserController"; // Import the router from the UserController
@@ -20,10 +23,11 @@ app.use("/api/subject", subjectRouter); // When the path of the request is /api/
 app.use("/api/teachers", teacherRouter); // When the path of the request is /api/teachers-> use the teacherRouter
 app.use("/api/reviews", reviewRouter); // When the path of the request is /api/reviews-> use the reviewRouter
 
+// Error handler -> if an error is thrown, it will be handled here
+app.use(errorHandler);
+
 // Start the server -> listen to the port
 app.listen(port, () => {
     console.log(`Example app listening on http://localhost:${port}`);
 });
 
-// Error handler -> if an error is thrown, it will be handled here
-app.use(errorHandler);

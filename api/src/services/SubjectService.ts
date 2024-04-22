@@ -155,10 +155,10 @@ class SubjectServiceClass {
     }
 
     // Check if a user can review a subject (if the user has already reviewed the subject, he can't review it again)
-    async canUserReviewSubject(subject_id: string, username: string) {
+    async canUserReviewSubject(id: string, userId: string) {
         const user = await prisma.user.findFirst({
             where: {
-                username: username,
+                id: userId,
             },
             select: {
                 id: true,
@@ -171,8 +171,8 @@ class SubjectServiceClass {
 
         const review = await prisma.review.findFirst({
             where: {
-                subject_id: subject_id,
-                user_id: user.id,
+                subject_id: id,
+                user_id: userId,
             },
         });
 
@@ -348,17 +348,15 @@ class SubjectServiceClass {
     }
 
     // Add a review to a subject -> will receive the ID of the subject, the name of the user and the review data
-    async addReview(id: string, username: string, body: Prisma.ReviewCreateInput) {
+    async addReview(id: string, userId: string, body: Prisma.ReviewCreateInput) {
         const user = await prisma.user.findFirst({
             where: {
-                username: username,
+                id: userId,
             },
             select: {
                 id: true,
             },
         });
-
-        console.log(user);
 
         if (!user) {
             throw new QueryError("User not found");

@@ -1,5 +1,5 @@
 import { JsonWebTokenError } from "jsonwebtoken";
-import { Request, Response } from "express";
+import { NextFunction, Request, Response } from "express";
 
 export const statusCodes = {
     SUCCESS: 200,
@@ -62,7 +62,8 @@ export class InvalidParamError extends Error {
 }
 
 // This function will be used as the error handler for the Express application
-export function errorHandler(error: Error, req: Request, res: Response) {
+// eslint-disable-next-line @typescript-eslint/no-unused-vars
+export function errorHandler(error: Error, req: Request, res: Response, next: NextFunction) {
     const message = error.message;
     let status = statusCodes.INTERNAL_SERVER_ERROR;
 
