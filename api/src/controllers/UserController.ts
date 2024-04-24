@@ -43,7 +43,7 @@ router.get("/", verifyJWT, async (req: Request, res: Response, next: NextFunctio
 );
 
 // Fetch the current user info
-router.get("/myProfile", verifyJWT, async (req: Request, res: Response, next: NextFunction) => {
+router.get("/my-profile", verifyJWT, async (req: Request, res: Response, next: NextFunction) => {
     try {
         if (!req.userId) {
             throw new Error("User not found");
