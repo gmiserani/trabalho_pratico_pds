@@ -3,18 +3,13 @@ import { AxiosError } from 'axios';
 
 export const getAllSubjects = async (order: string) => {
     try {
-        if (order === 'asc') {
-            const response = await api.get('/subjects/?order=asc');
+        if (order === '') {
+            const response = await api.get('/subject/');
             return response;
         }
-        else if (order === 'desc') {
-            const response = await api.get('/subjects/?order=desc');
-            return response;
-        }
-        else {
-            const response = await api.get('/subjects/');
-            return response;
-        }
+        const response = await api.get(`/subject/?order=${order}`);
+        return response;
+
     } catch (error) {
         console.error('Error fetching subjects:', error);
         throw error;
@@ -33,7 +28,7 @@ export const getSubjectById = async (id: string) => {
 
 export const getMostCommonAnswers = async (id: string) => {
     try {
-        const response = await api.get(`/subjects/${id}/most-common-answers`);
+        const response = await api.get(`/subject/${id}/most-common-answers`);
         return response;
     } catch (error) {
         console.error('Error fetching ratings:', error);

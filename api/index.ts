@@ -1,13 +1,36 @@
 import express, { Express } from "express";
+import dotenv from "dotenv";
+import cors, { CorsOptions } from "cors";
 import { errorHandler } from "./src/error";
 import cookieParser from "cookie-parser";
 
+dotenv.config(); // Load the environment variables from the .env file
+
 // Express will be responsable for the routes -> listen to routes I define, uses the port to receive requests and decide what to do with them
+
+export function getEnv(name: string): string {
+    const value = process.env[name];
+
+    if (!value) {
+        throw new Error(`Faltando: process.env['${name}'].`);
+    }
+
+    return value;
+}
+
 const app: Express = express();
 const port = 3000;
+const options: CorsOptions = {
+    origin: [getEnv("APP_URL_ADDRESS"), getEnv("APP_URL_LOCALHOST")],
+    credentials: true
+};
+app.use(cors(options));
+
 // Middleware to parse the body of the request 
 app.use(express.json()); // JSON
 app.use(express.urlencoded({ extended: true })); // URL Encoded
+
+
 
 app.use(cookieParser());
 

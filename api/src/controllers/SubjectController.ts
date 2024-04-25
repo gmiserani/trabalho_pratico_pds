@@ -21,7 +21,7 @@ router.post("/", verifyJWT, async (req: Request, res: Response, next: NextFuncti
 );
 
 // Fetch all subjects and returns its id, name and overall rating but ordered by rating
-router.get("/", verifyJWT, async (req: Request, res: Response, next: NextFunction) => {
+router.get("/", async (req: Request, res: Response, next: NextFunction) => {
     try {
         let subjects;
         const order = req.query.order;
