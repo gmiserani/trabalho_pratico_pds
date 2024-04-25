@@ -1,14 +1,17 @@
 import { PrismaClient } from "@prisma/client";
 import fs from "fs";
 import csvParser from "csv-parser";
+import { hash } from "bcrypt";
 
 //npx prisma db seed
 
-
-
 const prisma = new PrismaClient();
 
-
+async function encryptPassword(password: string) {
+    const saltRounds = 10;
+    const encryptedPassword = await hash(password, saltRounds);
+    return encryptedPassword;
+}
 
 async function main() {
     await prisma.user.deleteMany();
@@ -73,69 +76,28 @@ async function main() {
         }
         );
 
-    // await prisma.user.create({
-    //     data: {
-    //         name: "Raissa Miranda",
-    //         email: "raissa@prisma.io",
-    //         password: "123",
-    //         username: "raissa",
-    //         course: "Ciencia da Computacao",
-    //         semester: 1,
-    //     },
-    // });
-    // await prisma.user.create({
-    //     data: {
-    //         name: "Isabella Vignoli",
-    //         email: "bella@prisma.io",
-    //         password: "123",
-    //         username: "bella",
-    //         course: "Ciencia da Computacao",
-    //         semester: 1,
-    //     },
-    // });
+    const encryptedPassword = await encryptPassword("123");
 
-    // await prisma.subject.create({
-    //     data: {
-    //         name: "Projeto em Desenvolvimento de Software",
-    //         syllabus: "Ementa",
-    //         mode: "Presencial",
-    //         semester: 0,
-    //         workload: 60,
-    //         date: "Mon/Wend",
-    //         time: "17:00",
-    //         teacher: {
-    //             create: {
-    //                 name: "Marco Tulio",
-    //             },
-    //         },
-    //     },
-    // });
-
-    // const teacher = await prisma.teacher.findFirst({
-    //     where: {
-    //         name: "Marco Tulio",
-    //     },
-    //     select: {
-    //         id: true,
-    //     },
-    // });
-    // await prisma.subject.create({
-    //     data: {
-    //         name: "Engenharia de Software 1",
-    //         syllabus: "Ementa",
-    //         mode: "Presencial",
-    //         semester: 0,
-    //         workload: 60,
-    //         date: "Mon/Wend",
-    //         time: "14:55",
-    //         teacher: {
-    //             connect: {
-    //                 id: teacher?.id,
-    //             },
-    //         },
-    //     },
-    // });
-
+    await prisma.user.create({
+        data: {
+            name: "Raissa Miranda",
+            email: "raissa@prisma.io",
+            password: encryptedPassword,
+            username: "raissa",
+            course: "Ciencia da Computacao",
+            semester: 1,
+        },
+    });
+    await prisma.user.create({
+        data: {
+            name: "Isabella Vignoli",
+            email: "bella@prisma.io",
+            password: encryptedPassword,
+            username: "bella",
+            course: "Ciencia da Computacao",
+            semester: 1,
+        },
+    });
 
     console.log(prisma.subject.findMany());
 

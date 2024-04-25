@@ -2,6 +2,7 @@ import { Link, Outlet, useNavigate } from 'react-router-dom';
 import SubjectMiniature from '../Atoms/Subject_miniature';
 import { useState, useEffect } from 'react';
 import { getAllSubjects } from '../../services/subject';
+import { logout, getLoggedUser } from '../../services/user';
 
 export default function Home() {
 
@@ -25,13 +26,16 @@ export default function Home() {
         setRender(true);
     }
 
+    async function handleLogout() {
+        await logout().catch((err) => {
+            console.log(err);
+            throw err;
+        });
+    }
 
 
     const navigate = useNavigate();
-    const handleLogout = () => {
-        localStorage.removeItem('token');
-        navigate('/login');
-    }
+
 
     return (
         <div className="homeContainer">
@@ -39,7 +43,10 @@ export default function Home() {
                 <div>Welcome!</div>
             </div>
             <div>This is the home page.</div>
-            <button onClick={handleLogout}>Logout</button>
+            <Link to={'/'}>
+                <button onClick={handleLogout}>Logout</button>
+            </Link>
+
             <Link to='/users/gabriel'>
                 <button>
                     Profile
