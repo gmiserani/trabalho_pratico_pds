@@ -3,7 +3,7 @@ import Home from "./components/Home/Home";
 // import Profile from "./components/Profile/Profile";
 // import Signup from "./components/Signup/Signup";
 // import Subject from "./components/Subject/Subject";
-import { Routes, Route, useNavigate } from 'react-router-dom';
+import { Routes, Route } from 'react-router-dom';
 import { useEffect, useState } from 'react';
 import { getLoggedUser } from './services/user';
 
@@ -17,7 +17,6 @@ interface User {
 
 function AllRoutes() {
     const [user, setUser] = useState<User | null>(null);
-    const navigate = useNavigate();
 
     useEffect(() => {
         const getUserData = async () => {
@@ -32,13 +31,21 @@ function AllRoutes() {
         getUserData();
     }, []);
 
+    const auth = {
+        token: localStorage.getItem('token')
+    }
+
+    return (
+        auth.token ? <Outlet /> : <Navigate to="/login" replace />
+    )
+
     return (
         <Routes>
             <Route path="/home" element={<Home />} />
             {/* <Route path="/Profile" element={<Profile user={user} />} />
             <Route path="/Signup" element={<Signup />} />
             <Route path="/Subject" element={<Subject />} /> */}
-            <Route index element={<Login />} />
+            <Route path="/login" element={<Login />} />
         </Routes>
     );
 }

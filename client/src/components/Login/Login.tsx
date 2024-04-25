@@ -6,6 +6,7 @@ import "./Login.css";
 
 export default function Login() {
     const navigate = useNavigate();
+
     const [email, setEmail] = useState('');
     const [password, setPassword] = useState('');
     const [loading, setLoading] = useState(false);
@@ -20,7 +21,9 @@ export default function Login() {
         }
 
         await login(email, password).then(() => {
-            navigate('/home');
+            console.log('Logged in');
+            localStorage.setItem('token', 'success');
+            navigate('/');
         }).catch((err) => {
             console.log(err);
             setLoading(false);
