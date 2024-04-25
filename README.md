@@ -36,6 +36,8 @@ Criar um ambiente para avaliar as matérias ofertadas e os professores do Depart
 
 > MySQL
 
+> Typescript
+
 ## Backlog do produto
 > Como usuário, eu gostaria de me cadastrar no sistema
 
