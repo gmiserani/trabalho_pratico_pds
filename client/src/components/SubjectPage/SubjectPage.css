@@ -1,0 +1,255 @@
+.page {
+    background-color: #E9D5E7;
+    height: 100%;
+    width: 100%;
+    align-items: center;
+}
+
+.page .label {
+    height: 126px;
+    width: 781px;
+}
+
+.page .label .disciplinas {
+    color: #3c043d;
+    font-family: "Montserrat-Bold", Helvetica;
+    font-size: 60px;
+    font-weight: 700;
+    left: 0;
+    letter-spacing: 0;
+    line-height: normal;
+    position:relative;
+    text-align: center;
+    align-items: center;
+    top: 0;
+    width: 781px;
+}
+
+.page .box {
+    height: 180px;
+    position: relative;
+    width: 1312px;
+  }
+  
+  .page .box .filter-bar {
+    height: 48px;
+    left: 0;
+    position: relative;
+    top: 0;
+    width: 1312px;
+  }
+  
+  .page .box .search {
+    height: 47px;
+    background-color: #d2abce;
+    border-radius: 25px;
+    text-align: center;
+    left: 0;
+    position: relative;
+    top: 0;
+    width: 431px;
+  }
+  
+  .page .box .overlap-group {
+    background-size: 100% 100%;
+    height: 55px;
+    text-align: center;
+    left: -4px;
+    position: relative;
+    width: 437px;
+  }
+  
+  .page .box .overlap {
+    background: none;
+    background-image: url(./rectangle-33.svg);
+    background-size: 100% 100%;
+    border: none;
+    color: #e8d5e6;
+    background-color: #ffffff;
+    font-family: "Montserrat-Medium", Helvetica;
+    font-size: 20px;
+    font-weight: 500;
+    height: 33px;
+    left: 18px;
+    letter-spacing: 0;
+    line-height: normal;
+    padding: 0;
+    padding-left: 25px;
+    position: absolute;
+    top: 7px;
+    white-space: nowrap;
+    width: 346px;
+  }
+  
+  .page .box .image {
+    background-blend-mode: overlay;
+    height: 35px;
+    left: 378px;
+    object-fit: cover;
+    position: absolute;
+    top: 7px;
+    width: 34px;
+  }
+  
+  .page .box .filters {
+    height: 48px;
+    left: 466px;
+    position: absolute;
+    top: 0;
+    width: 846px;
+  }
+  
+  .page .box .limpar {
+    height: 47px;
+    left: 676px;
+    position: absolute;
+    top: 1px;
+    width: 172px;
+  }
+  
+  .page .box .div-wrapper {
+    background-image: url(./avaliacao.svg);
+    background-size: 100% 100%;
+    height: 55px;
+    left: -4px;
+    position: relative;
+    width: 178px;
+  }
+  
+  .page .box .text-wrapper {
+    color: #ffffff;
+    background-color: #3c043d;
+    text-align: center;
+    border-radius: 25px;
+    font-family: "Montserrat-Bold", Helvetica;
+    font-size: 20px;
+    font-weight: 700;
+    height: 36px;
+    left: 0px;
+    letter-spacing: 0;
+    line-height: normal;
+    position: relative;
+    top: 6px;
+    width: 142px;
+  }
+  
+  .page .box .filtro {
+    height: 47px;
+    left: 507px;
+    position: relative;
+    top: 1px;
+    width: 159px;
+  }
+  
+  .page .box .div {
+    background-image: url(./image.svg);
+    background-size: 100% 100%;
+    height: 55px;
+    left: -4px;
+    position: relative;
+    width: 165px;
+  }
+  
+  .page .box .text-wrapper-2 {
+    color: #3c043e;
+    background-color: #d2abce;
+    text-align: center;
+    border-radius: 25px;
+    font-family: "Montserrat-Bold", Helvetica;
+    font-size: 20px;
+    font-weight: 700;
+    height: 36px;
+    left: 19px;
+    letter-spacing: 0;
+    line-height: normal;
+    position: relative;
+    top: 6px;
+    width: 121px;
+  }
+  
+  .page .box .polygon {
+    height: 11px;
+    left: 133px;
+    position: absolute;
+    top: 20px;
+    width: 13px;
+  }
+  
+  .page .box .overlap-wrapper {
+    height: 47px;
+    left: 338px;
+    position: absolute;
+    top: 1px;
+    width: 159px;
+  }
+  
+  .page .box .overlap-2 {
+    background-image: url(./avaliacao-2.svg);
+    background-size: 100% 100%;
+    height: 55px;
+    left: -4px;
+    position: relative;
+    width: 165px;
+  }
+  
+  .page .box .overlap-group-wrapper {
+    height: 47px;
+    left: 169px;
+    position: absolute;
+    top: 1px;
+    width: 159px;
+  }
+  
+  .page .box .overlap-3 {
+    background-image: url(./avaliacao-3.svg);
+    background-size: 100% 100%;
+    height: 55px;
+    left: -4px;
+    position: relative;
+    width: 165px;
+  }
+  
+  .page .box .filtro-2 {
+    height: 47px;
+    left: 0;
+    position: absolute;
+    top: 1px;
+    width: 159px;
+  }
+  
+  .page .box .overlap-4 {
+    background-image: url(./avaliacao-4.svg);
+    background-size: 100% 100%;
+    height: 55px;
+    text-align: center;
+    left: -4px;
+    position: relative;
+    width: 165px;
+  }
+  
+  .page .box .text-wrapper-3 {
+    color: #ffffff;
+    background-color: #3c043d;
+    text-align: center;
+    border-radius: 25px;
+    border-radius: 25px;
+    font-family: "Montserrat-Bold", Helvetica;
+    font-size: 20px;
+    font-weight: 700;
+    height: 36px;
+    left: 19px;
+    letter-spacing: 0;
+    line-height: normal;
+    position: relative;
+    top: 6px;
+    width: 121px;
+  }
+  
+  .page .box .img {
+    height: 11px;
+    left: 133px;
+    position: absolute;
+    top: 16px;
+    width: 13px;
+  }
+  
