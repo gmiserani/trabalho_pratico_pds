@@ -2,7 +2,8 @@ import Login from "./components/Login/Login";
 import Home from "./components/Home/Home";
 // import Profile from "./components/Profile/Profile";
 // import Signup from "./components/Signup/Signup";
-// import Subject from "./components/Subject/Subject";
+import Subject from "./components/Subject/Subject"
+import Review from "./components/Review/Review";
 import { BrowserRouter as Router, Routes, Route } from 'react-router-dom'
 import PrivateRoute from './components/PrivateRoute/PrivateRoute'
 import './App.css'
@@ -20,7 +21,10 @@ function App() {
           <Route element={<PrivateRoute />}>
             <Route element={<Home />} path="/" />
             {/* <Route element={<Profile />} path='users/:teste' /> */}
+            <Route path='subject/:id' element={<Subject />} />
+            <Route path='subject/:id/add-review' element={<Review />} />
             <Route element={<h1>Not Found</h1>} path="*" />
+
           </Route>
           <Route element={<Login />} path="/login" />
           {/* <Route element={<SignUp />} path="signup" /> */}

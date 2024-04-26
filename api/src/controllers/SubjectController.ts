@@ -42,7 +42,7 @@ router.get("/", verifyJWT, async (req: Request, res: Response, next: NextFunctio
 );
 
 // Fetch a subject by id and returns its basic content
-router.get("/:id", verifyJWT, verifyJWT, async (req: Request, res: Response, next: NextFunction) => {
+router.get("/:id", verifyJWT, async (req: Request, res: Response, next: NextFunction) => {
     try {
         const subject = await SubjectService.getById(req.params.id);
         res.status(statusCodes.SUCCESS).json(subject).end();

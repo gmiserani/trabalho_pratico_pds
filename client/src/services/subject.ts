@@ -18,7 +18,7 @@ export const getAllSubjects = async (order: string) => {
 
 export const getSubjectById = async (id: string) => {
     try {
-        const response = await api.get(`/subjects/${id}`);
+        const response = await api.get(`/subject/${id}`);
         return response;
     } catch (error) {
         console.error('Error fetching subject:', error);
@@ -38,7 +38,7 @@ export const getMostCommonAnswers = async (id: string) => {
 
 export const getReviews = async (id: string) => {
     try {
-        const response = await api.get(`/subjects/${id}/reviews`);
+        const response = await api.get(`/subject/${id}/reviews`);
         return response;
     } catch (error) {
         console.error('Error fetching reviews:', error);
@@ -48,7 +48,7 @@ export const getReviews = async (id: string) => {
 
 export const checkUserCanAddReview = async (id: string) => {
     try {
-        const response = await api.get(`/subjects/${id}/check-review`);
+        const response = await api.get(`/subject/${id}/check-review`);
         return response;
     } catch (error) {
         console.error('Error checking review:', error);
@@ -72,7 +72,7 @@ export const addReview = async (id: string, presence_rating: string,
     formData.append('overall_rating', overall_rating);
     formData.append('comment', comment);
 
-    const response = await api.post(`/subjects/${id}/add-review`, formData, {
+    const response = await api.post(`/subject/${id}/add-review`, formData, {
         headers: {
             'Content-Type': 'multipart/form-data'
         }
