@@ -1,5 +1,22 @@
 import { useState, useEffect } from 'react';
 import { Link } from 'react-router-dom';
+import { Rating } from '@mui/material';
+import './Subject_miniature.css';
+import StarBorderOutlined from '@mui/icons-material/StarBorderOutlined';
+import { styled } from '@mui/material/styles';
+
+const StyledRating = styled(Rating)({
+    '& .MuiRating-iconFilled': {
+        color: '#FCDE00',
+    },
+    '& .MuiRating-iconHover': {
+        color: '#FCDE00',
+    },
+    '& .MuiRating-iconEmpty': {
+        color: '#FCDE00',
+    },
+});
+
 
 interface SubjectMiniatureProps {
     subject: {
@@ -18,10 +35,17 @@ export default function SubjectMiniature({ subject, render, setRender }: Subject
         setRating(subject.overall_rating);
     }, [subject.overall_rating, render, setRender]);
 
+
     return (
-        <Link to={`/subject/${subject.id}`} className="subjectMiniature">
-            <div className="subjectName">{subject.name}</div>
-            <div className="subjectRating">{rating}</div>
-        </Link>
+        <div className="subjectMiniature">
+            <Link to={`/subject/${subject.id}`}>
+                <div className="subjectName">
+                    {subject.name}
+                    <StyledRating name="read-only" value={rating} size="large" emptyIcon={<StarBorderOutlined />} readOnly />
+                </div>
+
+            </Link>
+        </div>
+
     );
 }

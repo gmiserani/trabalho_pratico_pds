@@ -32,39 +32,18 @@ export default function Login() {
     }
 
     return (
-        <div className="page">
-            <div className="box">
-                <div className="login">
-                    <div className="overlap">
-                        <div className="text-wrapper-4">Login</div>
-                        <form onSubmit={handleSubmit}>
-                            <div className="inputs">
-                                <div className="email">
-                                    <div className="text-wrapper-2">Email</div>
-                                    <Input type="email" loading={loading} setValue={setEmail} value={email} />
-                                </div>
-                                <div className="senha">
-                                    <div className="text-wrapper-2">Senha</div>
-                                    <Input type="password" loading={loading} setValue={setPassword} value={password} />
-                                </div>
-                            </div>
-                            <button className="entrar">
-                                <div className="button-text">
-                                    Entrar
-                                </div>
-                            </button>
-                        </form>
-
-                        <Link to="signup">
-                            <div className="cadastro">
-                                <div className="text-wrapper">
-                                    Cadastrar-se
-                                </div>
-                            </div>
-                        </Link>
-                    </div>
-                </div>
-            </div>
+        <div className="form-wrapper">
+            <h1>Login</h1>
+            <form onSubmit={handleSubmit}>
+                <h3>Email</h3>
+                <Input type="email" loading={loading} setValue={setEmail} value={email} />
+                <h3>Senha</h3>
+                <Input type="password" loading={loading} setValue={setPassword} value={password} />
+                <button className="entrar">
+                    Entrar
+                </button>
+            </form>
+            <Link className="signup" to='/signup'>Cadastre-se</Link>
         </div>
     );
 }
