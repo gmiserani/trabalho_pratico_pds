@@ -24,20 +24,21 @@ interface SubjectMiniatureProps {
         name: string;
         overall_rating: number;
     };
+    isPurple: boolean;
     render: boolean;
     setRender: React.Dispatch<React.SetStateAction<boolean>>;
 }
 
-export default function SubjectMiniature({ subject, render, setRender }: SubjectMiniatureProps) {
+export default function SubjectMiniature({ isPurple, subject, render, setRender }: SubjectMiniatureProps) {
     const [rating, setRating] = useState(subject.overall_rating);
-
+    const color = "subjectMiniature" + (isPurple ? " purple" : "");
     useEffect(() => {
         setRating(subject.overall_rating);
     }, [subject.overall_rating, render, setRender]);
 
 
     return (
-        <div className="subjectMiniature">
+        <div className={color}>
             <Link to={`/subject/${subject.id}`}>
                 <div className="subjectName">
                     {subject.name}

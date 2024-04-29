@@ -53,7 +53,7 @@ export default function Home() {
 
             <div className="home-subjects">
                 {subjects.map((subject, index) => (
-                    <SubjectMiniature key={index} subject={subject} render={render} setRender={setRender} />
+                    <SubjectMiniature isPurple={index % 2 ? false : true} key={index} subject={subject} render={render} setRender={setRender} />
                 ))}
             </div>
 

@@ -1,16 +1,48 @@
 .subjectMiniature {
+    background-color: white;
+    border-radius: 25px;
+    margin-bottom: 1em;
+    padding: 0.5em;
+    box-shadow: 0px 4px 4px #00000040;
+    margin-left: 2%;
+    margin-right: 2%;
+}
+
+.purple {
     background-color: #8A568C;
     border-radius: 25px;
     margin-bottom: 1em;
     padding: 0.5em;
+    box-shadow: 0px 4px 4px #00000040;
+    margin-left: 2%;
+    margin-right: 2%;
 }
 
-.subjectName {
+.subjectMiniature .subjectName {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    font-size: 1.5em;
+    font-weight: 600;
+    color: #3c043e;
+    text-align: left;
+    margin-left: 2%;
+    margin-right: 2%;
+    padding: 0%;
+    padding-bottom: 0%;
+
+}
+
+.purple .subjectName {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
     font-size: 1.5em;
     font-weight: 600;
     color: white;
     text-align: left;
     margin-left: 2%;
+    margin-right: 2%;
     padding: 0%;
     padding-bottom: 0%;
 }
