@@ -7,13 +7,13 @@ import { styled } from '@mui/material/styles';
 
 const StyledRating = styled(Rating)({
     '& .MuiRating-iconFilled': {
-        color: '#FCDE00',
+        color: '#FCDE00'
     },
     '& .MuiRating-iconHover': {
-        color: '#FCDE00',
+        color: '#FCDE00'
     },
     '& .MuiRating-iconEmpty': {
-        color: '#FCDE00',
+        color: '#FCDE00'
     },
 });
 
@@ -42,7 +42,7 @@ export default function SubjectMiniature({ isPurple, subject, render, setRender 
             <Link to={`/subject/${subject.id}`}>
                 <div className="subjectName">
                     {subject.name}
-                    <StyledRating name="read-only" value={rating} size="large" emptyIcon={<StarBorderOutlined />} readOnly />
+                    <StyledRating name="read-only" value={rating} emptyIcon={<StarBorderOutlined style={{ width: "40", height: "40" }} />} readOnly />
                 </div>
 
             </Link>

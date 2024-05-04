@@ -2,6 +2,7 @@ import { Link, useNavigate } from "react-router-dom";
 import { useState, useEffect } from "react";
 import { getSubjectById, getMostCommonAnswers, checkUserCanAddReview, getReviews } from "../../services/subject";
 import { useParams } from "react-router-dom";
+import { Box } from '../Header/Header';
 
 interface SubjectProps {
     id: string;
@@ -113,6 +114,7 @@ export default function Subject() {
 
     return (
         <div className="Subject">
+            <Box />
             <h1>{subjectSummary?.name}</h1>
             <div>{subjectSummary?.syllabus}</div>
             <div>{subjectSummary?.mode}</div>

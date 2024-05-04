@@ -3,6 +3,7 @@ import { Input } from "../../components/Atoms/Input/Input";
 import { useState } from "react";
 import { addReview } from "../../services/subject";
 import { useParams } from "react-router-dom";
+import { Box } from '../Header/Header';
 
 export default function Review() {
 
@@ -41,6 +42,7 @@ export default function Review() {
 
     return (
         <div>
+            <Box />
             <h1>Subject</h1>
             <form onSubmit={handleSubmit}>
                 <div>

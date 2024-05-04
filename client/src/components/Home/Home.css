@@ -1,0 +1,37 @@
+.filterTab {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-left: 2%;
+    margin-right: 2%;
+    margin-bottom: 1%;
+
+}
+
+.filterTab .filterButton {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    min-inline-size: 15%;
+
+    font-weight: bold;
+    background-color: #D2ACCF;
+    border-radius: 25em;
+    color: #3c043e;
+    border: none;
+    box-shadow: 0px 4px 4px #00000040;
+}
+
+.cleanFilterButton {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    font-family: "Montserrat-Bold", Helvetica;
+    font-weight: bold;
+    background-color: #3c043e;
+    border-radius: 25em;
+    color: white;
+    cursor: pointer;
+    border: none;
+    box-shadow: 0px 4px 4px #00000040;
+}

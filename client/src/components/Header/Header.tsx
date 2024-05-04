@@ -1,16 +1,32 @@
 import "./Header.css";
+import simbolologo from '../../assets/simbollogo.svg';
+import AccountCircleOutlinedIcon from '@mui/icons-material/AccountCircleOutlined';
+import LogoutOutlinedIcon from '@mui/icons-material/LogoutOutlined';
+import { logout } from '../../services/user';
+import { Link } from 'react-router-dom';
 
 export const Box = () => {
+    async function handleLogout() {
+        await logout().then(() => {
+            localStorage.removeItem('token');
+        }).catch((err) => {
+            console.log(err);
+            throw err;
+        });
+    }
+
     return (
-        <div className="box" >
-            <header className="header" >
-                <div className="simbol" >
-                    <div className="overlap-group" >
-                        <img className="polygon" alt="Polygon" src="polygon-1.svg" />
-                        <img className="img" alt="Polygon" src="polygon-2.svg" />
-                    </div>
-                </div>
-            </header>
-        </div>
+        <header className="header" >
+            <img className="symbol" src={simbolologo} alt="" />
+            <div className="icons">
+                <AccountCircleOutlinedIcon className="profileIcon" sx={{ fontSize: 40 }} />
+                <Link className="LogoutLink" to={'/login'}>
+                    <LogoutOutlinedIcon onClick={handleLogout} sx={{ fontSize: 40, padding: 0 }} />
+                </Link>
+
+            </div>
+
+        </header>
+
     );
 };

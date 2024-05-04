@@ -1,44 +1,25 @@
-.box {
-    height: 70px;
-    width: 1432px;
-}
-
-.box .header {
-    background-color: #ffffff;
-    height: 70px;
-    left: 0;
+.header {
     position: fixed;
+    width: 100%;
     top: 0;
-    width: 1432px;
-}
-
-.box .simbol {
-    height: 66px;
-    left: 35px;
-    position: relative;
-    width: 68px;
-}
-
-.box .overlap-group {
-    height: 61px;
-    left: 15px;
-    position: relative;
-    top: 5px;
-    width: 52px;
-}
-
-.box .polygon {
-    height: 51px;
     left: 0;
-    position: absolute;
-    top: 0;
-    width: 45px;
+    height: 3em;
 }
 
-.box .img {
-    height: 51px;
-    left: 8px;
-    position: absolute;
-    top: 11px;
-    width: 45px;
+.symbol {
+    height: 2.5em;
+    width: 2.5em;
+    padding-left: 1em;
+}
+
+.icons {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-right: 1em;
+}
+
+a {
+    top: 0;
+    bottom: 0;
 }
