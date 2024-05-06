@@ -19,7 +19,7 @@
     margin-right: 1em;
 }
 
-a {
-    top: 0;
-    bottom: 0;
+.logoutLink {
+    height: 2em;
+    margin-left: 2em;
 }

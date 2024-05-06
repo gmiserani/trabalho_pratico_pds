@@ -15,11 +15,11 @@ import RadioButtonUncheckedIcon from '@mui/icons-material/RadioButtonUnchecked';
 
 const OrderButton = styled(BaseButton)(
     () => `
+    height:2em;
     display: flex;
     flex-direction: row;
     justify-content: space-between;
     align-items: center;
-    margin: 0 0;
     padding-left: 1em;
     padding-right: 0.5em;
 
@@ -32,6 +32,7 @@ const OrderButton = styled(BaseButton)(
     cursor: pointer;
     border: none;
     box-shadow: 0px 4px 4px #00000040;
+    
     `,
 );
 
@@ -50,7 +51,6 @@ const StyledMenu = styled((props: MenuProps) => (
     />
 ))(() => ({
     '& .MuiPaper-root': {
-        margin: '1em 0',
         borderRadius: 25,
         boxShadow: '6px 6px 6px #00000040',
     },

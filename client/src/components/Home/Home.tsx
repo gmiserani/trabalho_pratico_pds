@@ -1,12 +1,12 @@
-import { Link, Outlet } from 'react-router-dom';
+import { Outlet } from 'react-router-dom';
 import SubjectMiniature from '../Atoms/Subject_miniature';
 import { useState, useEffect } from 'react';
 import { getAllSubjects } from '../../services/subject';
-import { logout } from '../../services/user';
 import Order from '../Atoms/Order';
 import ArrowDropDownIcon from '@mui/icons-material/ArrowDropDown';
 import './Home.css';
-import { Box } from '../Header/Header';
+import { Header } from '../Header/Header';
+import SearchIcon from '@mui/icons-material/Search';
 
 
 //ToggleButton
@@ -16,15 +16,6 @@ export default function Home() {
     const [subjects, setSubjects] = useState([]);
     const [render, setRender] = useState(false);
     const [order, setOrder] = useState('');
-
-    async function handleLogout() {
-        await logout().then(() => {
-            localStorage.removeItem('token');
-        }).catch((err) => {
-            console.log(err);
-            throw err;
-        });
-    }
 
     useEffect(() => {
         getAllSubjects(order)
@@ -40,29 +31,40 @@ export default function Home() {
 
     return (
         <div>
-            <Box />
+            <Header />
             <div className="homeContainer">
-                <div className='filterTab'>
-                    <Order order={order} setOrder={setOrder} />
 
-                    <button className='filterButton'>
-                        Professor
-                        <ArrowDropDownIcon sx={{ fontSize: 30 }} />
-                    </button>
+                <h1 className='pageTittle'>
+                    Disciplinas ofertadas
+                </h1>
 
-                    <button className='filterButton'>
-                        Periodo
-                        <ArrowDropDownIcon sx={{ fontSize: 30 }} />
-                    </button>
+                <div className='optionsTab'>
+                    <div className='searchSubject'>
+                        <input type="text" placeholder="Search" className='input' />
+                        <SearchIcon sx={{ fontSize: 40, color: '#A5599F' }} />
+                    </div>
+                    <div className='buttons'>
+                        <Order order={order} setOrder={setOrder} />
 
-                    <button className='filterButton'>
-                        Dia e hora
-                        <ArrowDropDownIcon sx={{ fontSize: 30 }} />
-                    </button>
+                        <button className='filterButtons'>
+                            Professor
+                            <ArrowDropDownIcon sx={{ fontSize: 30 }} />
+                        </button>
 
-                    <button className='cleanFilterButton'>Limpar filtros</button>
+                        <button className='filterButtons'>
+                            Periodo
+                            <ArrowDropDownIcon sx={{ fontSize: 30 }} />
+                        </button>
 
+                        <button className='filterButtons'>
+                            Dia e hora
+                            <ArrowDropDownIcon sx={{ fontSize: 30 }} />
+                        </button>
 
+                        <button className='cleanFilterButton'>
+                            Limpar filtros
+                        </button>
+                    </div>
                 </div>
 
                 <div className="home-subjects">

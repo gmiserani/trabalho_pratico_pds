@@ -98,6 +98,7 @@ router.post("/:id/add-review", verifyJWT, async (req: Request, res: Response, ne
         if (!req.userId) {
             throw new Error("User ID not found.");
         }
+        console.log(req.body);
         await SubjectService.addReview(req.params.id, req.userId, req.body);
         res.status(statusCodes.CREATED).end();
     }

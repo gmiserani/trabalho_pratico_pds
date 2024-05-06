@@ -14,7 +14,7 @@ export const login = async (email: string, password: string) => {
 }
 
 export const signup = async (name: string, username: string, email: string, password: string, course: string, semester: string) => {
-    const formData = new FormData();
+    const formData = new URLSearchParams();
     formData.append('name', name);
     formData.append('username', username);
     formData.append('email', email);
@@ -22,11 +22,7 @@ export const signup = async (name: string, username: string, email: string, pass
     formData.append('semester', semester);
     formData.append('password', password);
 
-    const response = await api.post('/users/', formData, {
-        headers: {
-            'Content-Type': 'multipart/form-data'
-        }
-    }).catch(
+    const response = await api.post('/users/', formData).catch(
         (error: AxiosError) => {
             if (error.response) {
                 throw error.response.data;

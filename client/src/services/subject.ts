@@ -56,27 +56,17 @@ export const checkUserCanAddReview = async (id: string) => {
     }
 }
 
-export const addReview = async (id: string, presence_rating: string,
-    teacher_rating: string,
-    project_rating: string,
-    test_rating: string,
-    effort_rating: string,
-    overall_rating: string,
-    comment: string) => {
-    const formData = new FormData();
+export const addReview = async (id: string, presence_rating: string, teacher_rating: string, project_rating: string, test_rating: string, effort_rating: string, overall_rating: number, comment: string) => {
+    const formData = new URLSearchParams();
     formData.append('presence_rating', presence_rating);
     formData.append('teacher_rating', teacher_rating);
     formData.append('project_rating', project_rating);
     formData.append('test_rating', test_rating);
     formData.append('effort_rating', effort_rating);
-    formData.append('overall_rating', overall_rating);
+    formData.append('overall_rating', String(overall_rating));
     formData.append('comment', comment);
 
-    const response = await api.post(`/subject/${id}/add-review`, formData, {
-        headers: {
-            'Content-Type': 'multipart/form-data'
-        }
-    }).catch(
+    const response = await api.post(`/subject/${id}/add-review`, formData).catch(
         (error: AxiosError) => {
             if (error.response) {
                 throw error.response.data;

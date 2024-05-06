@@ -1,0 +1,35 @@
+.reviewForm {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    background-color: #3c043e;
+    margin: 5%;
+    border-radius: 25px;
+}
+
+.reviewField {
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+
+    align-items: center;
+    margin-top: 20px;
+    background-color: white;
+    border-radius: 25em;
+    width: 80%;
+}
+
+.question {
+    flex-grow: 1;
+    font-size: 1.5em;
+}
+
+.options {
+    flex-grow: 4;
+    justify-content: center;
+}
+
+.option {
+    flex-grow: 1;
+    border-radius: 25%;
+}
