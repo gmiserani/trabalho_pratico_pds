@@ -20,7 +20,6 @@ export default function Home() {
     useEffect(() => {
         getAllSubjects(order)
             .then(response => {
-                console.log(order);
                 setSubjects(response.data);
                 setRender(false);
             })

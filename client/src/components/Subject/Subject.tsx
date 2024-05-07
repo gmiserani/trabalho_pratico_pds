@@ -3,6 +3,32 @@ import { useState, useEffect } from "react";
 import { getSubjectById, getMostCommonAnswers, checkUserCanAddReview, getReviews } from "../../services/subject";
 import { useParams } from "react-router-dom";
 import { Header } from '../Header/Header';
+import ArrowBackIcon from '@mui/icons-material/ArrowBack';
+import './Subject.css';
+import { Rating } from '@mui/material';
+import StarBorderOutlined from '@mui/icons-material/StarBorderOutlined';
+import Star from '@mui/icons-material/Star';
+import { styled } from '@mui/material/styles';
+import MostCommonReview from "../Atoms/MostCommonReview";
+import ReviewContainer from "../Atoms/ReviewContainer";
+
+const StyledRating = styled(Rating)({
+    '& .MuiRating-iconFilled': {
+        color: '#FCDE00',
+        width: "40",
+        height: "40"
+    },
+    '& .MuiRating-iconHover': {
+        color: '#FCDE00',
+        width: "40",
+        height: "40"
+    },
+    '& .MuiRating-iconEmpty': {
+        color: '#FCDE00',
+        width: "40",
+        height: "40"
+    },
+});
 
 interface SubjectProps {
     id: string;
@@ -38,8 +64,7 @@ interface Review {
     overall_rating: number;
     comment: string;
     user: {
-        id: string;
-        name: string;
+        username: string;
     };
 }
 
@@ -47,17 +72,16 @@ export default function Subject() {
 
     const navigate = useNavigate();
 
+
     const [subjectSummary, setSubjectSummary] = useState<SubjectProps | null>(null);
-    const [renderSummary, setRenderSummary] = useState(false);
 
     const [mostCommonAnswers, setMostCommonAnswers] = useState<MostCommonAnswer | null>(null);
-    const [renderMostCommonAnswers, setRenderMostCommonAnswers] = useState(false);
 
     const [reviews, setReviews] = useState<Review[]>([]);
-    const [renderReviews, setRenderReviews] = useState(false);
 
-    // const [canAddReview, setCanAddReview] = useState(false);
-    // const [renderCanAddReview, setRenderCanAddReview] = useState(false);
+    const [canAddReview, setCanAddReview] = useState(true);
+
+    const [render, setRender] = useState(false);
 
     const { id } = useParams();
 
@@ -67,27 +91,27 @@ export default function Subject() {
             try {
                 const response = await getSubjectById(id);
                 setSubjectSummary(response.data);
-                setRenderSummary(false);
+                setRender(false);
             } catch (error) {
                 console.error('Error fetching subject:', error);
             }
         };
         getSubjectData();
-    }, [id, renderSummary]);
+    }, [id, render]);
 
     useEffect(() => {
-        if (!subjectSummary || !id) return;
+        if (!id) return;
         const setMostCommonAnswersData = async () => {
             try {
                 const response = await getMostCommonAnswers(id);
                 setMostCommonAnswers(response.data);
-                setRenderMostCommonAnswers(false);
+                setRender(false);
             } catch (error) {
                 console.error('Error fetching most common answers:', error);
             }
         };
         setMostCommonAnswersData();
-    }, [id, renderMostCommonAnswers, subjectSummary]);
+    }, [id, render]);
 
     useEffect(() => {
         if (!id) return;
@@ -95,55 +119,79 @@ export default function Subject() {
             try {
                 const response = await getReviews(id);
                 setReviews(response.data);
-                setRenderReviews(false);
+                setRender(false);
             } catch (error) {
                 console.error('Error fetching reviews:', error);
             }
         };
         getReviewsData();
-    }, [id, renderReviews]);
+    }, [id, render]);
 
-    async function clickAddReview() {
+    useEffect(() => {
         if (!id) return;
-        const canAddReview = await checkUserCanAddReview(id);
-        if (canAddReview) {
-            // navigate to review page
-            navigate(`/subject/${id}/add-review`);
-        }
-    }
+        const checkUserCanAddReviewData = async () => {
+            try {
+                const response = await checkUserCanAddReview(id);
+                setCanAddReview(response.data);
+                setRender(false);
+            } catch (error) {
+                console.error('Error checking if user can add review:', error);
+            }
+        };
+        checkUserCanAddReviewData();
+    }, [id, render]);
 
     return (
-        <div className="Subject">
+        <div>
             <Header />
-            <h1>{subjectSummary?.name}</h1>
-            <div>{subjectSummary?.syllabus}</div>
-            <div>{subjectSummary?.mode}</div>
-            <div>{subjectSummary?.date}</div>
-            <div>{subjectSummary?.time}</div>
-            <div>{subjectSummary?.semester}</div>
-            <div>{subjectSummary?.workload}</div>
-            <div>{subjectSummary?.teacher.name}</div>
-            <div>{mostCommonAnswers?.presence_rating}</div>
-            <div>{mostCommonAnswers?.teacher_rating}</div>
-            <div>{mostCommonAnswers?.project_rating}</div>
-            <div>{mostCommonAnswers?.test_rating}</div>
-            <div>{mostCommonAnswers?.effort_rating}</div>
-            <div>{mostCommonAnswers?.overall_rating}</div>
-            <button onClick={clickAddReview}>Add Review</button>
-            <div>
-                {reviews.map((review, index) => (
-                    <div key={index}>
-                        <div>{review.user.name}</div>
-                        <div>{review.presence_rating}</div>
-                        <div>{review.teacher_rating}</div>
-                        <div>{review.project_rating}</div>
-                        <div>{review.test_rating}</div>
-                        <div>{review.effort_rating}</div>
-                        <div>{review.overall_rating}</div>
-                        <div>{review.comment}</div>
-                    </div>
-                ))}
+            <div className="backButton">
+                <ArrowBackIcon onClick={() => navigate('/')} />
             </div>
+            <div className="subjectPageContainer">
+
+                <div className="title">
+                    <h1>{subjectSummary?.name}</h1>
+                    <StyledRating name="read-only" value={mostCommonAnswers?.overall_rating || 0} icon={<Star style={{ width: "2em", height: "2em" }} />} emptyIcon={<StarBorderOutlined style={{ width: "2em", height: "2em" }} />} readOnly />
+                </div>
+                <div className="subjectInfo">
+                    <div className="syllabus">
+                        {subjectSummary?.syllabus}
+                        <div>{subjectSummary?.mode}</div>
+                        <div>{subjectSummary?.date}</div>
+                        <div>{subjectSummary?.time}</div>
+                        <div>{subjectSummary?.semester}</div>
+                        <div>{subjectSummary?.workload}</div>
+                    </div>
+
+                    <div className="teacher">
+                        {subjectSummary?.teacher.name}
+                    </div>
+                </div>
+                <div className="answers">
+                    {reviews.length > 0 ?
+                        <MostCommonReview
+                            review={mostCommonAnswers}
+                            render={render}
+                            setRender={setRender}
+                        />
+
+                        : <div className="noReviewCase">
+                            Essa disciplina ainda não possui avaliações
+                        </div>
+                    }
+                </div>
+                {canAddReview ? <button onClick={() => { navigate(`/subject/${id}/add-review`) }}>Adicionar sua avaliacao</button> : null}
+                <div className="users_reviews">
+                    {reviews.map((review, index) => (
+                        <ReviewContainer
+                            review={review}
+                            render={render}
+                            setRender={setRender}
+                        />
+                    ))}
+                </div>
+            </div>
+
         </div>
     );
 }

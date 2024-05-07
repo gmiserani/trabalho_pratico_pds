@@ -7,6 +7,7 @@ import { Header } from '../Header/Header';
 import ToggleButton from '@mui/material/ToggleButton';
 import ToggleButtonGroup from '@mui/material/ToggleButtonGroup';
 import { StyledRating } from '../../components/Atoms/Rating';
+import ArrowBackIcon from '@mui/icons-material/ArrowBack';
 import './Review.css';
 // import { styled } from "@mui/material/styles";
 
@@ -76,6 +77,9 @@ export default function Review() {
         <div>
             <Header />
             <div className="reviewPage">
+                <div className="backButton">
+                    <ArrowBackIcon onClick={() => navigate(`/subject/${id}`)} />
+                </div>
                 <form onSubmit={handleSubmit} className="reviewForm">
                     <div className="reviewField">
                         <div className="question">
