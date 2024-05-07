@@ -1,7 +1,7 @@
 import { Link, useNavigate } from "react-router-dom";
 import { Input } from "../../components/Atoms/Input/Input";
-import { useState } from "react";
-import { login } from '../../services/user';
+import { useState, useEffect } from "react";
+import { login, isLoggedIn } from '../../services/user';
 import "./Login.css";
 
 export default function Login() {
@@ -10,6 +10,21 @@ export default function Login() {
     const [email, setEmail] = useState('');
     const [password, setPassword] = useState('');
     const [loading, setLoading] = useState(false);
+    const [logged, setLogged] = useState(false);
+
+    useEffect(() => {
+        async function checkLogin() {
+            await isLoggedIn().then((res) => {
+                if (res.data) {
+                    setLogged(true);
+                    navigate('/');
+                }
+            }).catch((err) => {
+                console.log(err);
+            });
+        }
+        checkLogin();
+    }, [logged]);
 
     async function handleSubmit(e: React.FormEvent<HTMLFormElement>) {
         e.preventDefault();

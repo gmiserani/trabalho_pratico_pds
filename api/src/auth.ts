@@ -62,6 +62,7 @@ export async function loginMiddleware(req: Request, res: Response, next: NextFun
 export function notLoggedIn(req: Request, res: Response, next: NextFunction) {
     try {
         const token = cookieExtractor(req);
+        console.log(token);
 
         if (token) {
             const decoded = verify(token, getEnv("SECRET_KEY"));
@@ -70,6 +71,21 @@ export function notLoggedIn(req: Request, res: Response, next: NextFunction) {
             }
         }
         next();
+    } catch (error) {
+        next(error);
+    }
+}
+
+export function loggedIn(req: Request, res: Response, next: NextFunction) {
+    try {
+        const token = cookieExtractor(req);
+        if (!token) {
+            return false;
+        }
+        else {
+            return true;
+        }
+
     } catch (error) {
         next(error);
     }

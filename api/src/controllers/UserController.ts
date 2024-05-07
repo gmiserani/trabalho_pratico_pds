@@ -1,9 +1,24 @@
 import { Router, Request, Response, NextFunction } from "express";
 import { UserService } from "../services/UserService";
 import { statusCodes } from "../error";
-import { loginMiddleware, verifyJWT, notLoggedIn } from "../auth";
+import { loginMiddleware, verifyJWT, notLoggedIn, loggedIn } from "../auth";
 
 export const router = Router();
+
+router.get("/login", async (req: Request, res: Response, next: NextFunction) => {
+    try {
+        const isLogged = loggedIn(req, res, next);
+        if (isLogged) {
+            res.status(statusCodes.SUCCESS).json(true).end();
+        }
+        else {
+            res.status(statusCodes.SUCCESS).json(false).end();
+        }
+    } catch (error) {
+        next(error);
+    }
+},
+);
 
 router.post("/login", notLoggedIn, loginMiddleware);
 

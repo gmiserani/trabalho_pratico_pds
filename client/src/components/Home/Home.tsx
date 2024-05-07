@@ -71,7 +71,6 @@ export default function Home() {
                         <SubjectMiniature isPurple={index % 2 ? false : true} key={index} subject={subject} render={render} setRender={setRender} />
                     ))}
                 </div>
-
                 <Outlet />
             </div >
         </div>

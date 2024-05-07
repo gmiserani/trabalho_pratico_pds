@@ -1,6 +1,17 @@
 import api from './api';
 import { AxiosError } from 'axios';
 
+export const isLoggedIn = async () => {
+    const response = await api.get('/users/login').catch(
+        (error: AxiosError) => {
+            if (error.response) {
+                throw error.response.data;
+            }
+        });
+    console.log(response);
+    return response;
+}
+
 // The login, signup, and logout functions are asynchronous functions that make requests to the server.
 export const login = async (email: string, password: string) => {
     const response = await api.post('/users/login', { email, password }).catch(
@@ -39,7 +50,6 @@ export const logout = async () => {
                 throw error.response.data;
             }
         });
-
     return response;
 }
 
