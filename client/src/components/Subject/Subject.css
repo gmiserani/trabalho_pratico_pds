@@ -1,8 +1,10 @@
 .backButton {
     color: #3c043e;
-    display: flex;
-    justify-content: left;
-    margin-left: 0.5em;
+    z-index: 1;
+    position: absolute;
+    cursor: pointer;
+    top: 10%;
+    left: 1%;
 }
 
 .subjectPageContainer {
@@ -17,7 +19,7 @@
     display: flex;
     justify-content: space-between;
     align-items: center;
-    width: 90%;
+    width: 88%;
     background-color: #D2ACCF;
     padding-left: 2em;
     padding-right: 2em;
@@ -57,4 +59,5 @@
     padding-bottom: 0.5em;
     padding-left: 0.5em;
     padding-right: 0.5em;
+
 }

@@ -144,11 +144,11 @@ export default function Subject() {
     return (
         <div>
             <Header />
-            <div className="backButton">
-                <ArrowBackIcon onClick={() => navigate('/')} />
-            </div>
-            <div className="subjectPageContainer">
 
+            <div className="subjectPageContainer">
+                <div className="backButton">
+                    <ArrowBackIcon onClick={() => navigate('/')} />
+                </div>
                 <div className="title">
                     <h1>{subjectSummary?.name}</h1>
                     <StyledRating name="read-only" value={mostCommonAnswers?.overall_rating || 0} icon={<Star style={{ width: "2em", height: "2em" }} />} emptyIcon={<StarBorderOutlined style={{ width: "2em", height: "2em" }} />} readOnly />

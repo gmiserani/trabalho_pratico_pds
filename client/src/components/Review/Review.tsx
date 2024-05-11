@@ -1,5 +1,5 @@
 import { useNavigate } from "react-router-dom";
-import { Input } from "../../components/Atoms/Input/Input";
+import { Comment } from "../../components/Atoms/Comment";
 import { useState } from "react";
 import { addReview } from "../../services/subject";
 import { useParams } from "react-router-dom";
@@ -10,11 +10,11 @@ import ToggleButton, { toggleButtonClasses } from '@mui/material/ToggleButton';
 import ToggleButtonGroup, {
     toggleButtonGroupClasses,
 } from '@mui/material/ToggleButtonGroup';
-
+import Star from '@mui/icons-material/Star';
 import './Review.css';
+import StarBorderOutlined from '@mui/icons-material/StarBorderOutlined';
 
 import { styled } from "@mui/material/styles";
-import { Padding } from "@mui/icons-material";
 
 const StyledToggleButtonGroup = styled(ToggleButtonGroup)(() => ({
     [`& .${toggleButtonGroupClasses.grouped}`]: {
@@ -46,11 +46,13 @@ const StyledToggleButton = styled(ToggleButton)(() => ({
         padding: '0.2em',
         textTransform: 'none',
         fontWeight: 'bold',
+        width: '100%',
 
     },
     "&.Mui-selected, &.Mui-selected:hover": {
         color: "white",
-        backgroundColor: '#3c043e'
+        backgroundColor: '#3c043e',
+        width: '100%',
     }
 }));
 
@@ -112,94 +114,117 @@ export default function Review() {
     return (
         <div className="reviewPageContainer">
             <Header />
+
             <div className="reviewPage">
 
+                <div className="backButton-review">
+                    <ArrowBackIcon onClick={() => navigate(`/subject/${id}`)} sx={{ color: 'white' }} />
+                </div>
+
                 <form onSubmit={handleSubmit} className="reviewForm">
-                    <div className="backButton">
-                        <ArrowBackIcon onClick={() => navigate(`/subject/${id}`)} sx={{ color: 'white' }} />
-                    </div>
+
                     <div className="reviewField">
 
                         <div className="question">
                             Cobra presenca?
                         </div>
-                        <StyledToggleButtonGroup value={presence_rating} exclusive onChange={handlePresenceResponse} aria-label="reviewResponses" >
-                            <StyledToggleButton value="SIM" sx={{ marginRight: '1em' }}>
+                        <StyledToggleButtonGroup className="reviewResponseButtons" value={presence_rating} exclusive onChange={handlePresenceResponse} aria-label="reviewResponses" >
+                            <StyledToggleButton className="singleReviewResponseButtons" value="SIM" sx={{ marginRight: '4%' }}>
                                 Sim
                             </StyledToggleButton>
-                            <StyledToggleButton value="NAO" sx={{ marginLeft: '1em' }}>
+                            <StyledToggleButton value="NAO" sx={{ marginRight: '4%' }}>
                                 Nao
                             </StyledToggleButton>
                         </StyledToggleButtonGroup>
                     </div>
                     <div className="reviewField">
-                        Como e a didatica do professor?
-                        <StyledToggleButtonGroup value={teacher_rating} exclusive onChange={handleTeacherResponse} aria-label="reviewResponse">
-                            <StyledToggleButton value="RUIM" sx={{ marginRight: '1em' }}>
+
+                        <div className="question">
+                            Como e a didatica do professor?
+                        </div>
+                        <StyledToggleButtonGroup className="reviewResponseButtons" value={teacher_rating} exclusive onChange={handleTeacherResponse} aria-label="reviewResponse">
+                            <StyledToggleButton value="RUIM" sx={{ marginRight: '4%' }}>
                                 Ruim
                             </StyledToggleButton>
-                            <StyledToggleButton value="MEDIA" sx={{ marginRight: '1em' }}>
+                            <StyledToggleButton value="MEDIA" sx={{ marginRight: '4%' }}>
                                 Media
                             </StyledToggleButton>
-                            <StyledToggleButton value="BOA" sx={{ marginRight: '1em' }}>
+                            <StyledToggleButton value="BOA" sx={{ marginRight: '4%' }}>
                                 Boa
                             </StyledToggleButton>
-                            <StyledToggleButton value="OTIMA" sx={{ marginRight: '1em' }}>
+                            <StyledToggleButton value="OTIMA" sx={{ marginRight: '4%' }}>
                                 Otima
                             </StyledToggleButton>
                         </StyledToggleButtonGroup>
                     </div>
                     <div className="reviewField">
-                        Como sao os trabalhos?
-                        <StyledToggleButtonGroup value={project_rating} exclusive onChange={handleProjectResponse} aria-label="reviewResponse">
-                            <StyledToggleButton value="FACIL" sx={{ marginRight: '1em' }}>
+
+                        <div className="question">
+                            Como sao os trabalhos?
+                        </div>
+                        <StyledToggleButtonGroup className="reviewResponseButtons" value={project_rating} exclusive onChange={handleProjectResponse} aria-label="reviewResponse">
+                            <StyledToggleButton value="FACIL" sx={{ marginRight: '4%' }}>
                                 Facil
                             </StyledToggleButton>
-                            <StyledToggleButton value="MEDIO" sx={{ marginRight: '1em' }}>
+                            <StyledToggleButton value="MEDIO" sx={{ marginRight: '4%' }}>
                                 Medio
                             </StyledToggleButton>
-                            <StyledToggleButton value="DIFICIL" sx={{ marginRight: '1em' }}>
+                            <StyledToggleButton value="DIFICIL" sx={{ marginRight: '4%' }}>
                                 Dificil
                             </StyledToggleButton>
                         </StyledToggleButtonGroup>
                     </div>
                     <div className="reviewField">
-                        Como sao as provas?
-                        <StyledToggleButtonGroup value={test_rating} exclusive onChange={handleTestResponse} aria-label="reviewResponse">
-                            <StyledToggleButton value="FACIL" sx={{ marginRight: '1em' }}>
+
+                        <div className="question">
+                            Como sao as provas?
+                        </div>
+                        <StyledToggleButtonGroup className="reviewResponseButtons" value={test_rating} exclusive onChange={handleTestResponse} aria-label="reviewResponse">
+                            <StyledToggleButton value="FACIL" sx={{ marginRight: '4%' }}>
                                 Facil
                             </StyledToggleButton>
-                            <StyledToggleButton value="MEDIO" sx={{ marginRight: '1em' }}>
+                            <StyledToggleButton value="MEDIO" sx={{ marginRight: '4%' }}>
                                 Medio
                             </StyledToggleButton>
-                            <StyledToggleButton value="DIFICIL" sx={{ marginRight: '1em' }}>
+                            <StyledToggleButton value="DIFICIL" sx={{ marginRight: '4%' }}>
                                 Dificil
                             </StyledToggleButton>
                         </StyledToggleButtonGroup>
                     </div>
                     <div className="reviewField">
-                        Quanto tempo de dedicacao e necessario?
-                        <StyledToggleButtonGroup value={effort_rating} exclusive onChange={handleEffortResponse} aria-label="reviewResponse">
-                            <StyledToggleButton value="POUCO" sx={{ marginRight: '1em' }}>
+
+                        <div className="question">
+                            Quanto tempo de dedicacao?
+                        </div>
+                        <StyledToggleButtonGroup className="reviewResponseButtons" value={effort_rating} exclusive onChange={handleEffortResponse} aria-label="reviewResponse">
+                            <StyledToggleButton value="POUCO" sx={{ marginRight: '4%' }}>
                                 Pouco
                             </StyledToggleButton>
-                            <StyledToggleButton value="MEDIO" sx={{ marginRight: '1em' }}>
+                            <StyledToggleButton value="MEDIO" sx={{ marginRight: '4%' }}>
                                 Medio
                             </StyledToggleButton>
-                            <StyledToggleButton value="MUITO" sx={{ marginRight: '1em' }}>
+                            <StyledToggleButton value="MUITO" sx={{ marginRight: '4%' }}>
                                 Muito
                             </StyledToggleButton>
                         </StyledToggleButtonGroup>
                     </div>
                     <div className="reviewField">
-                        Nota geral da disciplina:
-                        <StyledRating name="overall_rating" value={overall_rating || 0} onChange={(event, newValue) => { setOverallRating(newValue || 0); }} />
+
+                        <div className="question">
+                            Nota geral da disciplina:
+                        </div>
+                        <StyledRating className="review-rating" name="overall_rating" value={overall_rating || 0} onChange={(event, newValue) => { setOverallRating(newValue || 0); }} icon={<Star style={{ width: "1.5em", height: "1.5em" }} />} emptyIcon={<StarBorderOutlined style={{ width: "1.5em", height: "1.5em" }} />} />
                     </div>
                     <div className="reviewField">
-                        Comentario opcional:
-                        <Input type="comment" loading={loading} setValue={setComment} value={comment} />
+
+                        <div className="question">
+                            Comentario opcional:
+                        </div>
+                        <div className="commentInput">
+                            <Comment setValue={setComment} value={comment} />
+                        </div>
                     </div>
-                    <button type="submit">Enviar</button>
+                    <button className="sendReviewButton" type="submit">Enviar</button>
                 </form>
             </div >
 

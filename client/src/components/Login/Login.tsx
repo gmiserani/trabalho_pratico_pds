@@ -50,11 +50,11 @@ export default function Login() {
         <div className="form-wrapper">
             <h1>Login</h1>
             <form onSubmit={handleSubmit}>
-                <div>
+                <div className="inputEmail">
                     <h3>Email</h3>
                     <Input type="email" loading={loading} setValue={setEmail} value={email} />
                 </div>
-                <div>
+                <div className="inputPassword">
                     <h3>Senha</h3>
                     <Input type="password" loading={loading} setValue={setPassword} value={password} />
                 </div>
