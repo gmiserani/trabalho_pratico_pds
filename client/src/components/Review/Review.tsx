@@ -4,19 +4,55 @@ import { useState } from "react";
 import { addReview } from "../../services/subject";
 import { useParams } from "react-router-dom";
 import { Header } from '../Header/Header';
-import ToggleButton from '@mui/material/ToggleButton';
-import ToggleButtonGroup from '@mui/material/ToggleButtonGroup';
 import { StyledRating } from '../../components/Atoms/Rating';
 import ArrowBackIcon from '@mui/icons-material/ArrowBack';
-import './Review.css';
-// import { styled } from "@mui/material/styles";
+import ToggleButton, { toggleButtonClasses } from '@mui/material/ToggleButton';
+import ToggleButtonGroup, {
+    toggleButtonGroupClasses,
+} from '@mui/material/ToggleButtonGroup';
 
-// export const styledToggleButton = styled(ToggleButton)({
-//     "&.Mui-selected, &.Mui-selected:hover": {
-//         color: "white",
-//         backgroundColor: '#00ff00'
-//     }
-// });
+import './Review.css';
+
+import { styled } from "@mui/material/styles";
+import { Padding } from "@mui/icons-material";
+
+const StyledToggleButtonGroup = styled(ToggleButtonGroup)(() => ({
+    [`& .${toggleButtonGroupClasses.grouped}`]: {
+        marginLeft: 1,
+        border: 0,
+        borderRadius: 25,
+        backgroundColor: '#E9D5E7',
+        color: '#3c043e',
+        width: 100,
+        [`&.${toggleButtonGroupClasses}`]: {
+            border: 0,
+        },
+    },
+    [`& .${toggleButtonGroupClasses.middleButton},& .${toggleButtonGroupClasses.lastButton}`]:
+    {
+        marginLeft: -1,
+        borderLeft: '1px solid transparent',
+    },
+    "&.Mui-selected, &.Mui-selected:hover": {
+        color: "white",
+        backgroundColor: '#3c043e'
+    }
+
+}));
+
+const StyledToggleButton = styled(ToggleButton)(() => ({
+    [`&.${toggleButtonClasses.root}`]:
+    {
+        padding: '0.2em',
+        textTransform: 'none',
+        fontWeight: 'bold',
+
+    },
+    "&.Mui-selected, &.Mui-selected:hover": {
+        color: "white",
+        backgroundColor: '#3c043e'
+    }
+}));
 
 export default function Review() {
 
@@ -50,9 +86,9 @@ export default function Review() {
         setTeacherRating(value);
     };
 
-    const handlePresenceResponse = (event: React.MouseEvent<HTMLElement>, value: string) => {
+    async function handlePresenceResponse(event: React.MouseEvent<HTMLElement>, value: string) {
         setPresenceRating(value);
-    };
+    }
 
     async function handleSubmit(e: React.FormEvent<HTMLFormElement>) {
         e.preventDefault();
@@ -74,85 +110,86 @@ export default function Review() {
     }
 
     return (
-        <div>
+        <div className="reviewPageContainer">
             <Header />
             <div className="reviewPage">
-                <div className="backButton">
-                    <ArrowBackIcon onClick={() => navigate(`/subject/${id}`)} />
-                </div>
+
                 <form onSubmit={handleSubmit} className="reviewForm">
+                    <div className="backButton">
+                        <ArrowBackIcon onClick={() => navigate(`/subject/${id}`)} sx={{ color: 'white' }} />
+                    </div>
                     <div className="reviewField">
+
                         <div className="question">
                             Cobra presenca?
                         </div>
-
-                        <ToggleButtonGroup value={presence_rating} exclusive onChange={handlePresenceResponse} aria-label="reviewResponse" className="options">
-                            <ToggleButton value="SIM" className="option">
+                        <StyledToggleButtonGroup value={presence_rating} exclusive onChange={handlePresenceResponse} aria-label="reviewResponses" >
+                            <StyledToggleButton value="SIM" sx={{ marginRight: '1em' }}>
                                 Sim
-                            </ToggleButton>
-                            <ToggleButton value="NAO" className="option">
+                            </StyledToggleButton>
+                            <StyledToggleButton value="NAO" sx={{ marginLeft: '1em' }}>
                                 Nao
-                            </ToggleButton>
-                        </ToggleButtonGroup>
+                            </StyledToggleButton>
+                        </StyledToggleButtonGroup>
                     </div>
                     <div className="reviewField">
                         Como e a didatica do professor?
-                        <ToggleButtonGroup value={teacher_rating} exclusive onChange={handleTeacherResponse} aria-label="reviewResponse">
-                            <ToggleButton value="RUIM">
+                        <StyledToggleButtonGroup value={teacher_rating} exclusive onChange={handleTeacherResponse} aria-label="reviewResponse">
+                            <StyledToggleButton value="RUIM" sx={{ marginRight: '1em' }}>
                                 Ruim
-                            </ToggleButton>
-                            <ToggleButton value="MEDIA" >
+                            </StyledToggleButton>
+                            <StyledToggleButton value="MEDIA" sx={{ marginRight: '1em' }}>
                                 Media
-                            </ToggleButton>
-                            <ToggleButton value="BOA" >
+                            </StyledToggleButton>
+                            <StyledToggleButton value="BOA" sx={{ marginRight: '1em' }}>
                                 Boa
-                            </ToggleButton>
-                            <ToggleButton value="OTIMA" >
+                            </StyledToggleButton>
+                            <StyledToggleButton value="OTIMA" sx={{ marginRight: '1em' }}>
                                 Otima
-                            </ToggleButton>
-                        </ToggleButtonGroup>
+                            </StyledToggleButton>
+                        </StyledToggleButtonGroup>
                     </div>
                     <div className="reviewField">
                         Como sao os trabalhos?
-                        <ToggleButtonGroup value={project_rating} exclusive onChange={handleProjectResponse} aria-label="reviewResponse">
-                            <ToggleButton value="FACIL">
+                        <StyledToggleButtonGroup value={project_rating} exclusive onChange={handleProjectResponse} aria-label="reviewResponse">
+                            <StyledToggleButton value="FACIL" sx={{ marginRight: '1em' }}>
                                 Facil
-                            </ToggleButton>
-                            <ToggleButton value="MEDIO" >
+                            </StyledToggleButton>
+                            <StyledToggleButton value="MEDIO" sx={{ marginRight: '1em' }}>
                                 Medio
-                            </ToggleButton>
-                            <ToggleButton value="DIFICIL" >
+                            </StyledToggleButton>
+                            <StyledToggleButton value="DIFICIL" sx={{ marginRight: '1em' }}>
                                 Dificil
-                            </ToggleButton>
-                        </ToggleButtonGroup>
+                            </StyledToggleButton>
+                        </StyledToggleButtonGroup>
                     </div>
                     <div className="reviewField">
                         Como sao as provas?
-                        <ToggleButtonGroup value={test_rating} exclusive onChange={handleTestResponse} aria-label="reviewResponse">
-                            <ToggleButton value="FACIL">
+                        <StyledToggleButtonGroup value={test_rating} exclusive onChange={handleTestResponse} aria-label="reviewResponse">
+                            <StyledToggleButton value="FACIL" sx={{ marginRight: '1em' }}>
                                 Facil
-                            </ToggleButton>
-                            <ToggleButton value="MEDIO" >
+                            </StyledToggleButton>
+                            <StyledToggleButton value="MEDIO" sx={{ marginRight: '1em' }}>
                                 Medio
-                            </ToggleButton>
-                            <ToggleButton value="DIFICIL" >
+                            </StyledToggleButton>
+                            <StyledToggleButton value="DIFICIL" sx={{ marginRight: '1em' }}>
                                 Dificil
-                            </ToggleButton>
-                        </ToggleButtonGroup>
+                            </StyledToggleButton>
+                        </StyledToggleButtonGroup>
                     </div>
                     <div className="reviewField">
                         Quanto tempo de dedicacao e necessario?
-                        <ToggleButtonGroup value={effort_rating} exclusive onChange={handleEffortResponse} aria-label="reviewResponse">
-                            <ToggleButton value="POUCO">
+                        <StyledToggleButtonGroup value={effort_rating} exclusive onChange={handleEffortResponse} aria-label="reviewResponse">
+                            <StyledToggleButton value="POUCO" sx={{ marginRight: '1em' }}>
                                 Pouco
-                            </ToggleButton>
-                            <ToggleButton value="MEDIO" >
+                            </StyledToggleButton>
+                            <StyledToggleButton value="MEDIO" sx={{ marginRight: '1em' }}>
                                 Medio
-                            </ToggleButton>
-                            <ToggleButton value="MUITO" >
+                            </StyledToggleButton>
+                            <StyledToggleButton value="MUITO" sx={{ marginRight: '1em' }}>
                                 Muito
-                            </ToggleButton>
-                        </ToggleButtonGroup>
+                            </StyledToggleButton>
+                        </StyledToggleButtonGroup>
                     </div>
                     <div className="reviewField">
                         Nota geral da disciplina:
@@ -164,8 +201,8 @@ export default function Review() {
                     </div>
                     <button type="submit">Enviar</button>
                 </form>
-            </div>
+            </div >
 
-        </div>
+        </div >
     );
 }

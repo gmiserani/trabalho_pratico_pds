@@ -1,4 +1,5 @@
 :root {
+  text-align: center;
   padding-top: 4em;
   font-family: "Montserrat-Bold", Helvetica;
   font-size: 20px;
@@ -51,4 +52,5 @@ header {
   height: 4em;
   width: 100%;
   top: 0;
+  z-index: 1;
 }
