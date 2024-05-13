@@ -1,13 +1,13 @@
 import { beforeEach, describe, expect, test, vi } from "vitest";
-import { UserService } from "../src/services/UserService";
-import { Prisma, User } from "@prisma/client";
-import prisma from "../libs/__mocks__/prisma";
+import { UserService } from "../services/UserService";
+import { Prisma } from "@prisma/client";
+import prisma from "../__mocks__/prisma";
 import * as bcrypt from "bcrypt";
 
-vi.mock("../libs/prisma/");
-vi.mock("bcrypt", () => ({
-    hash: vi.fn((password: string, saltRounds: number) => "encryptedPassword"),
-}));
+vi.mock("../prisma_main");
+// vi.mock("bcrypt", () => ({
+//     hash: vi.fn((password: string, saltRounds: number) => "encryptedPassword"),
+// }));
 
 const selectOptions = {
     id: true,
@@ -36,13 +36,13 @@ describe("create", () => {
     });
 
     test("Should call findFirst with email and username", async () => {
+        console.log(createBody);
         await UserService.create(createBody);
 
         expect(prisma.user.findFirst).toHaveBeenNthCalledWith(1, {
             where: {
                 email: createBody.email,
             },
-
         });
 
         expect(prisma.user.findFirst).toHaveBeenNthCalledWith(2, {
