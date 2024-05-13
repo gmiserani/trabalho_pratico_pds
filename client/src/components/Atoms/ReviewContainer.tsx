@@ -1,29 +1,7 @@
 import { useState, useEffect } from 'react';
-import { Rating } from '@mui/material';
-import StarBorderOutlined from '@mui/icons-material/StarBorderOutlined';
-import Star from '@mui/icons-material/Star';
-import { styled } from '@mui/material/styles';
+import Rating from './Rating';
 import Answer from './Answer';
 import './ReviewContainer.css';
-
-const StyledRating = styled(Rating)({
-    '& .MuiRating-iconFilled': {
-        color: '#FCDE00',
-        width: "40",
-        height: "40"
-    },
-    '& .MuiRating-iconHover': {
-        color: '#FCDE00',
-        width: "40",
-        height: "40"
-    },
-    '& .MuiRating-iconEmpty': {
-        color: '#FCDE00',
-        width: "40",
-        height: "40"
-    },
-});
-
 
 interface reviewProps {
     review: {
@@ -80,7 +58,7 @@ export default function ReviewContainer({ review, render, setRender }: reviewPro
                     </div>
                     <div className="review_rating">
                         Nota geral
-                        <StyledRating name="read-only" value={rating} icon={<Star style={{ width: "1.3em", height: "1.3em" }} />} emptyIcon={<StarBorderOutlined style={{ width: "1.3em", height: "1.3em" }} />} readOnly />
+                        <Rating value={rating} size="1.3em" read={true} setValue={null} />
                     </div>
                 </div>
                 <div className='review_col1'>

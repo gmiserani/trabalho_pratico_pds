@@ -5,7 +5,7 @@ import { getAllSubjects } from '../../services/subject';
 import Order from '../Atoms/Order';
 import ArrowDropDownIcon from '@mui/icons-material/ArrowDropDown';
 import './Home.css';
-import { Header } from '../Header/Header';
+import Header from '../Header/Header';
 import SearchIcon from '@mui/icons-material/Search';
 
 
@@ -30,7 +30,7 @@ export default function Home() {
 
     return (
         <div>
-            <Header />
+            <Header logged={true} />
             <div className="homeContainer">
 
                 <h1 className='pageTittle'>

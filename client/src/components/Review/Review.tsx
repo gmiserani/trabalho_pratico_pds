@@ -1,60 +1,13 @@
-import { useNavigate } from "react-router-dom";
-import { Comment } from "../../components/Atoms/Comment";
+import { useNavigate, useParams } from "react-router-dom";
 import { useState } from "react";
 import { addReview } from "../../services/subject";
-import { useParams } from "react-router-dom";
-import { Header } from '../Header/Header';
-import { StyledRating } from '../../components/Atoms/Rating';
+import Header from '../Header/Header';
+import Rating from '../../components/Atoms/Rating';
+import Comment from "../../components/Atoms/Comment";
 import ArrowBackIcon from '@mui/icons-material/ArrowBack';
-import ToggleButton, { toggleButtonClasses } from '@mui/material/ToggleButton';
-import ToggleButtonGroup, {
-    toggleButtonGroupClasses,
-} from '@mui/material/ToggleButtonGroup';
-import Star from '@mui/icons-material/Star';
+import { StyledToggleButton, StyledToggleButtonGroup } from '../../components/Atoms/ToggleButton';
 import './Review.css';
-import StarBorderOutlined from '@mui/icons-material/StarBorderOutlined';
 
-import { styled } from "@mui/material/styles";
-
-const StyledToggleButtonGroup = styled(ToggleButtonGroup)(() => ({
-    [`& .${toggleButtonGroupClasses.grouped}`]: {
-        marginLeft: 1,
-        border: 0,
-        borderRadius: 25,
-        backgroundColor: '#E9D5E7',
-        color: '#3c043e',
-        width: 100,
-        [`&.${toggleButtonGroupClasses}`]: {
-            border: 0,
-        },
-    },
-    [`& .${toggleButtonGroupClasses.middleButton},& .${toggleButtonGroupClasses.lastButton}`]:
-    {
-        marginLeft: -1,
-        borderLeft: '1px solid transparent',
-    },
-    "&.Mui-selected, &.Mui-selected:hover": {
-        color: "white",
-        backgroundColor: '#3c043e'
-    }
-
-}));
-
-const StyledToggleButton = styled(ToggleButton)(() => ({
-    [`&.${toggleButtonClasses.root}`]:
-    {
-        padding: '0.2em',
-        textTransform: 'none',
-        fontWeight: 'bold',
-        width: '100%',
-
-    },
-    "&.Mui-selected, &.Mui-selected:hover": {
-        color: "white",
-        backgroundColor: '#3c043e',
-        width: '100%',
-    }
-}));
 
 export default function Review() {
 
@@ -113,7 +66,7 @@ export default function Review() {
 
     return (
         <div className="reviewPageContainer">
-            <Header />
+            <Header logged={true} />
 
             <div className="reviewPage">
 
@@ -213,7 +166,10 @@ export default function Review() {
                         <div className="question">
                             Nota geral da disciplina:
                         </div>
-                        <StyledRating className="review-rating" name="overall_rating" value={overall_rating || 0} onChange={(event, newValue) => { setOverallRating(newValue || 0); }} icon={<Star style={{ width: "1.5em", height: "1.5em" }} />} emptyIcon={<StarBorderOutlined style={{ width: "1.5em", height: "1.5em" }} />} />
+                        <div className="reviewFormRating">
+                            <Rating value={overall_rating || 0} setValue={setOverallRating} size="1.5em" read={false} />
+                        </div>
+
                     </div>
                     <div className="reviewField">
 

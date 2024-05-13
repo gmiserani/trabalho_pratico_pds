@@ -5,7 +5,8 @@ import LogoutOutlinedIcon from '@mui/icons-material/LogoutOutlined';
 import { logout } from '../../services/user';
 import { Link } from 'react-router-dom';
 
-export const Header = () => {
+export default function Header({ logged }: { logged: boolean }) {
+
     async function handleLogout() {
         await logout().then(() => {
             localStorage.removeItem('token');
@@ -18,15 +19,19 @@ export const Header = () => {
     return (
         <header className="header" >
             <img className="symbol" src={simbolologo} alt="" />
-            <div className="icons">
-                <AccountCircleOutlinedIcon className="profileIcon" sx={{ fontSize: '2em' }} />
-                <Link className="logoutLink" to={'/login'}>
-                    <LogoutOutlinedIcon onClick={handleLogout} sx={{ fontSize: '2em' }} />
-                </Link>
-
-            </div>
-
+            {
+                logged ?
+                    <div className="icons">
+                        <AccountCircleOutlinedIcon className="profileIcon" sx={{ fontSize: '2em' }} />
+                        <Link className="logoutLink" to={'/login'}>
+                            <LogoutOutlinedIcon onClick={handleLogout} sx={{ fontSize: '2em' }} />
+                        </Link>
+                    </div>
+                    :
+                    <div>
+                    </div>
+            }
         </header>
 
     );
-};
+}

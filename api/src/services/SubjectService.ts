@@ -14,6 +14,7 @@ class SubjectServiceClass {
             select: {
                 id: true,
                 name: true,
+                picture: true,
             },
         },
         syllabus: true,

@@ -1,7 +1,7 @@
 import { Router, Request, Response, NextFunction } from "express";
 import { UserService } from "../services/UserService";
 import { statusCodes } from "../error";
-import { loginMiddleware, verifyJWT, notLoggedIn, loggedIn } from "../auth";
+import { loginMiddleware, verifyJWT, notLoggedIn, loggedIn, generateJWT } from "../auth";
 
 export const router = Router();
 
@@ -36,7 +36,8 @@ router.post("/logout", verifyJWT, async (req: Request, res: Response, next: Next
 // Create a new user
 router.post("/", async (req: Request, res: Response, next: NextFunction) => {
     try {
-        await UserService.create(req.body);
+        const user = await UserService.create(req.body);
+        generateJWT(user.id, res);
         res.status(statusCodes.CREATED).end();
     }
     catch (error) {

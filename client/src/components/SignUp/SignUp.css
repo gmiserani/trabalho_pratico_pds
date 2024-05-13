@@ -1,0 +1,85 @@
+.signUpContainer {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    width: 100%;
+}
+
+.backButtonSignUp {
+    z-index: 0;
+    color: #3c043e;
+    position: absolute;
+    cursor: pointer;
+    top: 10%;
+    left: 1%;
+}
+
+.form-wrapper-signup {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    background-color: #D2ACCF;
+    border-radius: 25px;
+    width: 50%;
+}
+
+.form-wrapper-signup h1 {
+    margin-bottom: 0.5em;
+    font-style: italic;
+}
+
+.form-wrapper-signup h3 {
+    text-align: left;
+    font-size: 1em;
+    margin: 0.5em 0;
+    padding-left: 1em;
+}
+
+.form-wrapper-signup form {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    width: 85%;
+}
+
+.form-wrapper-signup form div {
+    display: flex;
+    flex-direction: column;
+    width: 100%;
+}
+
+.form-wrapper-signup button {
+    display: flex;
+    justify-content: center;
+    width: 33%;
+    font-family: "Montserrat-Bold", Helvetica;
+    font-size: 20px;
+    font-weight: 700;
+    letter-spacing: 0;
+    color: #3c043e;
+    padding: 0.6em 1.2em;
+    margin-bottom: 1em;
+}
+
+.inputPassword {
+    margin-bottom: 1em;
+}
+
+input {
+    width: 100%;
+    margin: 0em 1em;
+}
+
+.form-wrapper-signup a {
+    padding-top: 5%;
+    color: #3c043e;
+    font-weight: bold;
+    text-decoration: underline;
+}
+
+.form-wrapper-signup a:hover {
+    transition: 0.1s;
+    color: #3c043e;
+}

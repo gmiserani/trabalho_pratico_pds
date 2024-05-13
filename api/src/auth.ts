@@ -12,7 +12,7 @@ export function getEnv(name: string): string {
     return value;
 }
 
-function generateJWT(userId: string, res: Response) {
+export function generateJWT(userId: string, res: Response) {
     const body = {
         id: userId,
     };

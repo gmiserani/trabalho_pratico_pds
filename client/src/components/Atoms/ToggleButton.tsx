@@ -1,28 +1,43 @@
-import * as React from 'react';
-import ToggleButton from '@mui/material/ToggleButton';
-import ToggleButtonGroup from '@mui/material/ToggleButtonGroup';
+import ToggleButton, { toggleButtonClasses } from '@mui/material/ToggleButton';
+import ToggleButtonGroup, { toggleButtonGroupClasses, } from '@mui/material/ToggleButtonGroup';
+import { styled } from "@mui/material/styles";
 
-export default function ToggleButtons() {
-    const [alignment, setAlignment] = React.useState<string | null>('left');
+export const StyledToggleButtonGroup = styled(ToggleButtonGroup)(() => ({
+    [`& .${toggleButtonGroupClasses.grouped}`]: {
+        marginLeft: 1,
+        border: 0,
+        borderRadius: 25,
+        backgroundColor: '#E9D5E7',
+        color: '#3c043e',
+        width: 100,
+        [`&.${toggleButtonGroupClasses}`]: {
+            border: 0,
+        },
+    },
+    [`& .${toggleButtonGroupClasses.middleButton},& .${toggleButtonGroupClasses.lastButton}`]:
+    {
+        marginLeft: -1,
+        borderLeft: '1px solid transparent',
+    },
+    "&.Mui-selected, &.Mui-selected:hover": {
+        color: "white",
+        backgroundColor: '#3c043e'
+    }
 
-    const handleReviewResponse = (
-        event: React.MouseEvent<HTMLElement>,
-        newAlignment: string | null,
-    ) => {
-        setAlignment(newAlignment);
-    };
+}));
 
-    return (
-        <ToggleButtonGroup value={alignment} exclusive onChange={handleReviewResponse} aria-label="reviewResponse">
-            <ToggleButton value="left" aria-label="left aligned">
-                Facil
-            </ToggleButton>
-            <ToggleButton value="center" aria-label="centered">
-                Medio
-            </ToggleButton>
-            <ToggleButton value="right" aria-label="right aligned">
-                Dificil
-            </ToggleButton>
-        </ToggleButtonGroup>
-    );
-}
+export const StyledToggleButton = styled(ToggleButton)(() => ({
+    [`&.${toggleButtonClasses.root}`]:
+    {
+        padding: '0.2em',
+        textTransform: 'none',
+        fontWeight: 'bold',
+        width: '100%',
+
+    },
+    "&.Mui-selected, &.Mui-selected:hover": {
+        color: "white",
+        backgroundColor: '#3c043e',
+        width: '100%',
+    }
+}));

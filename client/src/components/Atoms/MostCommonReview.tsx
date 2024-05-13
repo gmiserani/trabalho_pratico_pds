@@ -1,29 +1,7 @@
 import { useState, useEffect } from 'react';
-import { Rating } from '@mui/material';
-import StarBorderOutlined from '@mui/icons-material/StarBorderOutlined';
-import Star from '@mui/icons-material/Star';
-import { styled } from '@mui/material/styles';
-import './MostCommonReview.css';
+import Rating from './Rating';
 import Answer from './Answer';
-
-const StyledRating = styled(Rating)({
-    '& .MuiRating-iconFilled': {
-        color: '#FCDE00',
-        width: "40",
-        height: "40"
-    },
-    '& .MuiRating-iconHover': {
-        color: '#FCDE00',
-        width: "40",
-        height: "40"
-    },
-    '& .MuiRating-iconEmpty': {
-        color: '#FCDE00',
-        width: "40",
-        height: "40"
-    },
-});
-
+import './MostCommonReview.css';
 
 interface mostCommonReviewProps {
     review: {
@@ -39,7 +17,7 @@ interface mostCommonReviewProps {
 }
 
 export default function MostCommonReview({ review, render, setRender }: mostCommonReviewProps) {
-    const [rating, setRating] = useState(review.overall_rating);
+    const [rating, setRating] = useState(0);
 
     useEffect(() => {
         setRating(review.overall_rating);
@@ -72,7 +50,7 @@ export default function MostCommonReview({ review, render, setRender }: mostComm
                 </div>
                 <div className="rating">
                     Nota geral
-                    <StyledRating name="read-only" value={rating} icon={<Star style={{ width: "1.5em", height: "1.5em" }} />} emptyIcon={<StarBorderOutlined style={{ width: "1.5em", height: "1.5em" }} />} readOnly />
+                    <Rating value={rating} size="1.5em" read={true} setValue={null} />
                 </div>
             </div>
         </div >
