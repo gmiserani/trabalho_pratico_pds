@@ -1,6 +1,6 @@
 // Service class for the Subject entity. Here we define the methods that will be used in the SubjectController
 
-import prisma from "../prisma_main";
+import prisma from "../libs/prisma";
 import { Prisma } from "@prisma/client";
 import { QueryError } from "../../src/error";
 

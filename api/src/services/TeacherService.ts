@@ -1,6 +1,6 @@
 // Service class for teacher related operations in the database. Here we define the methods that will be used in the TeacherController
 
-import prisma from "../prisma_main";
+import prisma from "../libs/prisma";
 import { Prisma } from "@prisma/client";
 import { QueryError } from "../../src/error";
 
