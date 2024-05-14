@@ -27,6 +27,16 @@ class SubjectServiceClass {
 
     // Create a new subject
     async create(teacher_name: string, body: Prisma.SubjectCreateInput) {
+        const alreadyExists = await prisma.subject.findFirst({
+            where: {
+                name: body.name,
+            },
+        });
+
+        if (alreadyExists) {
+            throw new QueryError("Subject already exists");
+        }
+
         const teacher = await prisma.teacher.findFirst({
             where: {
                 name: teacher_name,
@@ -36,26 +46,21 @@ class SubjectServiceClass {
         let newSubject;
 
         if (!teacher) {
-            await prisma.teacher.create({
-                data: {
-                    name: teacher_name,
-                },
-            });
             newSubject = await prisma.subject.create({
                 data: {
                     name: body.name,
+                    syllabus: body.syllabus,
+                    mode: body.mode,
+                    semester: Number(body.semester),
+                    workload: Number(body.workload),
+                    date: body.date,
+                    time: body.time,
                     teacher: {
                         create: {
                             name: teacher_name,
                         },
                     },
-                    syllabus: body.syllabus,
-                    mode: body.mode,
-                    date: body.date,
-                    time: body.time,
-                    semester: Number(body.semester),
-                    workload: Number(body.workload),
-                },
+                }
             });
         }
         else {

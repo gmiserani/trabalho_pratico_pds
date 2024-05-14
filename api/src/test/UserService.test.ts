@@ -1,6 +1,6 @@
 import { beforeEach, describe, expect, test, vi } from "vitest";
 import { UserService } from "../services/UserService";
-import { Prisma } from "@prisma/client";
+import { Prisma, User } from "@prisma/client";
 import prisma from "../libs/__mocks__/prisma";
 import * as bcrypt from "bcrypt";
 
