@@ -21,7 +21,7 @@ const selectOptions = {
             workload: true,
             teacher: true,
         },
-        },
+    },
 };
 
 describe("create", () => {
@@ -58,7 +58,7 @@ describe("getById", () => {
             id: "1",
             name: "John Doe",
             picture: "picture",
-        }; 
+        };
     });
 
     test("Should return a teacher by id", async () => {
@@ -75,7 +75,7 @@ describe("getById", () => {
         await expect(TeacherService.getById("1")).rejects.toThrow("Teacher not found");
     });
 
-});    
+});
 
 describe("getAll", () => {
     let teachers: Teacher[];
@@ -109,5 +109,28 @@ describe("getAll", () => {
         prisma.teacher.findMany.mockResolvedValueOnce([]);
 
         await expect(TeacherService.getAll()).rejects.toThrow("No teachers found");
+    });
+});
+
+describe("update", () => {
+    let updateBody: Prisma.TeacherUpdateInput;
+
+    beforeEach(() => {
+        vi.resetAllMocks();
+
+        updateBody = {
+            name: "Jane Doe",
+        };
+    });
+
+    test("Should update a teacher", async () => {
+        await TeacherService.update("1", updateBody);
+
+        expect(prisma.teacher.update).toHaveBeenCalledWith({
+            where: {
+                id: "1",
+            },
+            data: updateBody,
+        });
     });
 });

@@ -55,6 +55,17 @@ class TeacherServiceClass {
         return newTeacher;
     }
 
+    async update(id: string, body: Prisma.TeacherUpdateInput) {
+        const updatedTeacher = await prisma.teacher.update({
+            where: {
+                id,
+            },
+            data: body,
+        });
+
+        return updatedTeacher;
+    }
+
 }
 
 // Export the service

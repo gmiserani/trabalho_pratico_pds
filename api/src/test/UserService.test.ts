@@ -81,20 +81,6 @@ describe("create", () => {
         expect(bcrypt.hash).toHaveBeenCalledWith(createBody.password, 10);
     });
 
-    // test("Should call prisma.user.create with encrypted password", async () => {
-    //     await UserService.create(createBody);
-
-    //     expect(prisma.user.create).toHaveBeenCalledWith({
-    //         data: {
-    //             email: createBody.email,
-    //             username: createBody.username,
-    //             name: createBody.name,
-    //             course: createBody.course,
-    //             semester: createBody.semester,
-    //             password: "encryptedPassword",
-    //         },
-    //     });
-    // });
 });
 
 describe("getAll", () => {

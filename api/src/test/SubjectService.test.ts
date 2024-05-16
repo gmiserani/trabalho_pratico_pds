@@ -1,8 +1,9 @@
 import { beforeEach, describe, expect, test, vi } from "vitest";
 import { SubjectService } from "../services/SubjectService";
-import { Prisma, Subject } from "@prisma/client";
+import { Prisma, Subject, User, Review } from "@prisma/client";
 import prisma from "../libs/__mocks__/prisma";
 import * as bcrypt from "bcrypt";
+import { create } from "domain";
 
 vi.mock("../libs/prisma.ts");
 
@@ -394,5 +395,220 @@ describe("getReviews", () => {
 
         await expect(SubjectService.getReviews("1")).rejects.toThrow("Subject not found");
     });
+
+    test("Should return all reviews", async () => {
+        prisma.subject.findFirst.mockResolvedValueOnce(findFirstSubject);
+
+        const reviews = await SubjectService.getReviews("1");
+
+        expect(reviews).toEqual(findFirstSubject.reviews);
+    });
 });
-            
+
+describe("canUserReviewSubject", () => {
+    let findFirstSubject: Subject;
+    let findFirstUser: User;
+
+    beforeEach(() => {
+        vi.resetAllMocks();
+
+        findFirstSubject = {
+            id: "1",
+            name: "test",
+            syllabus: "test",
+            mode: "test",
+            date: "Mon/Wed",
+            time: "17:00",
+            semester: 1,
+            workload: 1,
+            teacherId: "1",
+        };
+
+        findFirstUser = {
+            id: "1",
+            name: "John Doe",
+            username: "johndoe",
+            email: "john@prisma.io",
+            course: "Computer Science",
+            semester: 2,
+            password: "hashedPassword"
+        };
+    });
+
+    test("Should call findFirst with user id", async () => {
+        prisma.user.findFirst.mockResolvedValueOnce(findFirstUser);
+        prisma.subject.findFirst.mockResolvedValueOnce(findFirstSubject);
+
+        await SubjectService.canUserReviewSubject("1", "1");
+
+        expect(prisma.user.findFirst).toHaveBeenCalledWith({
+            where: {
+                id: "1",
+            },
+            select: {
+                id: true,
+            },
+        });
+    });
+
+    test("Should throw error if user is not found", async () => {
+        prisma.user.findFirst.mockResolvedValueOnce(null);
+
+        await expect(SubjectService.canUserReviewSubject("1", "1")).rejects.toThrow("User not found");
+    });
+
+    test("Should call findFirst with review subjectId", async () => {
+        prisma.user.findFirst.mockResolvedValueOnce(findFirstUser);
+        prisma.subject.findFirst.mockResolvedValueOnce(findFirstSubject);
+
+        await SubjectService.canUserReviewSubject("1", "1");
+
+        expect(prisma.review.findFirst).toHaveBeenCalledWith({
+            where: {
+                subject_id: "1",
+                user_id: "1",
+            },
+        });
+    });
+
+    test("Should return true if user has not reviewed subject", async () => {
+        prisma.user.findFirst.mockResolvedValueOnce(findFirstUser);
+        prisma.subject.findFirst.mockResolvedValueOnce(findFirstSubject);
+
+        const canReview = await SubjectService.canUserReviewSubject("1", "1");
+
+        expect(canReview).toBe(true);
+    });
+
+    test("Should return false if user has reviewed subject", async () => {
+        prisma.user.findFirst.mockResolvedValueOnce(findFirstUser);
+        prisma.subject.findFirst.mockResolvedValueOnce(findFirstSubject);
+        prisma.review.findFirst.mockResolvedValueOnce({
+            id: "1",
+            user_id: "1",
+            subject_id: "1",
+            test_rating: "5",
+            project_rating: "5",
+            teacher_rating: "5",
+            effort_rating: "5",
+            presence_rating: "5",
+            overall_rating: 5,
+            comment: "Great teacher",
+        });
+
+        const canReview = await SubjectService.canUserReviewSubject("1", "1");
+
+        expect(canReview).toBe(false);
+    });
+});
+
+describe("addReview", async () => {
+    let findFirstSubject: Subject;
+    let findFirstUser: User;
+    let createBody: Prisma.ReviewCreateInput;
+
+    beforeEach(() => {
+        vi.resetAllMocks();
+
+        findFirstSubject = {
+            id: "1",
+            name: "test",
+            syllabus: "test",
+            mode: "test",
+            date: "Mon/Wed",
+            time: "17:00",
+            semester: 1,
+            workload: 1,
+            teacherId: "1",
+        };
+
+        findFirstUser = {
+            id: "1",
+            name: "John Doe",
+            username: "johndoe",
+            email: "john@prisma.io",
+            course: "Computer Science",
+            semester: 2,
+            password: "hashedPassword"
+        };
+
+        createBody = {
+            presence_rating: "NAO",
+            teacher_rating: "RUIM",
+            project_rating: "FACIL",
+            test_rating: "FACIL",
+            effort_rating: "POUCO",
+            overall_rating: 5,
+            comment: "bla bla bla",
+        };
+
+    });
+
+    test("Should throw error if user is not found", async () => {
+        prisma.user.findFirst.mockResolvedValueOnce(null);
+
+        await expect(SubjectService.addReview("1", "1", createBody)).rejects.toThrow("User not found");
+    });
+
+    test("Should throw error if subject is not found", async () => {
+        prisma.user.findFirst.mockResolvedValueOnce(findFirstUser);
+        prisma.subject.findFirst.mockResolvedValueOnce(null);
+
+        await expect(SubjectService.addReview("1", "1", createBody)).rejects.toThrow("Subject not found");
+    });
+
+    test("Should throw error if invalid presence rating", async () => {
+        prisma.user.findFirst.mockResolvedValueOnce(findFirstUser);
+        prisma.subject.findFirst.mockResolvedValueOnce(findFirstSubject);
+
+        createBody.presence_rating = "INVALID";
+
+        await expect(SubjectService.addReview("1", "1", createBody)).rejects.toThrow("Invalid presence rating");
+    });
+
+    test("Should throw error if invalid teacher rating", async () => {
+        prisma.user.findFirst.mockResolvedValueOnce(findFirstUser);
+        prisma.subject.findFirst.mockResolvedValueOnce(findFirstSubject);
+
+        createBody.teacher_rating = "INVALID";
+
+        await expect(SubjectService.addReview("1", "1", createBody)).rejects.toThrow("Invalid teacher rating");
+    });
+
+    test("Should throw error if invalid project rating", async () => {
+        prisma.user.findFirst.mockResolvedValueOnce(findFirstUser);
+        prisma.subject.findFirst.mockResolvedValueOnce(findFirstSubject);
+
+        createBody.project_rating = "INVALID";
+
+        await expect(SubjectService.addReview("1", "1", createBody)).rejects.toThrow("Invalid project rating");
+    });
+
+    test("Should throw error if invalid test rating", async () => {
+        prisma.user.findFirst.mockResolvedValueOnce(findFirstUser);
+        prisma.subject.findFirst.mockResolvedValueOnce(findFirstSubject);
+
+        createBody.test_rating = "INVALID";
+
+        await expect(SubjectService.addReview("1", "1", createBody)).rejects.toThrow("Invalid test rating");
+    });
+
+    test("Should throw error if invalid effort rating", async () => {
+        prisma.user.findFirst.mockResolvedValueOnce(findFirstUser);
+        prisma.subject.findFirst.mockResolvedValueOnce(findFirstSubject);
+
+        createBody.effort_rating = "INVALID";
+
+        await expect(SubjectService.addReview("1", "1", createBody)).rejects.toThrow("Invalid effort rating");
+    });
+
+    test("Should throw error if invalid overall rating", async () => {
+        prisma.user.findFirst.mockResolvedValueOnce(findFirstUser);
+        prisma.subject.findFirst.mockResolvedValueOnce(findFirstSubject);
+
+        createBody.overall_rating = 6;
+
+        await expect(SubjectService.addReview("1", "1", createBody)).rejects.toThrow("Invalid overall rating");
+    });
+
+});

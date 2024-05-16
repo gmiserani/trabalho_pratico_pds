@@ -368,6 +368,19 @@ class SubjectServiceClass {
             throw new QueryError("User not found");
         }
 
+        const subject = await prisma.subject.findFirst({
+            where: {
+                id: id,
+            },
+            select: {
+                id: true,
+            },
+        });
+
+        if (!subject) {
+            throw new QueryError("Subject not found");
+        }
+
         if (!["SIM", "NAO"].includes(body.presence_rating)) {
             throw new Error("Invalid presence rating");
         }
