@@ -134,11 +134,11 @@ export default function Subject() {
                 </div>
                 <div className="subjectInfo">
                     <div className="summary">
-                        <div>{subjectSummary?.mode}</div>
+                        {/* <div>{subjectSummary?.mode}</div>
                         <div>{subjectSummary?.date}</div>
                         <div>{subjectSummary?.time}</div>
                         <div>{subjectSummary?.semester}</div>
-                        <div>{subjectSummary?.workload}</div>
+                        <div>{subjectSummary?.workload}</div> */}
                         {subjectSummary?.syllabus}
                     </div>
 
