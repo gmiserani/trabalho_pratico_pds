@@ -1,98 +1,33 @@
 // Service class for the Subject entity. Here we define the methods that will be used in the SubjectController
-
-import prisma from "../libs/prisma";
-import { Prisma } from "@prisma/client";
 import { QueryError } from "../../src/error";
+import { SubjectRepository } from "./SubjectRepository";
 
 class SubjectServiceClass {
 
-    // Define the fields that will be returned when a subject is fetched
-    selectOptions = {
-        id: true,
-        name: true,
-        teacher: {
-            select: {
-                id: true,
-                name: true,
-                picture: true,
-            },
-        },
-        syllabus: true,
-        mode: true,
-        date: true,
-        time: true,
-        semester: true,
-        workload: true,
-    };
-
     // Create a new subject
-    async create(teacher_name: string, body: Prisma.SubjectCreateInput) {
-        const alreadyExists = await prisma.subject.findFirst({
-            where: {
-                name: body.name,
-            },
-        });
+    async create(teacher_name: string, body: {id:string; name: string, syllabus: string, mode: string, semester: string, workload: string, date: string, time: string }) {
+        const alreadyExists = await SubjectRepository.alreadyExists(teacher_name, body);
 
         if (alreadyExists) {
             throw new QueryError("Subject already exists");
         }
 
-        const teacher = await prisma.teacher.findFirst({
-            where: {
-                name: teacher_name,
-            },
-        });
+        const teacher = await SubjectRepository.teacher(teacher_name);
 
         let newSubject;
 
         if (!teacher) {
-            newSubject = await prisma.subject.create({
-                data: {
-                    name: body.name,
-                    syllabus: body.syllabus,
-                    mode: body.mode,
-                    semester: Number(body.semester),
-                    workload: Number(body.workload),
-                    date: body.date,
-                    time: body.time,
-                    teacher: {
-                        create: {
-                            name: teacher_name,
-                        },
-                    },
-                }
-            });
+            const newSubject = await SubjectRepository.create({...body, semester: Number(body.semester), workload: Number(body.workload)})
         }
         else {
-            newSubject = await prisma.subject.create({
-                data: {
-                    name: body.name,
-                    teacher: {
-                        connect: {
-                            id: teacher.id,
-                        },
-                    },
-                    syllabus: body.syllabus,
-                    mode: body.mode,
-                    date: body.date,
-                    time: body.time,
-                    semester: Number(body.semester),
-                    workload: Number(body.workload),
-                },
-            });
+            newSubject = await SubjectRepository.connect({...body, semester: Number(body.semester), workload: Number(body.workload)});
         }
-
         return newSubject;
     }
 
     // Get a subject by its ID
     async getById(id: string) {
-        const subject = await prisma.subject.findFirst({
-            where: {
-                id,
-            },
-            select: this.selectOptions,
-        });
+        const subject = await SubjectRepository.getById(id);
 
         if (!subject) {
             throw new QueryError("Subject not found");
@@ -101,15 +36,9 @@ class SubjectServiceClass {
         return subject;
     }
 
-    // Get all subjects, but only the name and the 
+    // Get all subjects, but only the name
     async getAllSummaryNormalOrder() {
-        const subjects = await prisma.subject.findMany({
-            select: {
-                id: true,
-                name: true,
-                overall_rating: true,
-            },
-        });
+        const subjects = await SubjectRepository.getAllSummaryNormalOrder();
 
         if (!subjects) {
             throw new QueryError("No subjects found");
@@ -120,17 +49,7 @@ class SubjectServiceClass {
 
     // Get all subjects, but ordered by the overall rating
     async getAllSummaryRatingOrderDesc() {
-        const subjects = await prisma.subject.findMany({
-            orderBy: {
-                overall_rating: "desc",
-            },
-            select: {
-                id: true,
-                name: true,
-                overall_rating: true,
-            },
-
-        });
+        const subjects = await SubjectRepository.getAllSummaryRatingOrderDesc();
 
         if (!subjects) {
             throw new QueryError("No subjects found");
@@ -141,17 +60,7 @@ class SubjectServiceClass {
 
     // Get all subjects, but ordered by the overall rating
     async getAllSummaryRatingOrderAsc() {
-        const subjects = await prisma.subject.findMany({
-            orderBy: {
-                overall_rating: "asc",
-            },
-            select: {
-                id: true,
-                name: true,
-                overall_rating: true,
-            },
-
-        });
+        const subjects = await SubjectRepository.getAllSummaryRatingOrderAsc();
 
         if (!subjects) {
             throw new QueryError("No subjects found");
@@ -162,25 +71,13 @@ class SubjectServiceClass {
 
     // Check if a user can review a subject (if the user has already reviewed the subject, he can't review it again)
     async canUserReviewSubject(id: string, userId: string) {
-        const user = await prisma.user.findFirst({
-            where: {
-                id: userId,
-            },
-            select: {
-                id: true,
-            },
-        });
+        const user = await SubjectRepository.canUserReviewSubject(id, userId);
 
         if (!user) {
             throw new QueryError("User not found");
         }
 
-        const review = await prisma.review.findFirst({
-            where: {
-                subject_id: id,
-                user_id: userId,
-            },
-        });
+        const review = await SubjectRepository.canUserReviewSubject2(id, userId);
 
         if (review) {
             return false;
@@ -191,29 +88,7 @@ class SubjectServiceClass {
 
     // Get the reviews for a subject
     async getReviews(id: string) {
-        const subject = await prisma.subject.findFirst({
-            where: {
-                id: id,
-            },
-            select: {
-                reviews: {
-                    select: {
-                        user: {
-                            select: {
-                                username: true,
-                            },
-                        },
-                        test_rating: true,
-                        project_rating: true,
-                        teacher_rating: true,
-                        effort_rating: true,
-                        presence_rating: true,
-                        overall_rating: true,
-                        comment: true,
-                    },
-                },
-            },
-        });
+        const subject = await SubjectRepository.getReviews(id);
 
         if (!subject) {
             throw new QueryError("Subject not found");
@@ -224,127 +99,28 @@ class SubjectServiceClass {
 
     // Get most common ratings for a subject
     async calculateMostCommonRating(id: string) {
-        const test_ratings = await prisma.review.groupBy({
-            by: ["test_rating"],
-            _count: {
-                test_rating: true,
-            },
-            where: {
-                subject_id: id,
-            },
-            orderBy: {
-                _count: {
-                    test_rating: "desc",
-                },
-            },
-        });
-        const project_ratings = await prisma.review.groupBy({
-            by: ["project_rating"],
-            _count: {
-                project_rating: true,
-            },
-            where: {
-                subject_id: id,
-            },
-            orderBy: {
-                _count: {
-                    project_rating: "desc",
-                },
-            },
-        });
-        const teacher_ratings = await prisma.review.groupBy({
-            by: ["teacher_rating"],
-            _count: {
-                teacher_rating: true,
-            },
-            where: {
-                subject_id: id,
-            },
-            orderBy: {
-                _count: {
-                    teacher_rating: "desc",
-                },
-            },
-        });
-        const presence_ratings = await prisma.review.groupBy({
-            by: ["presence_rating"],
-            _count: {
-                presence_rating: true,
-            },
-            where: {
-                subject_id: id,
-            },
-            orderBy: {
-                _count: {
-                    presence_rating: "desc",
-                },
-            },
-        });
-        const effort_ratings = await prisma.review.groupBy({
-            by: ["effort_rating"],
-            _count: {
-                effort_rating: true,
-            },
-            where: {
-                subject_id: id,
-            },
-            orderBy: {
-                _count: {
-                    effort_rating: "desc",
-                },
-            },
-        });
+        const test_ratings = await SubjectRepository.getTestRatings(id);
 
-        await prisma.subject.update({
-            where: {
-                id: id,
-            },
-            data: {
-                test_rating: test_ratings[0].test_rating,
-                project_rating: project_ratings[0].project_rating,
-                teacher_rating: teacher_ratings[0].teacher_rating,
-                presence_rating: presence_ratings[0].presence_rating,
-                effort_rating: effort_ratings[0].effort_rating,
-            },
-        });
+        const project_ratings = await SubjectRepository.getProjectRatings(id);
+
+        const teacher_ratings = await SubjectRepository.getTeacherRatings(id);
+
+        const presence_ratings = await SubjectRepository.getPresenceRatings(id);
+
+        const effort_ratings = await SubjectRepository.getEffortRatings(id);
+        const updateSubject = await SubjectRepository.updateSubject(id, {test_ratings: test_ratings[0].test_rating, project_ratings: project_ratings[0].project_rating, teacher_ratings: teacher_ratings[0].teacher_rating, presence_ratings: presence_ratings[0].presence_rating, effort_ratings: effort_ratings[0].effort_rating});
     }
 
     // Get avg rating for subject
     async calculateAvgRating(id: string) {
-        const average = await prisma.review.aggregate({
-            where: {
-                subject_id: id,
-            },
-            _avg: {
-                overall_rating: true,
-            }
-        });
+        const average = await SubjectRepository.calculateAvgRating(id, {overall_rating: true});
 
-        await prisma.subject.update({
-            where: {
-                id: id,
-            },
-            data: {
-                overall_rating: average._avg.overall_rating ?? 0,
-            },
-        });
+        const updateSubject = await SubjectRepository.update(id, {overall_rating: average._avg.overall_rating ?? 0});
     }
 
     // Get the ratings for a subject
     async getRatings(id: string) {
-        const subject = await prisma.subject.findFirst({
-            where: {
-                id: id,
-            },
-            select: {
-                test_rating: true,
-                project_rating: true,
-                teacher_rating: true,
-                presence_rating: true,
-                effort_rating: true,
-                overall_rating: true,
-            },
-        });
+        const subject = await SubjectRepository.getRatings(id, {overall_rating: true, test_ratings: true, project_ratings: true, teacher_ratings: true, presence_ratings: true, effort_ratings: true});
 
         if (!subject) {
             throw new QueryError("Subject not found");
@@ -354,28 +130,14 @@ class SubjectServiceClass {
     }
 
     // Add a review to a subject -> will receive the ID of the subject, the name of the user and the review data
-    async addReview(id: string, userId: string, body: Prisma.ReviewCreateInput) {
-        const user = await prisma.user.findFirst({
-            where: {
-                id: userId,
-            },
-            select: {
-                id: true,
-            },
-        });
+    async addReview(id: string, userId: string, body: {presence_rating: string, teacher_rating: string, project_rating: string, test_rating: string, effort_rating: string, overall_rating: number, comment: string}) {
+        const user = await SubjectRepository.addReview(id, userId);
 
         if (!user) {
             throw new QueryError("User not found");
         }
 
-        const subject = await prisma.subject.findFirst({
-            where: {
-                id: id,
-            },
-            select: {
-                id: true,
-            },
-        });
+        const subject = await SubjectRepository.addReview2(id);
 
         if (!subject) {
             throw new QueryError("Subject not found");
@@ -405,58 +167,9 @@ class SubjectServiceClass {
             throw new Error("Invalid overall rating");
         }
 
-        const review = await prisma.review.create({
-            data: {
-                user: {
-                    connect: {
-                        id: user.id,
-                    },
-                },
-                subject: {
-                    connect: {
-                        id: id,
-                    },
-                },
-                test_rating: body.test_rating,
-                project_rating: body.project_rating,
-                teacher_rating: body.teacher_rating,
-                effort_rating: body.effort_rating,
-                presence_rating: body.presence_rating,
-                overall_rating: Number(body.overall_rating),
-                comment: body.comment,
-            },
-        });
+        const review = await SubjectRepository.createReview(id, userId, body);
 
-        prisma.subject.update({
-            where: {
-                id: id,
-            },
-            data: {
-                reviews: {
-                    connect: {
-                        id: review.id,
-                    },
-                },
-            },
-            select: {
-                reviews: {
-                    select: {
-                        user: {
-                            select: {
-                                username: true,
-                            },
-                        },
-                        test_rating: true,
-                        project_rating: true,
-                        teacher_rating: true,
-                        effort_rating: true,
-                        presence_rating: true,
-                        overall_rating: true,
-                        comment: true,
-                    },
-                },
-            },
-        });
+        const updateReview = await SubjectRepository.updateSubject2(id, review.id, {test_rating: true, project_rating: true, teacher_rating: true, effort_rating: true, presence_rating: true, overall_rating: true, comment: true, user: { select: { username: true } }});
 
         this.calculateMostCommonRating(id);
         this.calculateAvgRating(id);
