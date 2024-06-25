@@ -38,7 +38,7 @@ app.use(cookieParser());
 import { router as usersRouter } from "./src/domains/user/controllers/UserController"; // Import the router from the UserController
 import { router as subjectRouter } from "./src/controllers/SubjectController"; // Import the router from the SubjectController
 import { router as teacherRouter } from "./src/controllers/TeacherController"; // Import the router from the TeacherController
-import { router as reviewRouter } from "./src/controllers/ReviewController"; // Import the router from the ReviewController
+import { router as reviewRouter } from "./src/domains/review/controllers/ReviewController"; // Import the router from the ReviewController
 
 // Defining the routes -> the path and the method
 app.use("/api/users", usersRouter); // When the path of the request is /api/users-> use the usersRouter
