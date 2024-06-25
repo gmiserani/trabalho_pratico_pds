@@ -35,7 +35,7 @@ app.use(express.urlencoded({ extended: true })); // URL Encoded
 app.use(cookieParser());
 
 // Controllers -> define which method will be called for each route depending on the request -> dependps on the path and the method
-import { router as usersRouter } from "./src/controllers/UserController"; // Import the router from the UserController
+import { router as usersRouter } from "./src/domains/user/controllers/UserController"; // Import the router from the UserController
 import { router as subjectRouter } from "./src/controllers/SubjectController"; // Import the router from the SubjectController
 import { router as teacherRouter } from "./src/controllers/TeacherController"; // Import the router from the TeacherController
 import { router as reviewRouter } from "./src/controllers/ReviewController"; // Import the router from the ReviewController

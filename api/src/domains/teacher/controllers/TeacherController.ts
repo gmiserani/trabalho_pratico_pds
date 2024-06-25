@@ -1,7 +1,7 @@
 import { Router, Request, Response, NextFunction } from "express";
-import { TeacherService } from "../services/TeacherService";
-import { statusCodes } from "../error";
-import { verifyJWT } from "../auth";
+import { TeacherService } from "../../teacher/services/TeacherService";
+import { statusCodes } from "../../../error";
+import { verifyJWT } from "../../../auth";
 
 export const router = Router();
 
