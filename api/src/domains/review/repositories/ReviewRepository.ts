@@ -10,7 +10,7 @@ class ReviewRepositoryClass {
         project_rating: true,
         teacher_rating: true,
         effort_rating: true,
-        pesence_rating: true,
+        presence_rating: true,
         overall_rating: true,
         comment: true,
     };

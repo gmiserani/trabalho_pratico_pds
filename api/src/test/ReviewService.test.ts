@@ -13,7 +13,7 @@ const selectOptions = {
     project_rating: true,
     teacher_rating: true,
     effort_rating: true,
-    pesence_rating: true,
+    presence_rating: true,
     overall_rating: true,
     comment: true,
 };
@@ -34,6 +34,7 @@ describe("create", () => {
             project_rating: '5',
             teacher_rating: '5',
             effort_rating: '5',
+            presence_rating: '5',
             overall_rating: 5,
             comment: "Great teacher",
         };

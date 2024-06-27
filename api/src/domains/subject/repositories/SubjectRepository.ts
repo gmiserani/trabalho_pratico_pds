@@ -23,10 +23,10 @@ class SubjectRepositoryClass {
     };
 
     // Create a new subject
-    async alreadyExists(teacher_name: string, body: Prisma.SubjectCreateInput) {
+    async alreadyExists(name: string) {
         const alreadyExists = await prisma.subject.findFirst({
             where: {
-                name: body.name,
+                name
             },
         });
         return alreadyExists;
@@ -44,7 +44,6 @@ class SubjectRepositoryClass {
     async create(body: Prisma.SubjectCreateInput) {
         const subject = await prisma.subject.create({
             data: body,
-            teacher: {create: {name: body.teacher_name}},
         });
         return subject;
     }
@@ -52,7 +51,6 @@ class SubjectRepositoryClass {
     async connect(body: Prisma.SubjectCreateInput) {
         const subject = await prisma.subject.create({
             data: body,
-            teacher: {connect: {name: body.teacher_name}},
         });
         return subject;
     }
@@ -111,7 +109,7 @@ class SubjectRepositoryClass {
         return subjects;
     }
 
-    async canUserReviewSubject(id: string, userId: string) {
+    async canUserReviewSubject(userId: string) {
         const user = await prisma.user.findFirst({
             where: {
                 id: userId,
@@ -252,53 +250,62 @@ class SubjectRepositoryClass {
     return effort_ratings;
     }
 
-    async updateSubject(id: string, body: {test_ratings: string, project_ratings: string, teacher_ratings: string, presence_ratings: string, effort_ratings: string}) {
+    async updateSubject(id: string, body: {test_rating?: string, project_rating?: string, teacher_rating?: string, presence_rating?: string, effort_rating?: string}) {
         const updatedSubject = await prisma.subject.update({
             where: {
                 id,
             },
             data: body,
         });
-
+    
         return updatedSubject;
     }
 
     // Get avg rating for subject
-    async calculateAvgRating(id: string, body: {overall_rating: boolean}) {
+    async calculateAvgRating(id: string) {
         const average = await prisma.review.aggregate({
             where: {
                 subject_id: id,
             },
-            _avg: body,
+            _avg: {
+                overall_rating: true,
+            }
         });
         return average;
     }
 
     async update(id: string, body: {overall_rating: number}) {
-        const updatedTeacher = await prisma.teacher.update({
+        const updated = await prisma.subject.update({
             where: {
                 id,
             },
             data: body,
         });
 
-        return updatedTeacher;
+        return updated;
     }
 
 
     // Get the ratings for a subject
-    async getRatings(id: string, body: {overall_rating: boolean, test_ratings: boolean, project_ratings: boolean, teacher_ratings: boolean, presence_ratings: boolean, effort_ratings: boolean}) {
+    async getRatings(id: string) {
         const subject = await prisma.subject.findFirst({
             where: {
                 id: id,
             },
-            select: body,
+            select: {
+                test_rating: true,
+                project_rating: true,
+                teacher_rating: true,
+                presence_rating: true,
+                effort_rating: true,
+                overall_rating: true,
+            }
         });
         return subject;
     }
 
     // Add a review to a subject -> will receive the ID of the subject, the name of the user and the review data
-    async addReview(id: string, userId: string) {
+    async addReview(userId: string) {
         const user = await prisma.user.findFirst({
             where: {
                 id: userId,
@@ -310,10 +317,10 @@ class SubjectRepositoryClass {
         return user;
     }
 
-    async addReview2(id: string) {
+    async addSubject(id: string) {
         const subject = await prisma.subject.findFirst({
             where: {
-                id: id,
+                id,
             },
             select: {
                 id: true,
@@ -322,17 +329,13 @@ class SubjectRepositoryClass {
         return subject;
     }
 
-    async createReview(id: string, userId: string, body: Prisma.ReviewCreateInput) {
+    async createReview(body: Prisma.ReviewCreateInput) {
         const review = await prisma.review.create({
-            data: {
-                ...body,
-                user_id: userId,
-                subject_id: id,
-            },
+            data: body
         });
         return review;
     }
-    async updateSubject2(id: string, id2: string, body: {test_rating: boolean, project_rating: boolean, teacher_rating: boolean, presence_rating: boolean, effort_rating: boolean, overall_rating: boolean, comment: boolean, user: {select: {username: boolean}}}) {
+    async updateSubject2(id: string, id2: string) {
         const updatedSubject = await prisma.subject.update({
             where: {
                 id,
@@ -340,15 +343,28 @@ class SubjectRepositoryClass {
             data: {
                 reviews: {
                     connect: {
-                        id2,
+                        id: id2,
                     },
                 },
             },
             select: {
                 reviews: {
-                    select: {body},
-                }
-            }
+                    select: {
+                        user: {
+                            select: {
+                                username: true,
+                            },
+                        },
+                        test_rating: true,
+                        project_rating: true,
+                        teacher_rating: true,
+                        effort_rating: true,
+                        presence_rating: true,
+                        overall_rating: true,
+                        comment: true,
+                    },
+                },
+            },
         });
 
         return updatedSubject;
