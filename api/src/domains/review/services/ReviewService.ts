@@ -1,7 +1,7 @@
 // Service class for the Review entity. Here we define the methods that will be used in the ReviewController
 
 import { Prisma, SubjectCreateNestedOneWithoutReviewsInput, UserCreateNestedOneWithoutReviewInput } from "@prisma/client";
-import { QueryError } from "../../../error";
+import { QueryError } from "../../../middlewares/error";
 import { ReviewRepository } from "../repositories/ReviewRepository";
 
 class ReviewServiceClass {

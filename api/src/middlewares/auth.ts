@@ -1,8 +1,8 @@
 import { JwtPayload, sign, verify } from "jsonwebtoken";
 import { compare } from "bcrypt";
-import { PermissionError, statusCodes } from "../src/error";
+import { PermissionError, statusCodes } from "./error";
 import { Request, Response, NextFunction } from "express";
-import prisma from "./libs/prisma";
+import prisma from "../libs/prisma";
 
 export function getEnv(name: string): string {
     const value = process.env[name];

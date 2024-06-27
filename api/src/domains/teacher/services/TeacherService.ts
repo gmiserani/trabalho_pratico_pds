@@ -1,4 +1,4 @@
-import { QueryError } from "../../../error";
+import { QueryError } from "../../../middlewares/error";
 import { TeacherRepository } from "../repositories/TeacherRepository";
 
 

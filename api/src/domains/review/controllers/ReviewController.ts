@@ -2,8 +2,8 @@
 
 import { Router, Request, Response, NextFunction } from "express";
 import { ReviewService } from "../services/ReviewService";
-import { statusCodes } from "../../../error";
-import { verifyJWT } from "../../../auth";
+import { statusCodes } from "../../../middlewares/error";
+import { verifyJWT } from "../../../middlewares/auth";
 
 // Create a new router
 export const router = Router();

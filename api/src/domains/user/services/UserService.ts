@@ -3,7 +3,7 @@
 import prisma from "../../../libs/prisma";
 import { hash } from "bcrypt";
 import { Prisma } from "@prisma/client";
-import { QueryError } from "../../../error";
+import { QueryError } from "../../../middlewares/error";
 import { UserRepository } from "../repositories/UserRepository";
 
 class UserServiceClass {

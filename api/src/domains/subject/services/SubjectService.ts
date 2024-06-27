@@ -1,5 +1,5 @@
 // Service class for the Subject entity. Here we define the methods that will be used in the SubjectController
-import { QueryError } from "../../../error";
+import { QueryError } from "../../../middlewares/error";
 import { SubjectRepository } from "../repositories/SubjectRepository";
 
 class SubjectServiceClass {

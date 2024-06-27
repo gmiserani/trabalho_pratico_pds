@@ -1,7 +1,7 @@
 import express, { Express } from "express";
 import dotenv from "dotenv";
 import cors, { CorsOptions } from "cors";
-import { errorHandler } from "./src/error";
+import { errorHandler } from "./src/middlewares/error";
 import cookieParser from "cookie-parser";
 
 dotenv.config(); // Load the environment variables from the .env file
