@@ -2,6 +2,7 @@ import { PrismaClient } from "@prisma/client";
 import fs from "fs";
 import csvParser from "csv-parser";
 import { hash } from "bcrypt";
+import test from "node:test";
 
 //npx prisma db seed
 
@@ -149,6 +150,28 @@ async function main() {
                         },
                         
                     });
+                    const subjectReviews = await prisma.review.aggregate({
+                        where: {
+                            subject_id: subject.id,
+                        },
+                        _avg: {
+                            overall_rating: true,
+                        }
+                    });
+                    await prisma.subject.update({
+                        where: {
+                            id: subject.id,
+                        },
+                        data: {
+                            overall_rating: subjectReviews._avg.overall_rating,
+                            test_rating: review.test_rating,
+                            project_rating: review.project_rating,
+                            teacher_rating: review.teacher_rating,
+                            effort_rating: review.effort_rating,
+                            presence_rating: review.presence_rating,
+                        },
+                    });
+                
                 }
                 else {
                     await prisma.review.create({
@@ -176,6 +199,27 @@ async function main() {
                             presence_rating: review.presence_rating,
                             overall_rating: Number(review.overall_rating),
                             comment: review.comment,
+                        },
+                    });
+                    const subjectReviews = await prisma.review.aggregate({
+                        where: {
+                            subject_id: subject.id,
+                        },
+                        _avg: {
+                            overall_rating: true,
+                        }
+                    });
+                    await prisma.subject.update({
+                        where: {
+                            id: subject.id,
+                        },
+                        data: {
+                            overall_rating: subjectReviews._avg.overall_rating,
+                            test_rating: review.test_rating,
+                            project_rating: review.project_rating,
+                            teacher_rating: review.teacher_rating,
+                            effort_rating: review.effort_rating,
+                            presence_rating: review.presence_rating,
                         },
                     });
                 }
