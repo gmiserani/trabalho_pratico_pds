@@ -32,7 +32,7 @@ model Subject {
   id              String   @id @default(uuid())
   teacher_id      String
   teacher         Teacher  @relation(fields: [teacher_id], references: [id], onDelete: Cascade)
-  name            String
+  name            String   @unique
   syllabus        String
   mode            String
   date            String

@@ -1,2 +1,2 @@
-username,subject,test_rating,project_rating,teacher_rating,effort_rating,presence_rating,overall_rating,comment
+username,subjectName,test_rating,project_rating,teacher_rating,effort_rating,presence_rating,overall_rating,comment
 bella,Engenharia de Software,FACIL,FACIL,RUIM,POUCO,SIM,5,Great teacher

@@ -23,7 +23,7 @@ async function main() {
     const subjects: any[] = [];
     fs.createReadStream("prisma/subjects.csv")
         .pipe(csvParser())
-        .on("data", (data: any) => subjects.push(data))
+        .on("data", (data) => subjects.push(data))
         .on("end", async () => {
             for (const subject of subjects) {
                 console.log(subject);
@@ -75,71 +75,7 @@ async function main() {
             }
         }
         );
-
-    const reviews: any[] = [];
-    fs.createReadStream("prisma/reviews.csv")
-        .pipe(csvParser())
-        .on("data", (data: any) => reviews.push(data))
-        .on("end", async () => {
-            for (const review of reviews) {
-                console.log(review);
-                const subject = await prisma.subject.findFirst({
-                    where: {
-                        name: review.subjectName,
-                    },
-                    select: {
-                        id: true,
-                    },
-                });
-                if (subject) {
-                    await prisma.review.create({
-                        data: {
-                            user: {
-                                connect: {
-                                    username: review.username,
-                                },
-                            },
-                            subject: {
-                                connect: {
-                                    name: review.subjectName,
-                                },
-                            },
-                            test_rating: review.test_rating,
-                            project_rating: review.project_rating,
-                            teacher_rating: review.teacher_rating,
-                            effort_rating: review.effort_rating,
-                            presence_rating: review.presence_rating,
-                            overall_rating: review.overall_rating,
-                            comment: review.comment,
-                        },
-                        
-                    });
-                }
-                else {
-                    await prisma.subject.create({
-                        data: {
-                            name: subject.name,
-                            syllabus: subject.syllabus,
-                            mode: subject.mode,
-                            semester: Number(subject.semester),
-                            workload: Number(subject.workload),
-                            date: subject.date,
-                            time: subject.time,
-                            teacher: {
-                                create: {
-                                    name: subject.teacherName,
-                                    picture: subject.pictureUrl,
-                                },
-                            },
-                        }
-                    });
-                }
-            }
-        }
-        );
-
     const encryptedPassword = await encryptPassword("123");
-
     await prisma.user.create({
         data: {
             name: "Raissa Miranda",
@@ -160,29 +96,112 @@ async function main() {
             semester: 1,
         },
     });
+    const reviews: any[] = [];
+    fs.createReadStream("prisma/reviews.csv")
+        .pipe(csvParser())
+        .on("data", (data) => reviews.push(data))
+        .on("end", async () => {
+            for (const review of reviews) {
+                console.log(review);
+                const user = await prisma.user.findFirst({
+                    where: {
+                        username: review.username,
+                    },
+                    select: {
+                        id: true,
+                    },
+                });
+                const subject = await prisma.subject.findUnique({
+                    where: {
+                        name: review.subjectName, // Adjust the field name based on your schema
+                    },
+                });
+                
+                if (!subject) {
+                    // Handle the case where the subject does not exist.
+                    // For example, create the subject or log an error.
+                    console.error(`Subject not found for name: ${review.subjectName}`);
+                    continue; // Skip this review or handle appropriately
+                }
+                if (user) {
+                    await prisma.review.create({
+                        data: {
+                            user: {
+                                connect: {
+                                    username: review.username,
+                                },
+                            },
+                            subject: {
+                                connect: {
+                                    id: subject.id,
+                                },
+                            },
+                            test_rating: review.test_rating,
+                            project_rating: review.project_rating,
+                            teacher_rating: review.teacher_rating,
+                            effort_rating: review.effort_rating,
+                            presence_rating: review.presence_rating,
+                            overall_rating: Number(review.overall_rating),
+                            comment: review.comment,
+                        },
+                        
+                    });
+                }
+                else {
+                    await prisma.review.create({
+                        data: {
+                            user: {
+                                create: {
+                                    name: review.username,
+                                    email: review.username + "x@prisma.io",
+                                    password: encryptedPassword,
+                                    username: review.username,
+                                    course: "Ciencia da Computacao",
+                                    semester: 1,
+
+                                },
+                            },
+                            subject: {
+                                connect: {
+                                    id: subject.id,
+                                },
+                            },
+                            test_rating: review.test_rating,
+                            project_rating: review.project_rating,
+                            teacher_rating: review.teacher_rating,
+                            effort_rating: review.effort_rating,
+                            presence_rating: review.presence_rating,
+                            overall_rating: Number(review.overall_rating),
+                            comment: review.comment,
+                        },
+                    });
+                }
+            }
+        }
+        );
 
 
-    await prisma.review.create({
-        data: {
-            user: {
-                connect: {
-                    username: 'bella',
-                },
-            },
-            subject: {
-                connect: {
-                    id: '0aca40b5-d881-4043-b6fc-5935df30d8d7',
-                },
-            },
-            test_rating: 'FACIL',
-            project_rating: 'FACIL',
-            teacher_rating: 'RUIM',
-            effort_rating: 'POUCO',
-            presence_rating: 'SIM',
-            overall_rating:  5,
-            comment: "Great teacher",
-        },
-    });
+    // await prisma.review.create({
+    //     data: {
+    //         user: {
+    //             connect: {
+    //                 username: 'bella',
+    //             },
+    //         },
+    //         subject: {
+    //             connect: {
+    //                 id: '0aca40b5-d881-4043-b6fc-5935df30d8d7',
+    //             },
+    //         },
+    //         test_rating: 'FACIL',
+    //         project_rating: 'FACIL',
+    //         teacher_rating: 'RUIM',
+    //         effort_rating: 'POUCO',
+    //         presence_rating: 'SIM',
+    //         overall_rating:  5,
+    //         comment: "Great teacher",
+    //     },
+    // });
 
     console.log(prisma.subject.findMany());
 
