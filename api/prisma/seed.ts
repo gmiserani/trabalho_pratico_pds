@@ -99,6 +99,29 @@ async function main() {
         },
     });
 
+
+    await prisma.review.create({
+        data: {
+            user: {
+                connect: {
+                    username: 'bella',
+                },
+            },
+            subject: {
+                connect: {
+                    id: '0aca40b5-d881-4043-b6fc-5935df30d8d7',
+                },
+            },
+            test_rating: 'FACIL',
+            project_rating: 'FACIL',
+            teacher_rating: 'RUIM',
+            effort_rating: 'POUCO',
+            presence_rating: 'SIM',
+            overall_rating:  5,
+            comment: "Great teacher",
+        },
+    });
+
     console.log(prisma.subject.findMany());
 
     console.log(prisma.user.findMany());
