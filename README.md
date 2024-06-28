@@ -144,3 +144,25 @@ Criar um ambiente para avaliar as matérias ofertadas e os professores do Depart
 >>
 >>>Integrar filtro de ordenação com a respectiva lógica no backend [Raissa]
 
+## Arquitetura Hexagonal
+
+Para estabelecer uma separação clara entre o domínio e o restante do sistema e garantir uma melhor testabilidade o backend foi organizado em subpastas. Assim, foi criada a pasta domain para agrupar todas as classes de domínio, sendo elas: user, subject, teacher e review. Cada uma dessas classes foi desenvolvida dentro de uma pasta que separava a implementação dos controllores, do repository e do service. Dessa forma, a estrutura final do workspace com a arquitetura hexagonal implementada ficou da seguinte maneira:
+
+>domain
+>>review
+>>>controllers
+>>>repositories
+>>>services
+>>subject
+>>>controllers
+>>>repositories
+>>>services
+>>teacher
+>>>controllers
+>>>repositories
+>>>services
+>>user
+>>>controllers
+>>>repositories
+>>>services
+
