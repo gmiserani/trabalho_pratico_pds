@@ -15,9 +15,11 @@ export default function Answer({ value }: AnswerProps) {
         else if (value === 'MEDIA') setLabel('Média');
         else if (value === 'BOA') setLabel('Boa');
         else if (value === 'OTIMA') setLabel('Ótima');
-        else if (value === 'FACIL') setLabel('Fácil');
+        else if (value === 'FACIL') setLabel('Fáceis');
+        else if (value === 'MEDIOS') setLabel('Médios');
+        else if (value === 'MEDIAS') setLabel('Médias');
         else if (value === 'MEDIO') setLabel('Médio');
-        else if (value === 'DIFICIL') setLabel('Difícil');
+        else if (value === 'DIFICIL') setLabel('Difíceis');
         else if (value === 'POUCO') setLabel('Pouco');
         else if (value === 'MUITO') setLabel('Muito');
         console.log(value);

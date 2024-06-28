@@ -8,9 +8,6 @@ import './Home.css';
 import Header from '../Header/Header';
 import SearchIcon from '@mui/icons-material/Search';
 
-
-//ToggleButton
-
 export default function Home() {
 
     const [subjects, setSubjects] = useState([]);
@@ -51,7 +48,7 @@ export default function Home() {
                         </button>
 
                         <button className='filterButtons'>
-                            Periodo
+                            Período
                             <ArrowDropDownIcon sx={{ fontSize: 30 }} />
                         </button>
 

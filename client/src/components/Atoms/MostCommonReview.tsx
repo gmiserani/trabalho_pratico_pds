@@ -27,29 +27,29 @@ export default function MostCommonReview({ review, render, setRender }: mostComm
         <div className='mostCommonReview'>
             <div className='col1'>
                 <div className="rating">
-                    Cobra presença
+                    Cobra presença?
                     <Answer value={review.presence_rating} />
                 </div>
                 <div className="rating">
-                    Como é a didatica do professor
+                    Como é a didática do professor?
                     <Answer value={review.teacher_rating} />
                 </div>
                 <div className="rating">
-                    Como sao os trabalhos
+                    Como são os trabalhos?
                     <Answer value={review.project_rating} />
                 </div>
             </div>
             <div className='col1'>
                 <div className="rating">
-                    Como sao as provas
+                    Como são as provas?
                     <Answer value={review.test_rating} />
                 </div>
                 <div className="rating">
-                    Quanto tempo de dedicação
+                    Quanto tempo de dedicação?
                     <Answer value={review.effort_rating} />
                 </div>
                 <div className="rating">
-                    Nota geral
+                    Nota geral:
                     <Rating value={rating} size="1.5em" read={true} setValue={null} />
                 </div>
             </div>

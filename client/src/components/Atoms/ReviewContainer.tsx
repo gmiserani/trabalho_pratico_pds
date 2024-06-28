@@ -35,29 +35,29 @@ export default function ReviewContainer({ review, render, setRender }: reviewPro
             <div className='reviewContent'>
                 <div className='review_col1'>
                     <div className="review_rating">
-                        Cobra presença
+                        Cobra presença?
                         <Answer value={review.presence_rating} />
                     </div>
                     <div className="review_rating">
-                        Como é a didatica do professor
+                        Como é a didática do professor?
                         <Answer value={review.teacher_rating} />
                     </div>
                     <div className="review_rating">
-                        Como sao os trabalhos
+                        Como são os trabalhos?
                         <Answer value={review.project_rating} />
                     </div>
                 </div>
                 <div className='review_col1'>
                     <div className="review_rating">
-                        Como sao as provas
+                        Como são as provas?
                         <Answer value={review.test_rating} />
                     </div>
                     <div className="review_rating">
-                        Quanto tempo de dedicação
+                        Quanto tempo de dedicação?
                         <Answer value={review.effort_rating} />
                     </div>
                     <div className="review_rating">
-                        Nota geral
+                        Nota geral:
                         <Rating value={rating} size="1.3em" read={true} setValue={null} />
                     </div>
                 </div>

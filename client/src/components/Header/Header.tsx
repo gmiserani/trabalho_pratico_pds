@@ -1,5 +1,5 @@
 import "./Header.css";
-import simbolologo from '../../assets/simbollogo.svg';
+import logo from '../../../public/logo.svg';
 import AccountCircleOutlinedIcon from '@mui/icons-material/AccountCircleOutlined';
 import LogoutOutlinedIcon from '@mui/icons-material/LogoutOutlined';
 import { logout } from '../../services/user';
@@ -18,7 +18,7 @@ export default function Header({ logged }: { logged: boolean }) {
 
     return (
         <header className="header" >
-            <img className="symbol" src={simbolologo} alt="" />
+            <img className="symbol" src={logo} alt="" />
             {
                 logged ?
                     <div className="icons">

@@ -134,11 +134,6 @@ export default function Subject() {
                 </div>
                 <div className="subjectInfo">
                     <div className="summary">
-                        {/* <div>{subjectSummary?.mode}</div>
-                        <div>{subjectSummary?.date}</div>
-                        <div>{subjectSummary?.time}</div>
-                        <div>{subjectSummary?.semester}</div>
-                        <div>{subjectSummary?.workload}</div> */}
                         {subjectSummary?.syllabus}
                     </div>
 
@@ -149,7 +144,7 @@ export default function Subject() {
                             {subjectSummary?.teacher.name}
                         </div>
                         <div className="teacherPageLink">
-                            Pagina do professor
+                            Página do professor
                         </div>
                     </div>
                 </div>
@@ -165,7 +160,7 @@ export default function Subject() {
                         </div>
                     }
                 </div>
-                {canAddReview ? <button onClick={() => { navigate(`/subject/${id}/add-review`) }}>Adicionar sua avaliacao</button> : null}
+                {canAddReview ? <button onClick={() => { navigate(`/subject/${id}/add-review`) }}>Adicionar sua avaliação</button> : null}
                 <div className="users_reviews">
                     {reviews.map((review, index) => (
                         <ReviewContainer

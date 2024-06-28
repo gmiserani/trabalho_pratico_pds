@@ -79,82 +79,82 @@ export default function Review() {
                     <div className="reviewField">
 
                         <div className="question">
-                            Cobra presenca?
+                            Cobra presença?
                         </div>
                         <StyledToggleButtonGroup className="reviewResponseButtons" value={presence_rating} exclusive onChange={handlePresenceResponse} aria-label="reviewResponses" >
                             <StyledToggleButton className="singleReviewResponseButtons" value="SIM" sx={{ marginRight: '4%' }}>
                                 Sim
                             </StyledToggleButton>
                             <StyledToggleButton value="NAO" sx={{ marginRight: '4%' }}>
-                                Nao
+                                Não
                             </StyledToggleButton>
                         </StyledToggleButtonGroup>
                     </div>
                     <div className="reviewField">
 
                         <div className="question">
-                            Como e a didatica do professor?
+                            Como é a didática do professor?
                         </div>
                         <StyledToggleButtonGroup className="reviewResponseButtons" value={teacher_rating} exclusive onChange={handleTeacherResponse} aria-label="reviewResponse">
                             <StyledToggleButton value="RUIM" sx={{ marginRight: '4%' }}>
                                 Ruim
                             </StyledToggleButton>
                             <StyledToggleButton value="MEDIA" sx={{ marginRight: '4%' }}>
-                                Media
+                                Média
                             </StyledToggleButton>
                             <StyledToggleButton value="BOA" sx={{ marginRight: '4%' }}>
                                 Boa
                             </StyledToggleButton>
                             <StyledToggleButton value="OTIMA" sx={{ marginRight: '4%' }}>
-                                Otima
+                                Ótima
                             </StyledToggleButton>
                         </StyledToggleButtonGroup>
                     </div>
                     <div className="reviewField">
 
                         <div className="question">
-                            Como sao os trabalhos?
+                            Como são os trabalhos?
                         </div>
                         <StyledToggleButtonGroup className="reviewResponseButtons" value={project_rating} exclusive onChange={handleProjectResponse} aria-label="reviewResponse">
                             <StyledToggleButton value="FACIL" sx={{ marginRight: '4%' }}>
-                                Facil
+                                Fáceis
                             </StyledToggleButton>
-                            <StyledToggleButton value="MEDIO" sx={{ marginRight: '4%' }}>
-                                Medio
+                            <StyledToggleButton value="MEDIOS" sx={{ marginRight: '4%' }}>
+                                Médios
                             </StyledToggleButton>
                             <StyledToggleButton value="DIFICIL" sx={{ marginRight: '4%' }}>
-                                Dificil
+                                Difíceis
                             </StyledToggleButton>
                         </StyledToggleButtonGroup>
                     </div>
                     <div className="reviewField">
 
                         <div className="question">
-                            Como sao as provas?
+                            Como são as provas?
                         </div>
                         <StyledToggleButtonGroup className="reviewResponseButtons" value={test_rating} exclusive onChange={handleTestResponse} aria-label="reviewResponse">
                             <StyledToggleButton value="FACIL" sx={{ marginRight: '4%' }}>
-                                Facil
+                                Fáceis
                             </StyledToggleButton>
-                            <StyledToggleButton value="MEDIO" sx={{ marginRight: '4%' }}>
-                                Medio
+                            <StyledToggleButton value="MEDIAS" sx={{ marginRight: '4%' }}>
+                                Médias
                             </StyledToggleButton>
                             <StyledToggleButton value="DIFICIL" sx={{ marginRight: '4%' }}>
-                                Dificil
+                                Difíceis
                             </StyledToggleButton>
                         </StyledToggleButtonGroup>
                     </div>
                     <div className="reviewField">
 
                         <div className="question">
-                            Quanto tempo de dedicacao?
+                            Quanto tempo de dedicação?
                         </div>
                         <StyledToggleButtonGroup className="reviewResponseButtons" value={effort_rating} exclusive onChange={handleEffortResponse} aria-label="reviewResponse">
                             <StyledToggleButton value="POUCO" sx={{ marginRight: '4%' }}>
                                 Pouco
                             </StyledToggleButton>
                             <StyledToggleButton value="MEDIO" sx={{ marginRight: '4%' }}>
-                                Medio
+                                Médio
                             </StyledToggleButton>
                             <StyledToggleButton value="MUITO" sx={{ marginRight: '4%' }}>
                                 Muito
@@ -164,7 +164,7 @@ export default function Review() {
                     <div className="reviewField">
 
                         <div className="question">
-                            Nota geral da disciplina:
+                            Nota geral:
                         </div>
                         <div className="reviewFormRating">
                             <Rating value={overall_rating || 0} setValue={setOverallRating} size="1.5em" read={false} />
@@ -174,7 +174,7 @@ export default function Review() {
                     <div className="reviewField">
 
                         <div className="question">
-                            Comentario opcional:
+                            Comentário opcional:
                         </div>
                         <div className="commentInput">
                             <Comment setValue={setComment} value={comment} />

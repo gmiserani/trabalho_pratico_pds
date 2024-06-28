@@ -126,12 +126,14 @@
     width: 90%;
     max-width: 1500px;
     margin-bottom: 2em;
+    margin-top: 1em;
 }
 
 .noReviewCase {
     background-color: #A36E97;
     border-radius: 25px;
     padding: 1.5em;
+    margin-top: 1em;
 }
 
 .users_reviews {
