@@ -23,7 +23,7 @@ async function main() {
     const subjects: any[] = [];
     fs.createReadStream("prisma/subjects.csv")
         .pipe(csvParser())
-        .on("data", (data) => subjects.push(data))
+        .on("data", (data: any) => subjects.push(data))
         .on("end", async () => {
             for (const subject of subjects) {
                 console.log(subject);
@@ -51,6 +51,68 @@ async function main() {
                                 },
                             },
                         }
+                    });
+                }
+                else {
+                    await prisma.subject.create({
+                        data: {
+                            name: subject.name,
+                            syllabus: subject.syllabus,
+                            mode: subject.mode,
+                            semester: Number(subject.semester),
+                            workload: Number(subject.workload),
+                            date: subject.date,
+                            time: subject.time,
+                            teacher: {
+                                create: {
+                                    name: subject.teacherName,
+                                    picture: subject.pictureUrl,
+                                },
+                            },
+                        }
+                    });
+                }
+            }
+        }
+        );
+
+    const reviews: any[] = [];
+    fs.createReadStream("prisma/reviews.csv")
+        .pipe(csvParser())
+        .on("data", (data: any) => reviews.push(data))
+        .on("end", async () => {
+            for (const review of reviews) {
+                console.log(review);
+                const subject = await prisma.subject.findFirst({
+                    where: {
+                        name: review.subjectName,
+                    },
+                    select: {
+                        id: true,
+                    },
+                });
+                if (subject) {
+                    await prisma.review.create({
+                        data: {
+                            user: {
+                                connect: {
+                                    username: review.username,
+                                },
+                            },
+                            subject: {
+                                connect: {
+                                    name: review.subjectName,
+                                },
+                            },
+                            test_rating: review.test_rating,
+                            project_rating: review.project_rating,
+                            teacher_rating: review.teacher_rating,
+                            effort_rating: review.effort_rating,
+                            presence_rating: review.presence_rating,
+                            overall_rating: review.overall_rating,
+                            comment: review.comment,
+                        },
+                        
                     });
                 }
                 else {
