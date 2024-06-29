@@ -177,3 +177,8 @@ Para estabelecer uma separação clara entre o domínio e o restante do sistema 
 
 >>>services
 
+
+Os repositories são responsáveis por realizar operações de acesso a dados, como criação e recuperação de registros, encapsulando a lógica de interação com o banco de dados.
+Os controllers recebem as requisições do cliente, invocam os serviços para processar os dados e retornam as respostas adequadas, gerenciando o fluxo de dados de entrada e saída.
+Os services contêm a lógica de negócios da aplicação. Eles recebem dados dos controllers, aplicam as regras de negócios e utilizam os repositories para acessar ou manipular os dados no banco de dados. A separação da lógica de negócios nos services facilita a reutilização de código e a manutenção do sistema.
+
