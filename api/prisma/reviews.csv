@@ -1,7 +1,7 @@
 username,subjectName,test_rating,project_rating,teacher_rating,effort_rating,presence_rating,overall_rating,comment
 Isabella,Engenharia de Software,FACIL,FACIL,OTIMA,MUITO,SIM,5,Ótimo professor.
-Gabriela,Prática em Desenvolvimento de Software,MEDIO,MEDIOS,OTIMO,MEDIO,SIM,4,Matéria muito bem organizada.
-Maria Luiza,Visualização de dados,Prática em Desenvolvimento de Software,DIFICIL,FACIL,MEDIA,NAO,3,Exercicios e trabalhos em grupo.
+Gabriela,Prática em Desenvolvimento de Software,MEDIAS,MEDIOS,OTIMA,MEDIO,SIM,4,Matéria muito bem organizada.
+Maria Luiza,Visualização de dados,MEDIAS,DIFICIL,BOA,MEDIO,NAO,3,Exercicios e trabalhos em grupo.
 Julia,Static Program Analysis,DIFICIL,DIFICIL,RUIM,MUITO,NAO,2,Conteúdo muito complexo.
 Pedro,Information Theory,DIFICIL,MEDIOS,OTIMA,MEDIO,SIM,4,Matéria em inglês
 Bernardo,Testes de Software,FACIL,MEDIOS,BOA,POUCO,NAO,3,Matéria contém 3 provas e 2 TPs.

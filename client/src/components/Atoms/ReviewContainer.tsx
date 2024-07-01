@@ -43,13 +43,13 @@ export default function ReviewContainer({ review, render, setRender }: reviewPro
                         <Answer value={review.teacher_rating} />
                     </div>
                     <div className="review_rating">
-                        Como sao os trabalhos
+                        Como são os trabalhos
                         <Answer value={review.project_rating} />
                     </div>
                 </div>
                 <div className='review_col1'>
                     <div className="review_rating">
-                        Como sao as provas
+                        Como são as provas
                         <Answer value={review.test_rating} />
                     </div>
                     <div className="review_rating">

@@ -20,6 +20,8 @@ export default function Answer({ value }: AnswerProps) {
         else if (value === 'DIFICIL') setLabel('Difícil');
         else if (value === 'POUCO') setLabel('Pouco');
         else if (value === 'MUITO') setLabel('Muito');
+        else if (value === 'MEDIAS') setLabel('Médias');
+        else if (value === 'MEDIOS') setLabel('Médios');
         console.log(value);
     }, [value]);
 

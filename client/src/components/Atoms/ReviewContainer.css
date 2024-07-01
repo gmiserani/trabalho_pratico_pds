@@ -77,7 +77,7 @@
     justify-content: space-between;
     align-items: center;
     text-align: left;
-    font-size: 0.9em;
+    font-size: 0.75em;
     float: left;
     width: 90%;
     padding-left: 1em;
@@ -88,10 +88,13 @@
 }
 
 .comment {
+    display: flex;
+    flex-direction: column;
     background-color: white;
     border-radius: 25px;
     box-shadow: 0px 4px 4px #00000040;
     align-items: center;
+    justify-content: center;
     float: left;
     width: 90%;
     height: 100%;

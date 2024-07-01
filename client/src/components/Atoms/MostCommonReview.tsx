@@ -35,13 +35,13 @@ export default function MostCommonReview({ review, render, setRender }: mostComm
                     <Answer value={review.teacher_rating} />
                 </div>
                 <div className="rating">
-                    Como sao os trabalhos
+                    Como são os trabalhos
                     <Answer value={review.project_rating} />
                 </div>
             </div>
             <div className='col1'>
                 <div className="rating">
-                    Como sao as provas
+                    Como são as provas
                     <Answer value={review.test_rating} />
                 </div>
                 <div className="rating">
