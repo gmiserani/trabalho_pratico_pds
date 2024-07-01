@@ -150,38 +150,34 @@ Criar um ambiente para avaliar as matérias ofertadas e os professores do Depart
 
 Para estabelecer uma separação clara entre o domínio e o restante do sistema e garantir uma melhor testabilidade o backend foi organizado em subpastas. Assim, foi criada a pasta domain para agrupar todas as classes de domínio, sendo elas: user, subject, teacher e review. Cada uma dessas classes foi desenvolvida dentro de uma pasta que separava a implementação dos controllores, do repository e do service. Dessa forma, a estrutura final do workspace com a arquitetura hexagonal implementada ficou da seguinte maneira:
 
->domain
->>review
->>>controllers
+![image](https://github.com/gmiserani/trabalho_pratico_pds/assets/62564311/a3aa8d05-49fe-4c2a-a4b4-68a04442abea)
 
->>>repositories
+#### Repository
+Os repositories são responsáveis por realizar operações de acesso a dados, como criação e recuperação de registros, encapsulando a lógica de interação com o banco de dados. Um exemplo de como a implementação foi feita é mostrado a seguir:
 
->>>services
+![image](https://github.com/gmiserani/trabalho_pratico_pds/assets/62564311/15dc2bd8-dbfc-416b-81a0-496f71cb109d)
 
->>subject
->>>controllers
+#### Controller
+Os controllers recebem as requisições do cliente, invocam os serviços para processar os dados e retornam as respostas adequadas, gerenciando o fluxo de dados de entrada e saída. Um exemplo de como a implementação foi feita é mostrado a seguir:
 
->>>repositories
+![image](https://github.com/gmiserani/trabalho_pratico_pds/assets/62564311/6fcfcac8-60f9-4de2-86e6-7db78b7e40dd)
 
->>>services
+#### Service
+Os services contêm a lógica de negócios da aplicação. Eles recebem dados dos controllers, aplicam as regras de negócios e utilizam os repositories para acessar ou manipular os dados no banco de dados. A separação da lógica de negócios nos services facilita a reutilização de código e a manutenção do sistema. Um exemplo de como a implementação foi feita é mostrado a seguir:
 
->>teacher
->>>controllers
+![image](https://github.com/gmiserani/trabalho_pratico_pds/assets/62564311/e7ac6231-3352-4e04-8f35-3ddec01f4048)
 
->>>repositories
+### Por que o sistema está adotando essa arquitetura?
 
->>>services
+O sistema está adotando essa arquitetura pois ela promove um desacoplamento e melhor flexibilidade no projeto, uma vez que a lógica de negócios se torna independente dos frameworks e interfaces utlizadas. Assim, a manutenção do código a testabilidade são melhoradas, tornando a criação de testes de unidade e de integração mais fácil. Além disso, a organização do projeto utilizando a arquitetura hexagonal permite que adaptadores e outros componentes sejam reutilizados ao longo da evolução do código e até mesmo em outros projetos.
 
->>user
->>>controllers
+### Quais são as portas e adaptadores? Qual o objetivo deles?
 
->>>repositories
+Na arquitetura hexagonal do projeto, os portos (interfaces) e adaptadores (implementações) desempenham papéis essenciais para garantir a modularidade e independência tecnológica. Os portos, representados pelos serviços (por exemplo, ReviewService.ts, SubjectService.ts), definem operações da lógica de negócios, permitindo que esta permaneça independente de detalhes técnicos. Já os adaptadores, como os controladores (ex.: ReviewController.ts, SubjectController.ts) e repositórios (ex.: ReviewRepository.ts, SubjectRepository.ts), implementam essas interfaces, traduzindo interações externas e persistência de dados para o domínio central.
 
->>>services
+O objetivo dos portos é garantir que a lógica de negócios esteja isolada das mudanças tecnológicas, enquanto os adaptadores permitem a comunicação com sistemas externos, como bancos de dados e interfaces de usuário. Essa estrutura promove um design de software mais flexível, testável e fácil de manter, facilitando a adição de novas funcionalidades sem impactar o núcleo do sistema.
 
-Os repositories são responsáveis por realizar operações de acesso a dados, como criação e recuperação de registros, encapsulando a lógica de interação com o banco de dados.
-Os controllers recebem as requisições do cliente, invocam os serviços para processar os dados e retornam as respostas adequadas, gerenciando o fluxo de dados de entrada e saída.
-Os services contêm a lógica de negócios da aplicação. Eles recebem dados dos controllers, aplicam as regras de negócios e utilizam os repositories para acessar ou manipular os dados no banco de dados. A separação da lógica de negócios nos services facilita a reutilização de código e a manutenção do sistema.
+![image](https://github.com/gmiserani/trabalho_pratico_pds/assets/62564311/5f983339-30fa-4553-819c-a0e2514d9b60)
 
 ## Backlog da Sprint (atualizado)
 
