@@ -22,7 +22,7 @@ jobs:
         npm install
         npm run test > result.txt
         # PASSED=$(grep -E 'Tests *[0-9]+ passed' result.txt)
-        # if [ -z "$PASSED" ]
+        # if [ -z "${PASSED}" ]
         # then
         #       echo "passed=false" >> $GITHUB_ENV
         # else
