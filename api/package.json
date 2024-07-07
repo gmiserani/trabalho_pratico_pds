@@ -5,7 +5,7 @@
   "main": "index.js",
   "scripts": {
     "dev": "tsx watch index.ts",
-    "test": "vitest",
+    "test": "vitest --run",
     "coverage": "vitest run --coverage -r ./src/domains --dir ./src/unit-tests --coverage.reportsDirectory ./../coverage --coverage.exclude=**/controllers/**"
   },
   "author": "",
