@@ -21,7 +21,8 @@ jobs:
         cd api
         npm install
         npm run test > result.txt
-        PASSED=$(grep -E 'Tests *[0-9]+ passed' result.txt)
+        # PASSED=$(grep -E 'Tests *[0-9]+ passed' result.txt)
+        PASSED=""
         if [ -z "${PASSED}" ]
         then
               echo "passed=false" >> $GITHUB_ENV
