@@ -37,8 +37,7 @@
     "cors": "^2.8.5",
     "csv-parser": "^3.0.0",
     "express": "^4.19.1",
-    "jsonwebtoken": "^9.0.2",
-    "puppeteer": "^22.8.0"
+    "jsonwebtoken": "^9.0.2"
   },
   "prisma": {
     "seed": "tsx prisma/seed.ts"
