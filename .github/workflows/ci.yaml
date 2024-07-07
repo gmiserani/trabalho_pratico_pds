@@ -20,14 +20,14 @@ jobs:
       run: |
         cd api
         npm install
-        npm run test > result.txt
-        PASSED=$(grep -E 'Tests *[0-9]+ passed' result.txt)
-        if [ -z "$PASSED" ]
-        then
-              echo "passed=false" >> $GITHUB_ENV
-        else
-              echo "passed=true" >> $GITHUB_ENV
-        fi
+        npm run test
+        # PASSED=$(grep -E 'Tests *[0-9]+ passed' result.txt)
+        # if [ -z "$PASSED" ]
+        # then
+        #       echo "passed=false" >> $GITHUB_ENV
+        # else
+        #       echo "passed=true" >> $GITHUB_ENV
+        # fi
 
     - name: 📮 Get Coverage report
       id: coverage
