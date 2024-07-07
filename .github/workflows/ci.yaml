@@ -1,0 +1,67 @@
+name: 🔄 CI
+on: [push]
+jobs:
+  unit-tests-and-coverage:
+    name: 📦 Unit tests and coverage
+    runs-on: ubuntu-latest
+    outputs:
+      passed: ${{ steps.unit-tests.outputs.passed }}
+    steps:
+    - name: 📥 Checkout code
+      uses: actions/checkout@v4
+    - name: ⬆️ Set up Node
+      uses: actions/setup-node@v3
+      with:
+        node-version: '20'
+        cache: 'npm'
+        cache-dependency-path: './api/package-lock.json'
+    - name: 🏃 Run unit tests
+      id: unit-tests
+      run: |
+        cd api
+        npm run test > result.txt
+        PASSED=$(grep -E 'Tests *[0-9]+ passed' result.txt)
+        if [ -z "$PASSED" ]
+        then
+              echo "passed=false" >> $GITHUB_ENV
+        else
+              echo "passed=true" >> $GITHUB_ENV
+        fi
+
+    - name: 📮 Get Coverage report
+      id: coverage
+      run: |
+        cd api
+        npm run coverage
+  e2e-tests:
+    needs: unit-tests-and-coverage
+    if: ${{ always() && contains(needs.unit-tests-and-coverage.outputs.passed,'true') }}
+    name: 🧑‍💻 E2E tests
+    runs-on: ubuntu-latest
+    steps:
+      - name: 📥 Checkout code
+        uses: actions/checkout@v4
+  
+      - name: ⬆️ Set up Node
+        uses: actions/setup-node@v3
+        with:
+          node-version: '20'
+          cache: 'npm'
+          cache-dependency-path: './api/package-lock.json'
+      - name: 🔙 Run back-end
+        run: |
+          cd api
+          npm install
+          npx prisma db push
+          npx prisma db seed
+          npm run dev &
+      - name: 💻 Run front-end
+        run: |
+          cd client
+          npm install
+          npm run dev &
+      - name: 🏃Run E2E tests
+        run: |
+          cd client
+          npx cypress run
+      
