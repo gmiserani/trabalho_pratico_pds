@@ -16,12 +16,15 @@ class ReviewRepositoryClass {
     };
 
     async createReview(Reviewdata: Prisma.ReviewCreateInput) {
-        const review =  await prisma.review.create({ 
+        if (!Reviewdata.user) {
+            throw new Error("User does not exist");
+        }
+        const review = await prisma.review.create({
             data: Reviewdata,
         });
 
-        return review
+        return review;
     }
 }
 
-export const ReviewRepository = new ReviewRepositoryClass
+export const ReviewRepository = new ReviewRepositoryClass;

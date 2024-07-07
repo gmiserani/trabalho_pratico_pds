@@ -28,7 +28,7 @@ class TeacherServiceClass {
     // Fetch all teachers
     async getAll() {
         const teachers = await TeacherRepository.getAll();
-        
+
         if (teachers.length === 0) {
             throw new QueryError("No teachers found");
         }
@@ -37,7 +37,7 @@ class TeacherServiceClass {
 
     // Create a new teacher
     async create(body: { name: string; subjects: { select: (name: string) => void } }) {
-        const newTeacher = TeacherRepository.create({...body});
+        const newTeacher = TeacherRepository.create({ ...body });
 
         return newTeacher;
     }
@@ -52,6 +52,16 @@ class TeacherServiceClass {
         // });
 
         return updatedTeacher;
+    }
+
+    async getTeacherByName(name: string) {
+        const teacher = await TeacherRepository.getTeacherbyName(name);
+
+        if (!teacher) {
+            throw new QueryError("Teacher not found");
+        }
+
+        return teacher;
     }
 
 }

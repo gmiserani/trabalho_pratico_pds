@@ -19,6 +19,7 @@ const selectOptions = {
 
 describe("create", () => {
     let createBody: Prisma.ReviewCreateInput;
+    let createBodyError: Prisma.ReviewCreateWithoutUserInput;
 
     beforeEach(() => {
         vi.resetAllMocks();
@@ -36,11 +37,24 @@ describe("create", () => {
             overall_rating: 5,
             comment: "Great teacher",
         };
+
+        createBodyError = {
+            test_rating: "5",
+            project_rating: "5",
+            teacher_rating: "5",
+            effort_rating: "5",
+            overall_rating: 5,
+            comment: "Great teacher",
+        };
     });
 
     test("Should create a new review", async () => {
         await ReviewService.create(createBody);
 
         expect(prisma.review.create).toHaveBeenCalledWith({ data: createBody });
+    });
+
+    test("Should throw an error if user does not exist", async () => {
+        await expect(ReviewService.create(createBodyError)).rejects.toThrow("Error creating review");
     });
 });

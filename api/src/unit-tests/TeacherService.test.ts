@@ -90,7 +90,7 @@ describe("getAll", () => {
             },
             {
                 id: "2",
-                name: "Jane Doe",
+                name: "Jane Doe2",
                 picture: "picture",
             },
         ];
@@ -132,4 +132,25 @@ describe("update", () => {
             data: updateBody,
         });
     });
+
+    test("Should get teacher by name", async () => {
+        const teacher = {
+            id: "1",
+            name: "John Doe",
+            picture: "picture",
+        };
+
+        prisma.teacher.findFirst.mockResolvedValueOnce(teacher);
+
+        const result = await TeacherService.getTeacherByName("John Doe");
+
+        expect(result).toEqual(teacher);
+    });
+
+    test("Should throw error if teacher is not found", async () => {
+        prisma.teacher.findFirst.mockResolvedValueOnce(null);
+
+        await expect(TeacherService.getTeacherByName("John Doe")).rejects.toThrow("Teacher not found");
+    });
+
 });

@@ -43,12 +43,12 @@ class TeacherRepositoryClass {
 
 
     async getTeacherbyName(name: string) {
-        const teacher = await prisma.user.findFirst({
+        const teacher = await prisma.teacher.findFirst({
             where: {
                 name,
             },
         });
-    
+
         return teacher;
     }
 

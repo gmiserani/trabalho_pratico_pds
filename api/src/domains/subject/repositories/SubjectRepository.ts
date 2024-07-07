@@ -63,7 +63,7 @@ class SubjectRepositoryClass {
             },
             select: this.selectOptions,
         });
-    return subject;
+        return subject;
     }
 
     // Get all subjects, but only the name and
@@ -75,7 +75,7 @@ class SubjectRepositoryClass {
                 overall_rating: true,
             },
         });
-    return subjects;
+        return subjects;
     }
 
     // Get all subjects, but ordered by the overall rating
@@ -179,21 +179,21 @@ class SubjectRepositoryClass {
     }
 
     async getProjectRatings(id: string) {
-    const project_ratings = await prisma.review.groupBy({
-        by: ["project_rating"],
-        _count: {
-            project_rating: true,
-        },
-        where: {
-            subject_id: id,
-        },
-        orderBy: {
+        const project_ratings = await prisma.review.groupBy({
+            by: ["project_rating"],
             _count: {
-                project_rating: "desc",
+                project_rating: true,
             },
-        },
-    });
-    return project_ratings;
+            where: {
+                subject_id: id,
+            },
+            orderBy: {
+                _count: {
+                    project_rating: "desc",
+                },
+            },
+        });
+        return project_ratings;
     }
 
     async getTeacherRatings(id: string) {
@@ -233,31 +233,31 @@ class SubjectRepositoryClass {
     }
 
     async getEffortRatings(id: string) {
-    const effort_ratings = await prisma.review.groupBy({
-        by: ["effort_rating"],
-        _count: {
-            effort_rating: true,
-        },
-        where: {
-            subject_id: id,
-        },
-        orderBy: {
+        const effort_ratings = await prisma.review.groupBy({
+            by: ["effort_rating"],
             _count: {
-                effort_rating: "desc",
+                effort_rating: true,
             },
-        },
-    });
-    return effort_ratings;
+            where: {
+                subject_id: id,
+            },
+            orderBy: {
+                _count: {
+                    effort_rating: "desc",
+                },
+            },
+        });
+        return effort_ratings;
     }
 
-    async updateSubject(id: string, body: {test_rating?: string, project_rating?: string, teacher_rating?: string, presence_rating?: string, effort_rating?: string}) {
+    async updateSubject(id: string, body: { test_rating?: string, project_rating?: string, teacher_rating?: string, presence_rating?: string, effort_rating?: string }) {
         const updatedSubject = await prisma.subject.update({
             where: {
                 id,
             },
             data: body,
         });
-    
+
         return updatedSubject;
     }
 
@@ -274,7 +274,7 @@ class SubjectRepositoryClass {
         return average;
     }
 
-    async update(id: string, body: {overall_rating: number}) {
+    async update(id: string, body: { overall_rating: number }) {
         const updated = await prisma.subject.update({
             where: {
                 id,
@@ -304,8 +304,7 @@ class SubjectRepositoryClass {
         return subject;
     }
 
-    // Add a review to a subject -> will receive the ID of the subject, the name of the user and the review data
-    async addReview(userId: string) {
+    async checkUser(userId: string) {
         const user = await prisma.user.findFirst({
             where: {
                 id: userId,
@@ -317,7 +316,7 @@ class SubjectRepositoryClass {
         return user;
     }
 
-    async addSubject(id: string) {
+    async checkSubject(id: string) {
         const subject = await prisma.subject.findFirst({
             where: {
                 id,
@@ -335,6 +334,7 @@ class SubjectRepositoryClass {
         });
         return review;
     }
+
     async updateSubject2(id: string, id2: string) {
         const updatedSubject = await prisma.subject.update({
             where: {

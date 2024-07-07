@@ -1,5 +1,6 @@
 import { beforeEach, describe, expect, test, vi } from "vitest";
 import { SubjectService } from "../domains/subject/services/SubjectService";
+import { SubjectRepository } from "../domains/subject/repositories/SubjectRepository";
 import { Prisma, Subject, User, Review } from "@prisma/client";
 import prisma from "../libs/__mocks__/prisma";
 
@@ -51,7 +52,7 @@ describe("create", () => {
         });
     });
 
-    test("Should create a new subject if it does not exist", async () => {
+    test("Should create a new subject and a new teacher if it does not exist", async () => {
         prisma.teacher.findFirst.mockResolvedValueOnce(null);
 
         await SubjectService.create("John Doe", createBody);
@@ -68,6 +69,35 @@ describe("create", () => {
                 id: createBody.id,
                 teacher: {
                     create: {
+                        name: "John Doe",
+                        id: "teacher_id",
+                    },
+                },
+            },
+        });
+    });
+
+    test("Should create a new subject and connect to a existing teacher if it does not exist but the teacher does", async () => {
+        prisma.teacher.findFirst.mockResolvedValueOnce({
+            id: "1",
+            name: "John Doe",
+            picture: "picture",
+        });
+
+        await SubjectService.create("John Doe", createBody);
+
+        expect(prisma.subject.create).toHaveBeenCalledWith({
+            data: {
+                name: createBody.name,
+                syllabus: createBody.syllabus,
+                mode: createBody.mode,
+                semester: createBody.semester,
+                workload: createBody.workload,
+                date: createBody.date,
+                time: createBody.time,
+                id: createBody.id,
+                teacher: {
+                    connect: {
                         name: "John Doe",
                         id: "teacher_id",
                     },
@@ -502,10 +532,10 @@ describe("canUserReviewSubject", () => {
     });
 });
 
-describe("addReview", async () => {
+describe("addReview", () => {
     let findFirstSubject: Subject;
     let findFirstUser: User;
-    let createBody: Prisma.ReviewCreateInput;
+    let createBody: Review;
 
     beforeEach(() => {
         vi.resetAllMocks();
@@ -519,7 +549,7 @@ describe("addReview", async () => {
             time: "17:00",
             semester: 1,
             workload: 1,
-            teacherId: "1",
+            teacher_id: "1",
         };
 
         findFirstUser = {
@@ -533,6 +563,9 @@ describe("addReview", async () => {
         };
 
         createBody = {
+            id: "1",
+            subject_id: "1",
+            user_id: "1",
             presence_rating: "NAO",
             teacher_rating: "RUIM",
             project_rating: "FACIL",
@@ -610,5 +643,136 @@ describe("addReview", async () => {
 
         await expect(SubjectService.addReview("1", "1", createBody)).rejects.toThrow("Invalid overall rating");
     });
+});
+
+describe("getTestRatings", () => {
+    test("should return grouped test ratings", async () => {
+        // Arrange
+        const id = "some-subject-id";
+        const mockData = [
+            { test_rating: "A", _count: { test_rating: 3 } },
+            { test_rating: "B", _count: { test_rating: 2 } },
+            { test_rating: "C", _count: { test_rating: 1 } },
+        ];
+
+        prisma.review.groupBy.mockResolvedValue(mockData);
+
+        // Act
+        const result = await SubjectService.getTestRatings(id);
+
+        // Assert
+        expect(result).toEqual(mockData);
+        expect(prisma.review.groupBy).toHaveBeenCalledWith({
+            by: ["test_rating"],
+            _count: { test_rating: true },
+            where: { subject_id: id },
+            orderBy: { _count: { test_rating: "desc" } },
+        });
+    });
+
 
 });
+
+describe("getProjectRatings", () => {
+    test("should return grouped project ratings", async () => {
+        // Arrange
+        const id = "some-subject-id";
+        const mockData = [
+            { project_rating: "A", _count: { project_rating: 3 } },
+            { project_rating: "B", _count: { project_rating: 2 } },
+            { project_rating: "C", _count: { project_rating: 1 } },
+        ];
+
+        prisma.review.groupBy.mockResolvedValue(mockData);
+
+        // Act
+        const result = await SubjectService.getProjectRatings(id);
+
+        // Assert
+        expect(result).toEqual(mockData);
+        expect(prisma.review.groupBy).toHaveBeenCalledWith({
+            by: ["project_rating"],
+            _count: { project_rating: true },
+            where: { subject_id: id },
+            orderBy: { _count: { project_rating: "desc" } },
+        });
+    });
+});
+
+describe("getTeacherRatings", () => {
+    test("should return grouped teacher ratings", async () => {
+        // Arrange
+        const id = "some-subject-id";
+        const mockData = [
+            { teacher_rating: "A", _count: { teacher_rating: 3 } },
+            { teacher_rating: "B", _count: { teacher_rating: 2 } },
+            { teacher_rating: "C", _count: { teacher_rating: 1 } },
+        ];
+
+        prisma.review.groupBy.mockResolvedValue(mockData);
+
+        // Act
+        const result = await SubjectService.getTeacherRatings(id);
+
+        // Assert
+        expect(result).toEqual(mockData);
+        expect(prisma.review.groupBy).toHaveBeenCalledWith({
+            by: ["teacher_rating"],
+            _count: { teacher_rating: true },
+            where: { subject_id: id },
+            orderBy: { _count: { teacher_rating: "desc" } },
+        });
+    });
+});
+
+describe("getPresenceRatings", () => {
+    test("should return grouped presence ratings", async () => {
+        // Arrange
+        const id = "some-subject-id";
+        const mockData = [
+            { presence_rating: "A", _count: { presence_rating: 3 } },
+            { presence_rating: "B", _count: { presence_rating: 2 } },
+            { presence_rating: "C", _count: { presence_rating: 1 } },
+        ];
+
+        prisma.review.groupBy.mockResolvedValue(mockData);
+
+        // Act
+        const result = await SubjectService.getPresenceRatings(id);
+
+        // Assert
+        expect(result).toEqual(mockData);
+        expect(prisma.review.groupBy).toHaveBeenCalledWith({
+            by: ["presence_rating"],
+            _count: { presence_rating: true },
+            where: { subject_id: id },
+            orderBy: { _count: { presence_rating: "desc" } },
+        });
+    });
+});
+
+describe("getEffortRatings", () => {
+    test("should return grouped effort ratings", async () => {
+        // Arrange
+        const id = "some-subject-id";
+        const mockData = [
+            { effort_rating: "A", _count: { effort_rating: 3 } },
+            { effort_rating: "B", _count: { effort_rating: 2 } },
+            { effort_rating: "C", _count: { effort_rating: 1 } },
+        ];
+
+        prisma.review.groupBy.mockResolvedValue(mockData);
+
+        // Act
+        const result = await SubjectService.getEffortRatings(id);
+
+        // Assert
+        expect(result).toEqual(mockData);
+        expect(prisma.review.groupBy).toHaveBeenCalledWith({
+            by: ["effort_rating"],
+            _count: { effort_rating: true },
+            where: { subject_id: id },
+            orderBy: { _count: { effort_rating: "desc" } },
+        });
+    });
+}); 

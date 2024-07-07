@@ -1,3 +1,4 @@
+/* eslint-disable indent */
 // Service class for the Subject entity. Here we define the methods that will be used in the SubjectController
 import { QueryError } from "../../../middlewares/error";
 import { SubjectRepository } from "../repositories/SubjectRepository";
@@ -97,17 +98,38 @@ class SubjectServiceClass {
         return subject.reviews;
     }
 
+    async getTestRatings(id: string) {
+        const subject = await SubjectRepository.getTestRatings(id);
+        return subject;
+    }
+
+    async getProjectRatings(id: string) {
+        const subject = await SubjectRepository.getProjectRatings(id);
+        return subject;
+    }
+
+    async getTeacherRatings(id: string) {
+        const subject = await SubjectRepository.getTeacherRatings(id);
+        return subject;
+    }
+
+    async getPresenceRatings(id: string) {
+        const subject = await SubjectRepository.getPresenceRatings(id);
+        return subject;
+    }
+
+    async getEffortRatings(id: string) {
+        const subject = await SubjectRepository.getEffortRatings(id);
+        return subject;
+    }
+
     // Get most common ratings for a subject
     async calculateMostCommonRating(id: string) {
-        const test_ratings = await SubjectRepository.getTestRatings(id);
-
-        const project_ratings = await SubjectRepository.getProjectRatings(id);
-
-        const teacher_ratings = await SubjectRepository.getTeacherRatings(id);
-
-        const presence_ratings = await SubjectRepository.getPresenceRatings(id);
-
-        const effort_ratings = await SubjectRepository.getEffortRatings(id);
+        const test_ratings = await this.getTestRatings(id);
+        const project_ratings = await this.getProjectRatings(id);
+        const teacher_ratings = await this.getTeacherRatings(id);
+        const presence_ratings = await this.getPresenceRatings(id);
+        const effort_ratings = await this.getEffortRatings(id);
         await SubjectRepository.updateSubject(id, { test_rating: test_ratings[0].test_rating, project_rating: project_ratings[0].project_rating, teacher_rating: teacher_ratings[0].teacher_rating, presence_rating: presence_ratings[0].presence_rating, effort_rating: effort_ratings[0].effort_rating });
     }
 
@@ -131,14 +153,12 @@ class SubjectServiceClass {
 
     // Add a review to a subject -> will receive the ID of the subject, the name of the user and the review data
     async addReview(id: string, userId: string, body: { presence_rating: string, teacher_rating: string, project_rating: string, test_rating: string, effort_rating: string, overall_rating: string, comment: string }) {
-        const user = await SubjectRepository.addReview(userId);
-
+        const user = await SubjectRepository.checkUser(userId);
         if (!user) {
             throw new QueryError("User not found");
         }
 
-        const subject = await SubjectRepository.addSubject(id);
-
+        const subject = await SubjectRepository.checkSubject(id);
         if (!subject) {
             throw new QueryError("Subject not found");
         }
@@ -162,8 +182,21 @@ class SubjectServiceClass {
             throw new Error("Invalid overall rating");
         }
 
-
-        const review = await SubjectRepository.createReview({ ...body, overall_rating: Number(body.overall_rating), user: { connect: { id: user.id } }, subject: { connect: { id: id } } });
+        const review = await SubjectRepository.createReview(
+            {
+                ...body,
+                overall_rating: Number(body.overall_rating),
+                user: {
+                    connect: {
+                        id: user.id
+                    }
+                },
+                subject: {
+                    connect: {
+                        id: id
+                    }
+                }
+            });
 
         await SubjectRepository.updateSubject2(id, review.id);
 
