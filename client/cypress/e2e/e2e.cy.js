@@ -3,7 +3,6 @@
 
 
 describe('Login', () => {
-    const random = Math.floor(Math.random() * 100000);
 
     beforeEach(() => {
         cy.visit('http://localhost:5173/');
@@ -12,8 +11,8 @@ describe('Login', () => {
     });
 
     it('should login and logout', () => {
-        cy.get('.text-input').eq(0).type('test' + random + '@test.com');
-        cy.get('.text-input').eq(1).type('test123');
+        cy.get('.text-input').eq(0).type('bella@prisma.io');
+        cy.get('.text-input').eq(1).type('123');
         cy.get('.entrar').click();
         cy.wait(1000);
         cy.url().should('include', '/');
@@ -54,8 +53,8 @@ describe('Subject-page', () => {
     });
 
     it('should login and go a subject page when clicking on suvjects list item', () => {
-        cy.get('.text-input').eq(0).type('test' + random + '@test.com');
-        cy.get('.text-input').eq(1).type('test123');
+        cy.get('.text-input').eq(0).type('bella@prisma.io');
+        cy.get('.text-input').eq(1).type('123');
         cy.get('.entrar').click();
         cy.wait(1000);
         cy.url().should('eq', 'http://localhost:5173/');
