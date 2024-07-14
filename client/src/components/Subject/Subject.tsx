@@ -160,7 +160,7 @@ export default function Subject() {
                         </div>
                     }
                 </div>
-                {canAddReview ? <button onClick={() => { navigate(`/subject/${id}/add-review`) }}>Adicionar sua avaliação</button> : null}
+                {canAddReview ? <button id="addReviewButton" onClick={() => { navigate(`/subject/${id}/add-review`) }}>Adicionar sua avaliação</button> : null}
                 <div className="users_reviews">
                     {reviews.map((review, index) => (
                         <ReviewContainer
