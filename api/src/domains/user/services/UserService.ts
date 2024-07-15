@@ -8,8 +8,6 @@ import { UserRepository } from "../repositories/UserRepository";
 
 class UserServiceClass {
 
-    
-
     private async encryptPassword(password: string) {
         const saltRounds = 10;
         const encryptedPassword = await hash(password, saltRounds);
